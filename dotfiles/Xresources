@@ -1,0 +1,70 @@
+!xrdb -merge ~/.Xresources
+! Use a nice truetype font and size by default... 
+xterm*faceName: DejaVu Sans Mono Book
+!xterm*faceSize: 11
+xterm*faceSize: 10
+
+! Every shell is a login shell by default (for inclusion of all necessary environment variables)
+xterm*loginshell: true
+
+! I like a LOT of scrollback...
+xterm*savelines: 16384
+
+! double-click to select whole URLs :D
+xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
+
+
+! DOS-box colours...
+
+
+! right hand side scrollbar...
+xterm*rightScrollBar: true
+xterm*ScrollBar: true
+
+! stop output to terminal from jumping down to bottom of scroll again
+xterm*scrollTtyOutput: false
+
+#define S_base03        #002b36
+#define S_base02        #073642
+#define S_base01        #586e75
+#define S_base00        #657b83
+#define S_base0         #839496
+#define S_base1         #93a1a1
+#define S_base2         #eee8d5
+#define S_base3         #fdf6e3
+
+*background:            S_base03
+*foreground:            S_base0
+*fadeColor:             S_base03
+*cursorColor:           S_base1
+*pointerColorBackground:S_base01
+*pointerColorForeground:S_base1
+
+#define S_yellow        #b58900
+#define S_orange        #cb4b16
+#define S_red           #dc322f
+#define S_magenta       #d33682
+#define S_violet        #6c71c4
+#define S_blue          #268bd2
+#define S_cyan          #2aa198
+#define S_green         #859900
+
+xterm*foreground: S_base0
+xterm*background: S_base03
+xterm*color0: S_base02
+xterm*color1: S_red
+xterm*color2: S_green
+xterm*color3: S_yellow
+xterm*color4: S_blue
+xterm*color5: S_magenta
+xterm*color6: S_cyan
+xterm*color7: S_base2
+xterm*color8: S_base03
+xterm*color9: S_orange
+xterm*color10: S_base01
+xterm*color11: S_base00
+xterm*color12: S_base0
+xterm*color13: S_violet
+xterm*color14: S_base1
+xterm*color15: S_base3
