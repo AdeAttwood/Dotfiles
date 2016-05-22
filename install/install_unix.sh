@@ -10,8 +10,16 @@ ln -sf ~/.dotfiles/dotfiles/Xresources ~/.Xresources
 # Link to the tmuxinator dir
 ln -sf ~/.dotfiles/dotfiles/tmuxinator ~/.tmuxinator
 
-# Make vim dir tree
-mkdir ~/.vim/autoload ~/.vim/bundle/
-# Link to vim autoload plugin
+# Link to vim plugin autoloader
+mkdir -p ~/.vim/autoload
 ln -sf ~/.dotfiles/dotfiles/vim/autoload/pathogen.vim ~/.vim/autoload/pathogen.vim
 
+# Install vim plugins
+rm -rf ~/.vim/bundle
+mkdir -p ~/.vim/bundle
+cd ~/.dotfiles
+git submodule init
+git submodule update
+ln -sf ~/.dotfiles/dotfiles/vim/bundle/* ~/.vim/bundle
+cd ~/
+echo "All dotfiles have been installed"
