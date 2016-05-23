@@ -8,6 +8,7 @@ ln -sf ~/.dotfiles/dotfiles/vimrc ~/.vimrc
 ln -sf ~/.dotfiles/dotfiles/Xresources ~/.Xresources
 
 # Link to the tmuxinator dir
+rm -rf ~/.tmuxinator
 ln -sf ~/.dotfiles/dotfiles/tmuxinator ~/.tmuxinator
 
 # Link to vim plugin autoloader
