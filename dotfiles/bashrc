@@ -46,7 +46,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -118,3 +118,29 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+
+
+export PHPBREW_SET_PROMPT=1
+source "$HOME/.phpbrew/bashrc"
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init -)"
+export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
+
+
+export base00="#2b303b"
+export base01="#343d46"
+export base02="#4f5b66"
+export base03="#65737e"
+export base04="#a7adba"
+export base05="#c0c5ce"
+export base06="#dfe1e8"
+export base07="#eff1f5"
+export base08="#bf616a"
+export base09="#d08770"
+export base0A="#ebcb8b"
+export base0B="#a3be8c"
+export base0C="#96b5b4"
+export base0D="#8fa1b3"
+export base0E="#b48ead"
+export base0F="#ab7967"

@@ -1,31 +1,16 @@
-" --------------------------------------------------------------------------------
+
 " important
 " --------------------------------------------------------------------------------
 call pathogen#infect()
 set nocompatible
 set runtimepath^=~/.vim/bundle/ctrlp.vim
+filetype plugin on
+set t_Co=256
 " --------------------------------------------------------------------------------
 " not sorted
 " --------------------------------------------------------------------------------
-let g:airline#extensions#branch#enabled=1
-
-set t_Co=256
-set fileencoding=utf-8
-set encoding=utf-8
-set title
-set autoread
-set matchpairs+=<:>
-set ruler
-set showcmd
-set cursorline
-
-
-let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
-let g:indent_guides_auto_colors = 1
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=red   ctermbg=3
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven guibg=green ctermbg=4
 " --------------------------------------------------------------------------------
-" moving around, searching and patterns
+
 " --------------------------------------------------------------------------------
 set showmatch
 set incsearch
@@ -37,9 +22,13 @@ set hlsearch
 " displaying text
 " --------------------------------------------------------------------------------
 set linebreak
+set nowrap
+set nu
+set rnu
 " --------------------------------------------------------------------------------
 " highlighting and spelling
 " --------------------------------------------------------------------------------
+set cursorline
 " --------------------------------------------------------------------------------
 " multiple windows
 " --------------------------------------------------------------------------------
@@ -50,6 +39,7 @@ set laststatus=2
 " --------------------------------------------------------------------------------
 " terminal
 " --------------------------------------------------------------------------------
+set title
 " --------------------------------------------------------------------------------
 " using the mouse
 " --------------------------------------------------------------------------------
@@ -60,12 +50,15 @@ set mouse=a
 " --------------------------------------------------------------------------------
 " messages and info
 " --------------------------------------------------------------------------------
+set ruler
+set showcmd
 " --------------------------------------------------------------------------------
 " selecting text
 " --------------------------------------------------------------------------------
 " --------------------------------------------------------------------------------
 " editing text
 " --------------------------------------------------------------------------------
+set matchpairs+=<:>
 " --------------------------------------------------------------------------------
 " tabs and indenting
 " --------------------------------------------------------------------------------
@@ -77,6 +70,10 @@ filetype plugin indent on
 " --------------------------------------------------------------------------------
 " folding
 " --------------------------------------------------------------------------------
+set foldmethod=indent
+set foldlevel=1
+set foldnestmax=2
+"set	nofen
 " --------------------------------------------------------------------------------
 " diff mode
 " --------------------------------------------------------------------------------
@@ -100,6 +97,7 @@ nnoremap <leader>tf :! vendor/bin/phpunit %<cr>
 " --------------------------------------------------------------------------------
 " reading and writing files
 " --------------------------------------------------------------------------------
+set autoread
 " --------------------------------------------------------------------------------
 " the swap file
 " --------------------------------------------------------------------------------
@@ -119,27 +117,21 @@ set noswapfile
 " --------------------------------------------------------------------------------
 " multi-byte characters
 " --------------------------------------------------------------------------------
+set fileencoding=utf-8
+set encoding=utf-8
 " --------------------------------------------------------------------------------
 " variousexecute 
 " --------------------------------------------------------------------------------
 " --------------------------------------------------------------------------------
-"  functions
+"  plugins
 " --------------------------------------------------------------------------------
-set rnu
-function! ToggleNumbersOn()
-	set nu!
-	set rnu
-endfunction
-function! ToggleRelativeOn()
-	set rnu!
-	set nu
-endfunction
-autocmd FocusLost * call ToggleRelativeOn()
-autocmd FocusGained * call ToggleRelativeOn()
-autocmd InsertEnter * call ToggleRelativeOn()
-autocmd InsertLeave * call ToggleRelativeOn()
 
+" ultisnips
+let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
+let g:snips_author = "AdeAttwood"
+let g:snips_email = "attwood16@gmail.com"
 
+" vimwiki
 let g:vimwiki_list = [{
 \ 'path': '$HOME/ownCloud/vimwiki/',
 \ 'template_path': '$HOME/ownCloud/vimwiki/templates',
@@ -163,3 +155,21 @@ function! ToggleCalendar()
 endfunction
 
 autocmd FileType calendar nmap <buffer> <CR> :<C-u>call vimwiki#diary#calendar_action(b:calendar.day().get_day(), b:calendar.day().get_month(), b:calendar.day().get_year(), b:calendar.day().week(), "V")<CR>
+
+" vim-airline
+let g:airline#extensions#branch#enabled=1
+
+" browserlink
+let g:bl_pagefiletype = ['html', 'javascript', 'css', 'scss', 'sass', 'php', 'phtml']
+
+" pdv
+let g:pdv_template_dir = $HOME ."/.vim/bundle/pdv/templates_snip"
+
+" indent-guides
+let g:indent_guides_auto_colors = 1
+" --------------------------------------------------------------------------------
+"  functions
+" --------------------------------------------------------------------------------
+
+
+
