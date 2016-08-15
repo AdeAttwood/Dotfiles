@@ -12,7 +12,7 @@ rm -rf ~/.tmuxinator
 ln -sf ~/.dotfiles/dotfiles/tmuxinator ~/.tmuxinator
 
 # Link bin files
-ln -sf ~/.dotfiles/dotfiles/bin/* /usr/local/bin
+sudo ln -sf ~/.dotfiles/dotfiles/bin/* /usr/local/bin
 
 # Link to vim plugin autoloader
 mkdir -p ~/.vim/autoload
