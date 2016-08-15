@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [ -z "$1" ] || [ -z "$2" ]; then
+    echo "USAGE: a2changedocumentroot new/documentroot apache/config/file"
+    exit 128
+fi
+
+sed -i "/DocumentRoot/c\    DocumentRoot $1" $2
+
+echo "Document Root has been changed restarting apache"
+
+sudo service apache2 restart

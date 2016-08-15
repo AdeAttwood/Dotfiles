@@ -119,6 +119,9 @@ if ! shopt -oq posix; then
   fi
 fi
 
+# map esc to caps lock
+xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+
 
 export PHPBREW_SET_PROMPT=1
 source "$HOME/.phpbrew/bashrc"

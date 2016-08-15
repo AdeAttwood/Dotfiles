@@ -11,6 +11,9 @@ ln -sf ~/.dotfiles/dotfiles/Xresources ~/.Xresources
 rm -rf ~/.tmuxinator
 ln -sf ~/.dotfiles/dotfiles/tmuxinator ~/.tmuxinator
 
+# Link bin files
+ln -sf ~/.dotfiles/dotfiles/bin/* /usr/local/bin
+
 # Link to vim plugin autoloader
 mkdir -p ~/.vim/autoload
 ln -sf ~/.dotfiles/dotfiles/vim/autoload/pathogen.vim ~/.vim/autoload/pathogen.vim
