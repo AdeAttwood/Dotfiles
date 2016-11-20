@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+tmux new-window
+
+tmux rename-window 'General Dev'
+
+tmux send-keys "vim" C-m
+
+
+tmux split-window -h
+tmux send-keys "Server And Watch"
+
+tmux split-window -h
+tmux send-keys "General Terminal"
+
+tmux select-layout "5a9e,283x65,0,0{175x65,0,0,0,107x65,176,0[107x32,176,0,1,107x32,176,33,3]}"

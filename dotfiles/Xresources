@@ -5,7 +5,7 @@ xterm*faceName: DejaVu Sans Mono Book
 xterm*faceSize: 10
 
 ! Every shell is a login shell by default (for inclusion of all necessary environment variables)
-xterm*loginshell: true
+!xterm*loginshell: true
 
 ! I like a LOT of scrollback...
 xterm*savelines: 16384

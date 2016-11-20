@@ -1,4 +1,3 @@
-
 " important
 " --------------------------------------------------------------------------------
 call pathogen#infect()
@@ -9,6 +8,7 @@ set t_Co=256
 " --------------------------------------------------------------------------------
 " not sorted
 " --------------------------------------------------------------------------------
+autocmd BufNewFile,BufRead *.phtml   set ft=html
 " --------------------------------------------------------------------------------
 
 " --------------------------------------------------------------------------------
@@ -29,6 +29,7 @@ set rnu
 " highlighting and spelling
 " --------------------------------------------------------------------------------
 set cursorline
+syntax on
 " --------------------------------------------------------------------------------
 " multiple windows
 " --------------------------------------------------------------------------------
@@ -43,7 +44,7 @@ set title
 " --------------------------------------------------------------------------------
 " using the mouse
 " --------------------------------------------------------------------------------
-set mouse=a
+"set mouse=a
 " --------------------------------------------------------------------------------
 " printing
 " --------------------------------------------------------------------------------
@@ -84,6 +85,7 @@ inoremap EE <esc>$a
 inoremap ;;  <esc>$a;
 inoremap jj <esc>:w<cr>
 nnoremap <Leader>p :set paste<CR>o<esc>"*]p:set nopaste<cr>"
+nnoremap <Leader>b :ls<CR>:b
 nmap <silent> <Leader>o :NERDTreeToggle<CR>
 nmap <silent> <Leader>s ]sz=
 nmap <Leader>r :BLReloadPage<cr>
@@ -126,6 +128,10 @@ set encoding=utf-8
 "  plugins
 " --------------------------------------------------------------------------------
 
+" php complete
+let $PATH=$PATH . ':' . expand('~/.config/composer/vendor/bin')
+let g:padawan#composer_command = "composer"
+
 " ultisnips
 let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
 let g:snips_author = "AdeAttwood"
@@ -133,8 +139,8 @@ let g:snips_email = "attwood16@gmail.com"
 
 " vimwiki
 let g:vimwiki_list = [{
-\ 'path': '$HOME/ownCloud/vimwiki/',
-\ 'template_path': '$HOME/ownCloud/vimwiki/templates',
+\ 'path': '$HOME/vimwiki/',
+\ 'template_path': '$HOME/vimwiki/templates',
 \ 'template_default': 'default',
 \ 'template_ext': '.html',
 \ 'auto_toc': 1}]
@@ -158,6 +164,7 @@ autocmd FileType calendar nmap <buffer> <CR> :<C-u>call vimwiki#diary#calendar_a
 
 " vim-airline
 let g:airline#extensions#branch#enabled=1
+let g:airline_theme='bubblegum'
 
 " browserlink
 let g:bl_pagefiletype = ['html', 'javascript', 'css', 'scss', 'sass', 'php', 'phtml']
@@ -170,6 +177,3 @@ let g:indent_guides_auto_colors = 1
 " --------------------------------------------------------------------------------
 "  functions
 " --------------------------------------------------------------------------------
-
-
-
