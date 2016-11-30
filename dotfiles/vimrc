@@ -128,14 +128,10 @@ set encoding=utf-8
 "  plugins
 " --------------------------------------------------------------------------------
 
-" php complete
-let $PATH=$PATH . ':' . expand('~/.config/composer/vendor/bin')
-let g:padawan#composer_command = "composer"
-
 " ultisnips
 let g:UltiSnipsSnippetsDir = "~/.vim/UltiSnips"
 let g:snips_author = "AdeAttwood"
-let g:snips_email = "attwood16@gmail.com"
+let g:snips_email = "attwood16@googlemail.com"
 
 " vimwiki
 let g:vimwiki_list = [{
