@@ -40,6 +40,23 @@ node default {
   apt::ppa { 'ppa:neovim-ppa/stable': }
 
   #
+  # Install alacritty from deb archive is not available
+  #
+  archive { '/tmp/alacritty.deb':
+    ensure => present,
+    source => 'https://github.com/alacritty/alacritty/releases/download/v0.4.3/Alacritty-v0.4.3-ubuntu_18_04_amd64.deb'
+  }
+
+  package { 'alacritty':
+    ensure   => present,
+    provider => dpkg,
+    source => '/tmp/alacritty.deb',
+    require => [
+      Archive['/tmp/alacritty.deb']
+    ],
+  }
+
+  #
   # Install all the packages that the workstation needs to run
   #
   include core::packages

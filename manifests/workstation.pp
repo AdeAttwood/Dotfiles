@@ -24,4 +24,5 @@ node default {
   include core::fonts
   include core::vscode
   include core::emacs
+  include core::terminal
 }
