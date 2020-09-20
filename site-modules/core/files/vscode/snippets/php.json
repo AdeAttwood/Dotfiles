@@ -1,0 +1,226 @@
+{
+    "Var Doc": {
+        "prefix": "var",
+        "body": ["/** @var ${1:var} ${2:type} ${0:comment} */"],
+        "description": "Renders a php var doc comment"
+    },
+    "Arrow": {
+        "prefix": "-",
+        "body": ["->$0"],
+        "description": "completes arraw"
+    },
+    "Equals": {
+        "prefix": "=",
+        "body": ["=>$0"],
+        "description": "completes equals"
+    },
+    "This": {
+        "prefix": "$",
+        "body": ["\\$this->${0:code}"],
+        "description": "php this"
+    },
+    "Array Item": {
+        "prefix": "ai",
+        "body": ["'${1:key}' => ${0:value},"],
+        "description": "Creates an array item"
+    },
+    "New": {
+        "prefix": "new",
+        "body": ["$${1:var} = new ${2:Class}($0);"]
+    },
+    "Public Function": {
+        "prefix": "pub",
+        "body": [
+            "public function ${1:name}(${2:$param})",
+            "{",
+            "\t${0://code......}",
+            "}"
+        ],
+        "description": "Creates public function"
+    },
+    "Protected Function": {
+        "prefix": "pro",
+        "body": [
+            "protected function ${1:name}(${2:$param})",
+            "{",
+            "\t${0://code......}",
+            "}"
+        ],
+        "description": "Creates protected function"
+    },
+    "Private Function": {
+        "prefix": "pri",
+        "body": [
+            "private function ${1:name}(${2:$param})",
+            "{",
+            "\t${0://code......}",
+            "}"
+        ],
+        "description": "Creates private function"
+    },
+    "Public Static Function": {
+        "prefix": "pubs",
+        "body": [
+            "public static function ${1:name}(${2:$param})",
+            "{",
+            "\t${0://code......}",
+            "}"
+        ],
+        "description": "Creates public static function"
+    },
+    "Protected Static Function": {
+        "prefix": "pros",
+        "body": [
+            "protected static function ${1:name}(${2:$param})",
+            "{",
+            "\t${0://code......}",
+            "}"
+        ],
+        "description": "Creates protected static function"
+    },
+    "Private Static Function": {
+        "prefix": "pris",
+        "body": [
+            "private static function ${1:name}(${2:$param})",
+            "{",
+            "\t${0://code......}",
+            "}"
+        ],
+        "description": "Creates private static function"
+    },
+    "Codeception unit test": {
+        "prefix": "cutest",
+        "body": [
+            "public function ${1:name}(UnitTester \\$I)",
+            "{",
+            "\t${0://code......}",
+            "}"
+        ],
+        "description": "Codeception unit test"
+    },
+    "Codeception functional test": {
+        "prefix": "cftest",
+        "body": [
+            "public function ${1:name}(FunctionalTester \\$I)",
+            "{",
+            "\t${0://code......}",
+            "}"
+        ],
+        "description": "Codeception functional test"
+    },
+    "Codeception acceptance test": {
+        "prefix": "catest",
+        "body": [
+            "public function ${1:name}(AcceptanceTester \\$I)",
+            "{",
+            "\t${0://code......}",
+            "}"
+        ],
+        "description": "Codeception acceptance test"
+    },
+    "DD": {
+        "prefix": "dd",
+        "body": ["echo '<pre>' . var_dump($0) . '</pre>';die;"],
+        "description": "Dump die stright php"
+    },
+    "Dump": {
+        "prefix": "dump",
+        "body": ["dump(${0:var});"],
+        "description": "Dump a var"
+    },
+    "Dump Die": {
+        "prefix": "dumpd",
+        "body": ["dump(${0:var});die;"],
+        "description": "Dump a var"
+    },
+    "Dump Die Revo": {
+        "prefix": "rdd",
+        "body": ["\\revo\\Revo::dieVar(${0:var});"],
+        "description": "Revo die var"
+    },
+    "Yii Action": {
+        "prefix": "yii-action",
+        "body": [
+            "/**",
+            " * Undocumented action",
+            " *",
+            " * @return yii\\web\\View",
+            " */",
+            "public function action${1:name}(${2:$param})",
+            "{",
+            "\t${0://code......}",
+            "}"
+        ],
+        "description": "Creates public function"
+    },
+    "Yii2 After Save": {
+        "prefix": "yii-after-save",
+        "body": [
+            "    /**",
+            "     * This method is called at the end of inserting or updating a record.",
+            "     * ",
+            "     * @param bool  $insert            Whether this method called while inserting or updating a record.",
+            "     * @param array $changedAttributes The old values of attributes that had changed and were saved.",
+            "     * ",
+            "     * @return void",
+            "     */",
+            "    public function afterSave($insert, $changedAttributes)",
+            "    {",
+            "        return parent::afterSave();",
+            "    }"
+        ],
+        "description": "Yii2 after save funcion for a activerecord"
+    },
+    "Create Var Doc": {
+        "prefix": "var-doc",
+        "body": [
+            "echo '<pre>';",
+            "\\$_type = gettype(\\$this) == 'object' ? get_class(\\$this) : gettype(\\$this);",
+            "echo \"/** @var \\\\\\$this \\$_type */\\n\";",
+            "foreach(get_defined_vars() as \\$name => \\$var) {",
+            "    if (substr(\\$name, 0, strlen('_')) !== '_' && \\$name !== 'this') {",
+            "        if (is_array(\\$var) && isset(\\$var[0]) && gettype(\\$var[0]) == 'object') {",
+            "            \\$type = get_class(\\$var[0]);",
+            "            echo \"/** @var \\\\$\\$name {\\$type}[] */\\n\";",
+            "            continue;",
+            "        }",
+            "        \\$type = gettype(\\$var) == 'object' ? get_class(\\$var) : gettype(\\$var);",
+            "        echo \"/** @var \\\\$\\$name \\$type */\\n\";",
+            "    }",
+            "}",
+            "echo \"</pre>\";",
+            "die;"
+        ],
+        "description": "Creates a var doc from the defied vars"
+    },
+    "Create var doc for vscode": {
+        "prefix": "var-doc-code",
+        "body": [
+            "echo '<pre>';",
+            "echo '/**'.PHP_EOL;",
+            "echo ' *'.PHP_EOL;",
+            "\\$_type = gettype(\\$this) == 'object' ? get_class(\\$this) : gettype(\\$this);",
+            "echo \" * @var \\$_type \\\\\\$this\\n\";",
+            "foreach(get_defined_vars() as \\$name => \\$var) {",
+            "    if (substr(\\$name, 0, strlen('_')) !== '_' && \\$name !== 'this') {",
+            "        if (is_array(\\$var) && isset(\\$var[0]) && gettype(\\$var[0]) == 'object') {",
+            "            \\$type = get_class(\\$var[0]);",
+            "            echo \" * @var {\\$type}[] \\\\$\\$name\\n\";",
+            "            continue;",
+            "        }",
+            "        \\$type = gettype(\\$var) == 'object' ? get_class(\\$var) : gettype(\\$var);",
+            "        echo \" * @var \\$type \\\\$\\$name\\n\";",
+            "    }",
+            "}",
+            "echo ' */'.PHP_EOL;",
+            "echo \"</pre>\";",
+            "die;"
+        ],
+        "description": "Creates a var doc from the defied vars"
+    },
+    "Return Array": {
+        "prefix": "returna",
+        "body": ["return [", "\t${0}", "];"],
+        "description": ""
+    }
+}

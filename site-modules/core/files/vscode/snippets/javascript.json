@@ -1,0 +1,33 @@
+{
+  "Create react functional component": {
+    "prefix": "rfc",
+    "body": ["export const ${1:Component} = ($2) => {", "\t$0", "};"]
+  },
+  "Create react class component": {
+    "prefix": "rc",
+    "body": [
+      "export class ${1:Component} extends React.Component {",
+      "",
+      "\tstatic propTypes = {",
+      "\t\t${2}",
+      "\t};",
+      "",
+      "\tconstructor(props) {",
+      "\t\tsuper(props);$3",
+      "\t}",
+      "",
+      "\trender() {",
+      "\t\treturn (",
+      "\t\t\t$0",
+      "\t\t);",
+      "\t}",
+      "",
+      "}"
+    ]
+  },
+  "Jest Test": {
+    "prefix": "test",
+    "body": ["test('${1:Description}', () => {$0});"],
+    "description": "Create a jest test"
+  }
+}

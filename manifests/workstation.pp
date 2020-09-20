@@ -22,4 +22,5 @@ node default {
   include core::ssh
   include core::tmux
   include core::fonts
+  include core::vscode
 }
