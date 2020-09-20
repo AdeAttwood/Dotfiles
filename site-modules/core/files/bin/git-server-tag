@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#
+# Creates a git tag when publishing code to a server.
+#
+# Author:  Ade Attwood <code@adeattwood.co.uk>
+# Created: 2018-11-11
+#
+
+set -e
+
+SERVER="$1";
+
+main() {
+    local date=`date +%Y-%m-%d-%H-%M`;
+    local tag="$SERVER/$date";
+
+    git tag "$tag";
+
+    echo "Tag $tag has been created";
+    echo "You can push the tag by running";
+    echo "    git push origin $tag";
+}
+
+if [[ ! -z "$1" ]]; then
+    main;
+    exit 0;
+fi
+
+cat << HELP
+Git Server Tag
+
+When publishing code to a server you can run this command
+and it will create a git tag with the server name and
+date time you published the code
+
+Example Tag: \`stage/2018-11-11-17-17\`
+
+Usage: $0 <server_name>
+
+HELP
+
+exit 1;

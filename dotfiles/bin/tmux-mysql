@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-tmux new-window
-tmux rename-window 'MySql'
-tmux send-keys "mysql -uroot -proot" C-m
-tmux send-keys "pager vim -" C-m
-tmux split-window -h

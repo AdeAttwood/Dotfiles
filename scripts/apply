@@ -1,0 +1,4 @@
+#!/bin/sh
+
+bolt apply manifests/root.pp -vv --targets localhost --run-as root --sudo-password-prompt
+bolt apply manifests/workstation.pp -vv --targets localhost

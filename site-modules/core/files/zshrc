@@ -1,0 +1,118 @@
+# Path to your oh-my-zsh installation.
+
+#
+# Set oh-my-zsh path
+#
+export ZSH=$HOME/.oh-my-zsh
+
+#
+# Disable applications setting the terminal title globally not just in
+# oh-my-zsh as it was previously
+#
+export DISABLE_AUTO_TITLE=true
+
+#
+# Configure oh-my-zsh
+#
+ZSH_THEME="pygmalion"
+ENABLE_CORRECTION="false"
+COMPLETION_WAITING_DOTS="true"
+
+#
+# Set oh-my-zsh plug-ins
+#
+# More plug-ins are loaded in ~/.oh-my-zsh/custom/lib/misc.zsh file so we dint
+# have to define all of the custom installed plug ins here.
+#
+plugins=(git golang composer npm tmux debian vagrant docker-compose extract emacs nvm)
+
+#
+# map ecs to caps lock
+#
+xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
+
+#
+# Change cursor shape
+#
+# Block     ▇ printf '\033[1 q'
+# Underline _ printf '\033[3 q'
+# Beam      | printf '\033[5 q'
+#
+printf '\033[5 q'
+
+
+#
+# Configure base16 shell for colors if the terminal is not running inside of
+# emacs
+#
+##if [[ -z INSIDE_EMACS ]]; then
+    BASE16_SHELL="$HOME/.config/base16-shell/"
+    [ -n "$PS1" ] && \
+        [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+            eval "$("$BASE16_SHELL/profile_helper.sh")"
+
+    $HOME/.dotfiles/bin/base16_theme;
+##fi
+
+#
+# Setup and export $PATH
+#
+if [ -d $HOME/.local/share/go ]; then
+    export PATH=$PATH:$HOME/.local/share/go/bin
+fi
+
+if [ -d $HOME/.local/bin ]; then
+    export PATH=$PATH:$HOME/.local/bin
+fi
+
+if [ -d $HOME/development/flutter ]; then
+    export PATH=$PATH:$HOME/development/flutter/bin
+fi
+
+PPHP_VERSION=7.3
+if [ -d /usr/share/practically-php/php/$PPHP_VERSION/bin ]; then
+    export PATH=$PATH:/usr/share/practically-php/php/$PPHP_VERSION/bin
+fi
+
+export PATH=$PATH:$HOME/.config/composer/vendor/bin
+
+#
+# Set up golang
+#
+export GOPATH=$HOME/go
+
+#
+# Init oh-my-zsh
+#
+source $ZSH/oh-my-zsh.sh
+
+#
+# Import local alases if the file exists
+#
+if [ -f ~/.aliases ]; then
+    source ~/.aliases;
+fi
+
+#
+# Make vim and vi neovim
+#
+if type nvim > /dev/null 2>&1; then
+  alias vim='nvim'
+  alias vi='nvim'
+fi
+
+# Load php env
+export PHPENV_ROOT="/home/ade/.phpenv"
+if [ -d "${PHPENV_ROOT}" ]; then
+    export PATH="${PHPENV_ROOT}/bin:${PATH}"
+    eval "$(phpenv init -)"
+fi
+
+# conventional-tools autocomplete setup
+CONVENTIONAL_TOOLS_AC_ZSH_SETUP_PATH=/home/ade/.cache/@baln/conventional-tools/autocomplete/zsh_setup && test -f $CONVENTIONAL_TOOLS_AC_ZSH_SETUP_PATH && source $CONVENTIONAL_TOOLS_AC_ZSH_SETUP_PATH;
+
+export ANDROID_HOME=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_HOME/emulator
+export PATH=$PATH:$ANDROID_HOME/tools
+export PATH=$PATH:$ANDROID_HOME/tools/bin
+export PATH=$PATH:$ANDROID_HOME/platform-tools

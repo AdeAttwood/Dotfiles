@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+#
+# Merges a git branch into a another branch.
+#
+# Author:  Ade Attwood <code@adeattwood.co.uk>
+# Created: 2018-11-11
+#
+
+set -e
+
+MERGE_BRANCH="$1";
+
+main() {
+    local branch=$(git rev-parse --abbrev-ref HEAD);
+    echo "Merging $branch with $MERGE_BRANCH";
+
+    git checkout $MERGE_BRANCH;
+    git pull origin $MERGE_BRANCH
+    git merge --ff-only --log $branch;
+}
+
+if [[ ! -z "$1" ]]; then
+    main;
+    exit 0;
+fi
+
+cat << HELP
+Git Merge To
+
+For the reverse of \`git merge\`
+
+The flow for the script is:
+
+- Change to the target branch
+- Pull branch for the latest changes
+- Merge the previous branch
+
+Usage: $0 <branch_name>
+
+HELP
+
+exit 1;

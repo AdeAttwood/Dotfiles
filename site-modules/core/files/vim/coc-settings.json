@@ -1,0 +1,63 @@
+{
+    "diagnostic.virtualText": true,
+    "diagnostic.enableHighlightLineNumber": false,
+    "diagnostic.errorSign": "❌",
+    "diagnostic.warningSign": "⚠",
+    "diagnostic.infoSign": "ℹ",
+    "diagnostic.hintSign": "ℹ",
+    "coc.preferences.hoverTarget": "preview",
+    "suggest.floatEnable": false,
+    "diagnostic.messageTarget": "echo",
+    "json.schemas": [
+        {
+            "url": "https://git.baln.co.uk/general/conventional-tools/blob/master/src/config.schema.json"
+        }
+    ],
+    "yaml.schemas": {
+        "https://git.baln.co.uk/general/conventional-tools/raw/master/src/config.schema.json": "/.ctrc.yml"
+    },
+    "cSpell.language": "en-GB",
+    "cSpell.dictionaryDefinitions": [
+        {"name": "ade", "path": "/home/ade/.vim/spell/en.utf-8.add"}
+    ],
+    "cSpell.dictionaries": ["ade"],
+    "cSpell.enabledLanguageIds": [
+        "asciidoc",
+        "c",
+        "cpp",
+        "csharp",
+        "css",
+        "git-commit",
+        "gitcommit",
+        "go",
+        "handlebars",
+        "haskell",
+        "html",
+        "jade",
+        "java",
+        "javascript",
+        "javascript.jsx",
+        "javascriptreact",
+        "json",
+        "jsonc",
+        "latex",
+        "less",
+        "markdown",
+        "php",
+        "plaintext",
+        "pug",
+        "python",
+        "restructuredtext",
+        "rust",
+        "scala",
+        "scss",
+        "text",
+        "typescript",
+        "typescript.jsx",
+        "typescriptreact",
+        "vim",
+        "yaml",
+        "yml"
+    ],
+    "cSpell.userWords": ["enviopemt", "loded"]
+}

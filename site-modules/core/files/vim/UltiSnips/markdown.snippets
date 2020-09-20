@@ -1,0 +1,42 @@
+snippet link "Link to something"
+[${1:${VISUAL:Text}}](${3:http://${2:www.url.com}})$0
+endsnippet
+
+snippet img "Image"
+![${1:pic alt}](${2:path}${3/.+/ "/}${3:opt title}${3/.+/"/})$0
+endsnippet
+
+snippet icode "Inline Code" i
+\`$1\`$0
+endsnippet
+
+snippet code "Codeblock" b
+\`\`\`${1:lang}
+$2
+\`\`\`
+$0
+endsnippet
+
+snippet table "A base table layout" b
+|${0} |   |   |   |   |
+|---|---|---|---|---|
+|   |   |   |   |   |
+endsnippet
+
+snippet frontmatter "A basic frontmatter block" b
+---
+title: ${1:Title}
+comments: false
+date: ${2:date}
+tags:
+  - ${3:tags}
+categories:
+  - ${4:categories}
+---
+
+${0}
+endsnippet
+
+snippet more "A more comment tag for blogs" b
+<!-- more -->
+endsnippet

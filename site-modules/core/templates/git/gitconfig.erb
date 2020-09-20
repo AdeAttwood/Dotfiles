@@ -1,0 +1,14 @@
+<%- $file = __FILE__ -%>
+<%- $comment = '#' -%>
+<%= scope.call_function('template', ["core/header.erb"]) %>
+
+[user]
+	email = <%= scope.call_function('lookup', ["email"]) %>
+	name = <%= scope.call_function('lookup', ["user_name"]) %>
+
+[core]
+	editor = nvim
+	autocrlf = input
+
+[rerere]
+	enabled = true

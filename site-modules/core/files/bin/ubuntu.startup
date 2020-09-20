@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+#
+# Script that runs on the start up of ubuntu gnome shell
+#
+# Author:  Ade Attwood <code@adeattwood.co.uk>
+# Created: 2019-02-16
+#
+
+#
+# Load local Xresources fix to #3
+#
+[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources

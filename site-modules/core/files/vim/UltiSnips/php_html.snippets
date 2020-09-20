@@ -1,0 +1,65 @@
+snippet php "php tag" i
+<?php $0 ?>
+endsnippet
+
+snippet phpe "php echo tag" i
+<?= $0 ?>
+endsnippet
+
+snippet phpif "php if statment" b
+<?php if($1): ?>
+	$0
+<?php endif; ?>
+endsnippet
+
+snippet phpife "php if else statment" b
+<? if ($1): ?>
+	$2
+<? else: ?>
+	$0
+<? endif; ?>
+endsnippet
+
+snippet phpifeif "php if else if statment" b
+<? if ($1): ?>
+	$2
+<? elseif ($3): ?>
+	$4
+<? else: ?>
+	$0
+<? endif; ?>
+endsnippet
+
+snippet phpfe "php foreach" b
+<?php foreach(${1:$array} as ${2:$key}=>${3:$value}): ?>
+	$0
+<?php endforeach; ?>
+endsnippet
+
+snippet phpf "php for loop" b
+<?php for ($i = ${1:1}; $i <= ${2:count}; $i++): ?>
+	$0
+<?php endfor; ?>
+endsnippet
+
+snippet var-doc "Code for createing a vardoc" b
+echo '<pre>';
+echo '/**'.PHP_EOL;
+echo ' *'.PHP_EOL;
+$_type = gettype($this) == 'object' ? get_class($this) : gettype($this);
+echo " * @var $_type \\$this\n";
+foreach(get_defined_vars() as $name => $var) {
+    if (substr($name, 0, strlen('_')) !== '_' && $name !== 'this') {
+        if (is_array($var) && isset($var[0]) && gettype($var[0]) == 'object') {
+            $type = get_class($var[0]);
+            echo " * @var {$type}[] \$$name\n";
+            continue;
+        }
+        $type = gettype($var) == 'object' ? get_class($var) : gettype($var);
+        echo " * @var $type \$$name\n";
+    }
+}
+echo ' */'.PHP_EOL;
+echo "</pre>";
+die;
+endsnippet
