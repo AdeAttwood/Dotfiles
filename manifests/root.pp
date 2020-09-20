@@ -13,13 +13,34 @@ node default {
   notify { "Running as ${id} for ${user} with home of ${user_home}": }
 
   #
-  # Install all the packages that the workstation needs to run
-  #
-  include core::packages
-
-  #
   # Install docker and docker-compose
   #
   class { 'docker': version => 'latest' }
-  class {'docker::compose': ensure  => present }
+  class { 'docker::compose': ensure  => present }
+
+  #
+  # Install vscode
+  #
+  class { 'vscode': }
+
+  #
+  # Install emacs
+  #
+  apt::ppa { 'ppa:kelleyk/emacs': }
+  package { 'emacs27':
+    ensure  => installed,
+    require => [
+      Apt::Ppa['ppa:kelleyk/emacs'],
+    ],
+  }
+
+  #
+  # Neovim PPA to get a better version
+  #
+  apt::ppa { 'ppa:neovim-ppa/stable': }
+
+  #
+  # Install all the packages that the workstation needs to run
+  #
+  include core::packages
 }

@@ -23,4 +23,5 @@ node default {
   include core::tmux
   include core::fonts
   include core::vscode
+  include core::emacs
 }
