@@ -25,7 +25,7 @@
     "terminal.integrated.fontFamily": "'LigaFreeMono' ,monospace, 'Droid Sans Fallback'",
     "terminal.integrated.fontSize": 14,
     "php.suggest.basic": false,
-    "diffEditor.ignoreTrimWhitespace": false,
+    "diffEditor.ignoreTrimWhitespace": true,
     "files.trimTrailingWhitespace": true,
     "vscode-neovim.neovimPath": "/usr/bin/nvim",
     // Vim plugin
