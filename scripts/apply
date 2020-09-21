@@ -1,4 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
+
+
+bolt puppetfile install
 bolt apply manifests/root.pp --targets localhost --run-as root --sudo-password-prompt
 bolt apply manifests/workstation.pp --targets localhost
