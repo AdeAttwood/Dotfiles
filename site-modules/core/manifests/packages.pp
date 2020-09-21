@@ -13,7 +13,6 @@ class core::packages {
       'notmuch',
       'offlineimap',
       'silversearcher-ag',
-      'thunderbird',
       'tmux',
       'urlscan',
       'vim',
@@ -26,6 +25,10 @@ class core::packages {
       'software-properties-common',
     ]:
       ensure => installed,
+  }
+
+  package { 'thunderbird':
+    ensure => absent
   }
 
   # core::packages::npm { [
