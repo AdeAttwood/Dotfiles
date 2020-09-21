@@ -18,3 +18,8 @@ mod 'puppetlabs-vcsrepo', '3.1.1'
 # Archive module for downloading and unpacking archives
 #
 mod 'puppet-archive', '4.6.0'
+
+#
+# Add the private puppet module for the proprietary bits
+#
+mod 'private', :git => 'git@gitlab.com:adeattwood/dotfiles-private.git'

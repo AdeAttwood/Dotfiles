@@ -25,4 +25,12 @@ node default {
   include core::vscode
   include core::emacs
   include core::terminal
+
+  #
+  # Add the private puppet module for all the proprietary bits only if the
+  # module is installed. You can see the puppet file
+  #
+  if defined('private::main') {
+    include private::main
+  }
 }
