@@ -1,4 +1,7 @@
-# Path to your oh-my-zsh installation.
+#
+# Stop emacs tramp from hanging when working remotly
+#
+[[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
 
 #
 # Set oh-my-zsh path
