@@ -48,14 +48,14 @@ printf '\033[5 q'
 # Configure base16 shell for colors if the terminal is not running inside of
 # emacs
 #
-##if [[ -z INSIDE_EMACS ]]; then
+if [[ -z $INSIDE_EMACS ]]; then
     BASE16_SHELL="$HOME/.config/base16-shell/"
     [ -n "$PS1" ] && \
         [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
             eval "$("$BASE16_SHELL/profile_helper.sh")"
 
     $HOME/.dotfiles/bin/base16_theme;
-##fi
+fi
 
 #
 # Setup and export $PATH
