@@ -5,4 +5,9 @@ class core::emacs {
     user     => $user,
     revision => 'develop',
   }
+
+  file { "${user_home}/.spacemacs":
+    ensure => 'link',
+    target => find_file('core/emacs/spacemacs'),
+  }
 }
