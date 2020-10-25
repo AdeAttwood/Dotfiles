@@ -72,11 +72,6 @@ if [ -d $HOME/development/flutter ]; then
     export PATH=$PATH:$HOME/development/flutter/bin
 fi
 
-PPHP_VERSION=7.3
-if [ -d /usr/share/practically-php/php/$PPHP_VERSION/bin ]; then
-    export PATH=$PATH:/usr/share/practically-php/php/$PPHP_VERSION/bin
-fi
-
 export PATH=$PATH:$HOME/.config/composer/vendor/bin
 
 #
