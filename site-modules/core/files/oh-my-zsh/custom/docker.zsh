@@ -4,6 +4,7 @@
 alias dk="docker"
 alias dkl="docker logs -f"
 alias dkps="docker ps --format '{{.ID}} ~ {{.Names}} ~ {{.Status}} ~ {{.Image}}'  | column -t -s'~'"
+alias dkls="docker container ps -a --format '{{.ID}} ~ {{.Names}} ~ {{.Status}} ~ {{.Image}}'  | column -t -s'~'"
 alias dkrm="docker rm"
 
 function dke() {
