@@ -495,6 +495,11 @@ configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
 
+  ;; Fix terminal color theme for base16
+  ;; See: https://github.com/belak/base16-emacs#terminal-colors
+  ;; See: https://github.com/belak/base16-emacs/issues/73#issuecomment-721942335
+  (setq base16-theme-256-color-source 'base16-shell)
+
   ;; Force magit status to go full screen
   (setq-default git-magit-status-fullscreen t))
 
