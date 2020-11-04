@@ -84,6 +84,8 @@ export GOPATH=$HOME/go
 #
 source $ZSH/oh-my-zsh.sh
 
+export EDITOR="emacs --no-wait"
+
 #
 # Import local alases if the file exists
 #
