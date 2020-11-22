@@ -17,7 +17,7 @@
     "editor.fontSize": 14,
     "editor.fontFamily": "'LigaFreeMono', Hasklig ,'JetBrains Mono', monospace, 'Droid Sans Fallback'",
     "editor.minimap.enabled": false,
-    "editor.lineNumbers": "relative",
+    "editor.lineNumbers": "off",
     "editor.rulers": [
         80,
         120
@@ -240,6 +240,18 @@
         "vs-kubernetes.kubeconfig": "/home/ade/.kube/zion-config.yaml"
     },
     "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     }
 }
