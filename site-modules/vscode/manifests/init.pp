@@ -1,8 +1,10 @@
 class vscode {
 
   archive { '/tmp/microsoft.asc':
-    ensure => present,
-    source => 'https://packages.microsoft.com/keys/microsoft.asc',
+    ensure        => present,
+    source        => 'https://packages.microsoft.com/keys/microsoft.asc',
+    checksum      => '2cfd20a306b2fa5e25522d78f2ef50a1f429d35fd30bd983e2ebffc2b80944fa',
+    checksum_type => 'sha256',
   }
 
   exec { 'gpg --dearmor /tmp/microsoft.asc':
