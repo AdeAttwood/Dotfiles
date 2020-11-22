@@ -499,6 +499,7 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; See: https://github.com/belak/base16-emacs#terminal-colors
   ;; See: https://github.com/belak/base16-emacs/issues/73#issuecomment-721942335
   (setq base16-theme-256-color-source 'base16-shell)
+  (setq base16-distinct-fringe-background nil)
 
   ;; Force magit status to go full screen
   (setq-default git-magit-status-fullscreen t))
