@@ -25,6 +25,7 @@ node default {
   include core::vscode
   include core::emacs
   include core::terminal
+  include core::mkcert
 
   #
   # Add the private puppet module for all the proprietary bits only if the
