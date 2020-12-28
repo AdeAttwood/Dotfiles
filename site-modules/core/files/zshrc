@@ -27,7 +27,7 @@ COMPLETION_WAITING_DOTS="true"
 # More plug-ins are loaded in ~/.oh-my-zsh/custom/lib/misc.zsh file so we dint
 # have to define all of the custom installed plug ins here.
 #
-plugins=(git golang composer npm tmux debian vagrant docker-compose extract emacs nvm)
+plugins=(git emacs nvim extract)
 
 #
 # map ecs to caps lock
@@ -42,7 +42,6 @@ xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 # Beam      | printf '\033[5 q'
 #
 printf '\033[5 q'
-
 
 #
 # Configure base16 shell for colors if the terminal is not running inside of
@@ -107,9 +106,6 @@ if [ -d "${PHPENV_ROOT}" ]; then
     export PATH="${PHPENV_ROOT}/bin:${PATH}"
     eval "$(phpenv init -)"
 fi
-
-# conventional-tools autocomplete setup
-CONVENTIONAL_TOOLS_AC_ZSH_SETUP_PATH=/home/ade/.cache/@baln/conventional-tools/autocomplete/zsh_setup && test -f $CONVENTIONAL_TOOLS_AC_ZSH_SETUP_PATH && source $CONVENTIONAL_TOOLS_AC_ZSH_SETUP_PATH;
 
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
