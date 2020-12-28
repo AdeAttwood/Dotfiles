@@ -82,7 +82,7 @@ This function should only modify configuration layer settings."
    ;; To use a local version of a package, use the `:location' property:
    ;; '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(base16-theme)
+   dotspacemacs-additional-packages '(base16-theme  doom-themes)
 
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
@@ -230,7 +230,7 @@ It should only modify the values of Spacemacs settings."
    ;; refer to the DOCUMENTATION.org for more info on how to create your own
    ;; spaceline theme. Value can be a symbol or list with additional properties.
    ;; (default '(spacemacs :separator wave :separator-scale 1.5))
-   dotspacemacs-mode-line-theme '(spacemacs :separator nil :separator-scale 1.5)
+   dotspacemacs-mode-line-theme '(doom :separator nil :separator-scale 1.5)
 
    ;; If non-nil the cursor color matches the state color in GUI Emacs.
    ;; (default t)
@@ -500,6 +500,9 @@ If you are unsure, try setting them in `dotspacemacs/user-config' first."
   ;; See: https://github.com/belak/base16-emacs/issues/73#issuecomment-721942335
   (setq base16-theme-256-color-source 'base16-shell)
   (setq base16-distinct-fringe-background nil)
+
+  ;; doom modeline config
+  (setq doom-modeline-icon t)
 
   ;; Force magit status to go full screen
   (setq-default git-magit-status-fullscreen t))
