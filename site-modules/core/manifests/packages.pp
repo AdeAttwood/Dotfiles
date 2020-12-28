@@ -14,6 +14,7 @@ class core::packages {
       'offlineimap',
       'silversearcher-ag',
       'tmux',
+      'bat',
       'urlscan',
       'vim',
       'zsh',
@@ -29,6 +30,14 @@ class core::packages {
 
   package { 'thunderbird':
     ensure => absent
+  }
+
+  exec { 'Link catbat to bat':
+    command => 'ln -s /usr/bin/batcat /usr/bin/bat',
+    onlyif  => 'test -e /usr/bin/batcat',
+    creates => '/usr/bin/bat',
+    path    => '/bin:/usr/bin',
+    provider => 'shell',
   }
 
   # core::packages::npm { [
