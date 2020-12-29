@@ -53,5 +53,8 @@ class core::packages {
   #
   core::packages::gem { [
       'neovim',
+      'mail',
+      'pandoc-ruby',
+      'puppet-lint',
   ]: }
 }
