@@ -38,7 +38,7 @@ This function should only modify configuration layer settings."
      ;; Base Layers
      git puppet version-control helm markdown docker spell-checking notmuch
      (treemacs :variables treemacs-use-all-the-icons-theme t)
-     (lsp :variables lsp-enable-file-watchers nil)
+     (lsp :variables lsp-enable-file-watchers nil lsp-headerline-breadcrumb-enable nil)
      (org :variables org-enable-reveal-js-support t)
      (shell :variables
             terminal-here-terminal-command (list "alacritty")
