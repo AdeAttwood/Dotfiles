@@ -1,0 +1,14 @@
+# -*- mode: snippet -*-
+# name: Public function
+# key: pub
+# contributor: Ade Attwood <code@adeattwood.co.uk>
+# --
+/**
+ * Undocumented function
+ *
+ * @return $4
+ */
+public function ${1:name}(${2:params})${3::${4:returns}}
+{
+    $0
+}

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: Table
+# key: table
+# contributor: Ade Attwood <code@adeattwood.co.uk>
+# --
+| One | Two |
+| --- | --- |
+| 1   | 2   |

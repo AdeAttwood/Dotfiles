@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Continuous intergration commit message
+# key: ci
+# contributor: Ade Attwood <code@adeattwood.co.uk>
+# --
+ci(${1:scope}): ${2:title}

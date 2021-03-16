@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Feature commit message
+# key: feat
+# contributor: Ade Attwood <code@adeattwood.co.uk>
+# --
+feat(${1:scope}): ${2:title}

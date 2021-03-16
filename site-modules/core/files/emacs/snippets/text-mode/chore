@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Chore commit message
+# key: chore
+# contributor: Ade Attwood <code@adeattwood.co.uk>
+# --
+chore(${1:scope}): ${2:title}

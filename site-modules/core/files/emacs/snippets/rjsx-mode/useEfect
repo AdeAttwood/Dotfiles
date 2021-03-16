@@ -1,0 +1,8 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: React useEffect hook
+# key: useEffec
+# contributor: Ade Attwood <code@adeattwood.co.uk>
+# --
+React.useEffect(() => {
+    `yas-selected-text`$0
+}, [${1:dependcides}]);

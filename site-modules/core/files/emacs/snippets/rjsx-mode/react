@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: React import
+# key: react
+# condition: (eq major-mode 'rjsx-mode)
+# contributor: Ade Attwood <code@adeattwood.co.uk>
+# --
+import React from 'react';
+import PropTypes from 'prop-types';

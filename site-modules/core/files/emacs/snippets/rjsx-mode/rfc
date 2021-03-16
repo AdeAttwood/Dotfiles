@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: React functional component
+# key: rfc
+# condition: (eq major-mode 'rjsx-mode)
+# contributor: Ade Attwood <code@adeattwood.co.uk>
+# --
+export const ${1:Component} = (${2:props}) => {
+    return (
+        ${0:<div>Content</div>}
+    );
+};
+
+$1.propTypes = {};

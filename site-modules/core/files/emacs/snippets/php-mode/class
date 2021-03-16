@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: Class definition
+# key: class
+# contributor: Ade Attwood <code@adeattwood.co.uk>
+# --
+<?php
+
+declare(strict_types=1);
+
+namespace NameSpace;
+
+/**
+ * Undocumented function
+ */
+class ${1:`(yas-php-get-class-name-by-file-name)`}${2: extends ${3:ExtendsClass}}${4: implements ${5:ImpementsInterface}}
+{
+    $0
+}

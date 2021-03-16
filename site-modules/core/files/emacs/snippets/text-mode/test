@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Test commit message
+# key: test
+# contributor: Ade Attwood <code@adeattwood.co.uk>
+# --
+test(${1:scope}): ${2:title}

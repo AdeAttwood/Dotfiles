@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Performance commit message
+# key: pref
+# contributor: Ade Attwood <code@adeattwood.co.uk>
+# --
+pref(${1:scope}): ${2:title}

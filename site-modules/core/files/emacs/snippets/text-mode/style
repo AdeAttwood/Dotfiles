@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: Code styling commit message
+# key: style
+# contributor: Ade Attwood <code@adeattwood.co.uk>
+# --
+style(${1:scope}): ${2:title}
