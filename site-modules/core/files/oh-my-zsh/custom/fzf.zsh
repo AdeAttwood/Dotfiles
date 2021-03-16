@@ -14,6 +14,12 @@ alias fe="e \$(FZF_DEFAULT_COMMAND=\"fd -t f\" fzf --layout=reverse --preview 'b
 alias fte="te \$(FZF_DEFAULT_COMMAND=\"fd -t f\" fzf --layout=reverse --preview 'bat --style=numbers ---color=always {}')"
 
 #
+# cd in to a porject directory
+#
+fp() {
+	cd ~/Code/src/$(cd ~/Code/src && FZF_DEFAULT_COMMAND="fd -t d --exact-depth 3" fzf --layout=reverse --preview 'bat --style=numbers ---color=always {}/README.md')
+}
+#
 # Searching the git history with diff and show preview support. When selecting a
 # commit `git show` output is displayed and `CTRL-d` the `git diff` output is
 # displayed

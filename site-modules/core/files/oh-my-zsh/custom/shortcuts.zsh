@@ -20,6 +20,5 @@ mutt_scripts=~/.mutt/scripts
 #
 # Zsh hash
 #
-hash -d s=~/sites
-hash -d df=~/.dotfiles
-hash -d d=~/development
+hash -d code=~/Code
+hash -d s=~/Code/src
