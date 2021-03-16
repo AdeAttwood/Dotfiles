@@ -14,8 +14,22 @@ main() {
     local branch=$(git rev-parse --abbrev-ref HEAD);
     echo "Merging $branch with $MERGE_BRANCH";
 
+	#
+	# Ensure the target branch is up to date
+	#
+    git checkout $MERGE_BRANCH
+	git pull origin $MERGE_BRANCH
+    git checkout $branch
+
+	#
+	# Rebase onto branch so we don't create a merge commit
+	#
+	git rebase $MERGE_BRANCH;
+
+	#
+	# Merge into the target branch ensuring its a fast forward merge
+	#
     git checkout $MERGE_BRANCH;
-    git pull origin $MERGE_BRANCH
     git merge --ff-only --log $branch;
 }
 
