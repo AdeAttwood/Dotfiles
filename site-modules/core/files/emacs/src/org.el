@@ -95,6 +95,9 @@
   :custom
   (org-bullets-bullet-list '("◉" "○" "●" "○" "●" "○" "●")))
 
+(use-package org-re-reveal
+  :after org)
+
 (use-package evil-org
   :ensure t
   :after org
