@@ -46,6 +46,13 @@ fshow() {
 }
 
 #
+# Checkout a git branch in a fzf context
+#
+fco() {
+    git checkout "$(git branch -vl | fzf --layout=reverse | awk '{print $1}')"
+}
+
+#
 # Interactive `git add` with FZF and diff preview support.
 #
 fadd() {
