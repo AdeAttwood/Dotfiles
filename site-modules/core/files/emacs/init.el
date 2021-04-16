@@ -126,20 +126,3 @@
 (unless (server-running-p)
         (message "Starting a server...")
         (server-start))
-
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(doom-modeline-mode t)
- '(package-selected-packages
-   '(string-inflection puppet-mode cue-mode evil-multiedit sh-mode dockerfile-mode docker hide-mode-line vterm browse-at-remote yasnippet yaml-mode which-key web-mode typescript-mode treemacs-projectile treemacs-magit treemacs-evil treemacs-all-the-icons smartparens scss-mode sass-mode rjsx-mode rainbow-delimiters quelpa-use-package prettier-js php-mode no-littering lsp-ui lsp-treemacs lsp-ivy ligature json-mode ivy-rich ivy-prescient general flycheck evil-surround evil-commentary evil-collection emmet-mode doom-themes doom-modeline counsel-projectile counsel-notmuch company-box base16-theme)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
