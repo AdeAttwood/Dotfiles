@@ -1,0 +1,29 @@
+---
+name: dotfiles
+modulepath:
+- site-modules
+modules:
+#
+# Puppet std lib
+#
+- puppetlabs/stdlib
+#
+# Docker modules
+#
+- puppetlabs/apt
+- puppetlabs/docker
+#
+# VSC Repo to install all the git repos
+#
+- puppetlabs/vcsrepo
+#
+# Archive module for downloading and unpacking archives
+#
+- puppet/archive
+#
+# Add the private puppet module for the proprietary bits
+#
+- name: private
+  git: git@gitlab.com:adeattwood/dotfiles-private.git
+  ref: master
+  resolve: false

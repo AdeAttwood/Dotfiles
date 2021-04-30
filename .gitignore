@@ -8,6 +8,11 @@ modules
 info.rb
 .rerun.json
 
+### Puppet Bolt ###
+.modules
+.plan_cache.json
+bolt-debug.log
+
 ### Code ###
 .vscode/*
 !.vscode/settings.json
