@@ -46,8 +46,11 @@
 
 (use-package typescript-mode
   :hook (typescript-mode . lsp-deferred)
-  :mode
-  (("\\.ts\\'"      . typescript-mode)
-   ("\\.tsx\\'"      . typescript-mode)))
+  :mode (("\\.ts\\'"      . typescript-mode)))
+
+(progn
+  (define-derived-mode typescript-tsx-mode web-mode "TypeScript-tsx")
+  (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-tsx-mode))
+  (add-hook 'typescript-tsx-mode-hook 'lsp-deferred))
 
 (use-package prettier-js :commands prettier-js)

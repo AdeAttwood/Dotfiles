@@ -58,7 +58,7 @@
 	 (rjsx-mode     . (lambda ()
 			(emmet-mode)
 			(setq-local emmet-expand-jsx-className? t)))
-	 (typescript-mode . (lambda ()
+	 (typescript-tsx-mode . (lambda ()
 			(emmet-mode)
 			(setq-local emmet-expand-jsx-className? t)))))
 
