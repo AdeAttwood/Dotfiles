@@ -85,7 +85,7 @@
     ;; Windows. Just rebind all of the evil window bindings to "SPC w"
     ;; so we dont have to keep hitting "CTRL-w"
     "w"		'(evil-window-map :which-key "Windows")
-    "wd"	'kill-buffer-and-window
+    "wd"	'evil-window-delete
     ;; Org Mode
     "o"		'(evil-window-map :which-key "Org Mode")
     "oa"	'org-agenda
