@@ -8,11 +8,15 @@
 
 (defun aa/term-init ()
   ;; Hide the mode line in the terminal
-  (hide-mode-line-mode))
+  (hide-mode-line-mode)
+  (evil-emacs-state)
+  (setq cursor-type 'bar))
 
 (use-package vterm
   :quelpa (vterm :fetcher github :repo "akermu/emacs-libvterm")
   :commands (vterm)
+  :bind (:map vterm-mode-map
+         ("C-o" . previous-buffer))
   :hook (vterm-mode . aa/term-init)
   :init
   (defvar vterm-install t)
