@@ -1,0 +1,105 @@
+#!/usr/bin/env bash
+#
+# Merges a remote branch into your current branch forcing a fast
+# forward merge by rebasing first. This uses the rebase style of
+# `--continue` and `--abort` when you have started to pick up where
+# you left off
+#
+# Author:  Ade Attwood <code@adeattwood.co.uk>
+# Created: 2021-05-16
+#
+
+set -e
+
+MERGE_BRANCH="$1";
+
+#
+# The merge branch argument is required
+#
+if [[ -z "$1" ]]; then
+	cat << HELP
+Git Merge Patch
+
+git merge-patch my-remote-branch
+
+HELP
+    exit 1;
+fi
+
+
+if [[ "$MERGE_BRANCH" == "--abort" ]]; then
+	#
+	# If we are in a rebase state then we want to abort that to
+	#
+	if [[ -f "$(git rev-parse --show-toplevel)/.git/REBASE_HEAD" ]]; then
+		git rebase --abort
+	fi
+
+	if [[ -f "$(git rev-parse --show-toplevel)/.git/MERGE_PATCH" ]]; then
+		rm "$(git rev-parse --show-toplevel)/.git/MERGE_PATCH"
+	fi
+
+	exit 0
+fi
+
+if [[ "$MERGE_BRANCH" != "--continue" ]]; then
+	branch=$(git rev-parse --abbrev-ref HEAD);
+	echo "$branch" > "$(git rev-parse --show-toplevel)/.git/MERGE_PATCH"
+
+	#
+	# Fetch from remove so every ting is upto date
+	#
+	git fetch
+
+	#
+	# Check out the merge branch from the origin
+	#
+	git checkout -b "$MERGE_BRANCH" "origin/$MERGE_BRANCH"
+
+	#
+	# Ensure the target branch is up to date
+	#
+	git checkout $branch
+	git pull origin $branch
+	git checkout $MERGE_BRANCH
+
+	#
+	# Rebase onto branch so we don't create a merge commit
+	#
+	git rebase $branch;
+else
+	if [[ ! -f "$(git rev-parse --show-toplevel)/.git/MERGE_PATCH" ]]; then
+		echo "ERROR: Merge patch has not been started"
+		exit 1;
+	fi
+
+	#
+	# If we are still in the rebase from above then we need to
+	# continue with that before we finish merging the patch
+	#
+	if [[ -f "$(git rev-parse --show-toplevel)/.git/REBASE_HEAD" ]]; then
+		git rebase --continue
+	fi
+
+	MERGE_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+	branch="$(cat $(git rev-parse --show-toplevel)/.git/MERGE_PATCH)"
+fi
+
+#
+# Force push the rebased branch to the remove so Gitlab
+# recognises the hash has been merged
+#
+git push origin "$MERGE_BRANCH" -f -o ci.skip
+
+#
+# Merge into the target branch ensuring its a fast forward merge
+#
+git checkout $branch
+git merge --ff-only --log $MERGE_BRANCH;
+
+#
+# Clean up the MERGE_PATCH file now we have completed the merge
+#
+if [[ -f "$(git rev-parse --show-toplevel)/.git/MERGE_PATCH" ]]; then
+	rm "$(git rev-parse --show-toplevel)/.git/MERGE_PATCH"
+fi
