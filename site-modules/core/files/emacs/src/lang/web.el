@@ -9,6 +9,8 @@
 (use-package web-mode
   :defer t
   :hook (web-mode . lsp-deferred)
+  :config
+  (setq web-mode-enable-auto-quoting nil)
   :mode
   (("\\.phtml\\'"      . web-mode)
    ("\\.tpl\\.php\\'"  . web-mode)
