@@ -30,6 +30,10 @@ function dktop() {
   docker stats --format "table {{.Container}}\t{{.Name}}\t{{.CPUPerc}}  {{.MemPerc}}\t{{.NetIO}}\t{{.BlockIO}}"
 }
 
+function dkip() {
+    docker inspect $1 | jq -r '.[0].NetworkSettings.Networks | .[].IPAddress'
+}
+
 #
 # Docker Compose
 #
