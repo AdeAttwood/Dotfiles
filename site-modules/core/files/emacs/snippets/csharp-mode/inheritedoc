@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: /// <inheritdoc ... />
+# key: ///i
+# --
+/// <inheritdoc${1: cref="${2:Class}"} />$0

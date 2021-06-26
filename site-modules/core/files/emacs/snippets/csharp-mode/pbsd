@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: Practically BSD licence
+# key: pbsd
+# contributor: Ade Attwood <code@adeattwood.co.uk>
+# uuid: pbsd
+# --
+/// <copyright file="`(file-name-nondirectory (buffer-file-name))`" company="Practically.io">
+/// Copyright `(format-time-string "%Y")` Practically.io All rights reserved
+///
+/// Use of this source is governed by a BSD-style
+/// licence that can be found in the LICENCE file or at
+/// https://www.practically.io/copyright/
+/// </copyright>
