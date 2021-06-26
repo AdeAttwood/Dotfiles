@@ -6,6 +6,11 @@
 ;; licence that can be found in the LICENCE file or at
 ;; https://www.practically.io/copyright/
 
+(defun aa/semicolon-at-end-of-line ()
+  (interactive)
+    (end-of-line)
+    (insert ";"))
+
 (use-package evil
   :init
   (setq evil-want-integration t)
@@ -21,7 +26,9 @@
   (global-set-key (kbd "C-k") 'evil-window-up)
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal))
+  (evil-set-initial-state 'dashboard-mode 'normal)
+
+  (define-key evil-insert-state-map (kbd "C-;") 'aa/semicolon-at-end-of-line))
 
 (use-package evil-collection
   :after evil
