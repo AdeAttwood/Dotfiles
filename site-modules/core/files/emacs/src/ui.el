@@ -23,9 +23,14 @@
 
 (set-face-attribute 'default nil :font a-font :height a-font-size)
 (set-face-attribute 'fixed-pitch nil :font a-font :height a-font-size)
-(set-face-attribute 'variable-pitch nil :font "Lato" :height a-font-size :weight 'regular)
+(set-face-attribute 'variable-pitch nil :font a-font :height a-font-size :weight 'regular)
 
-(use-package doom-themes)
+(use-package doom-themes
+  :init
+  (load-theme 'doom-tomorrow-day t t)
+  (when (display-graphic-p)
+    (enable-theme 'doom-tomorrow-day)))
+
 (use-package base16-theme
   :init
   ;; Fix terminal color theme for base16
@@ -33,7 +38,9 @@
   ;; See: https://github.com/belak/base16-emacs/issues/73#issuecomment-721942335
   (setq base16-theme-256-color-source 'base16-shell)
   (setq base16-distinct-fringe-background nil)
-  (load-theme 'base16-ocean t))
+  (load-theme 'base16-tomorrow t t)
+  (unless (display-graphic-p)
+    (enable-theme 'base16-tomorrow)))
 
 (use-package all-the-icons)
 

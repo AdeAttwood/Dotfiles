@@ -26,3 +26,19 @@
   ;; Once vterm is dead, the vterm buffer is useless. Why keep it around? We can
   ;; spawn another if want one.
   (setq vterm-kill-buffer-on-exit t))
+
+(use-package auto-dim-other-buffers
+  :config (auto-dim-other-buffers-mode)
+  :custom-face
+    (auto-dim-other-buffers-face ((t (:background "#e0e0e0")))))
+
+(unless (display-graphic-p)
+  (use-package tmux-pane
+	:config (tmux-pane-mode))
+  (use-package evil-terminal-cursor-changer
+	:config (evil-terminal-cursor-changer-activate))
+
+  (use-package xclip
+	:config (xclip-mode))
+
+  (xterm-mouse-mode))
