@@ -13,11 +13,10 @@ function gi() {
     curl -sL https://www.gitignore.io/api/$@;
 }
 
-function ggpushmr() {
+function ggpushpr() {
     if [[ -z "$1" ]]; then
-        echo "Error: Target branch to create your merge request against is missing"
-        exit 1
+		ggpush -o merge_request.merge_when_pipeline_succeeds -o merge_request.create -o merge_request.remove_source_branch
+	else
+		ggpush -o merge_request.merge_when_pipeline_succeeds -o merge_request.create -o merge_request.remove_source_branch -o merge_request.target="$1"
     fi
-
-    ggpush -o merge_request.create -o merge_request.target="$1" -o merge_request.merge_when_pipeline_succeeds -o merge_request.remove_source_branch
 }
