@@ -9,28 +9,20 @@
 ;; The main development configuration common development packages
 ;; like lsp and flycheck
 
-(defun efs/lsp-mode-setup ()
-  "Set up the LSP mode."
-  (setq lsp-enable-which-key-integration t
-	lsp-enable-xref nil
-	lsp-intelephense-completion-trigger-parameter-hints nil
-	lsp-intelephense-multi-root nil
-	lsp-enable-file-watchers nil
-	lsp-enable-snippet t
-	lsp-ui-doc-position 'top
-	lsp-headerline-breadcrumb-enable nil))
-
 (use-package lsp-mode
   :commands (lsp lsp-deferred)
   :config
-  (setq
-	lsp-intelephense-completion-trigger-parameter-hints nil
-	lsp-intelephense-multi-root nil
-	lsp-enable-file-watchers nil
-	lsp-enable-snippet t
-	lsp-ui-doc-position 'top
-	lsp-headerline-breadcrumb-enable nil))
-  ;;:hook (lsp-mode . efs/lsp-mode-setup))
+  (setq-default
+   lsp-intelephense-completion-trigger-parameter-hints nil
+   lsp-auto-guess-root t
+   lsp-headerline-breadcrumb-enable nil
+   lsp-enable-file-watchers nil
+   lsp-keep-workspace-alive nil
+   lsp-ui-doc-position 'top
+   lsp-modeline-diagnostics-scope :project
+   lsp-completion-provider :none))
+
+(advice-add 'lsp :before (lambda (&rest _args) (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
 
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode))
@@ -40,31 +32,66 @@
 
 (use-package lsp-ivy)
 
+(defun do-yas-expand ()
+    (let ((yas/fallback-behavior 'return-nil))
+      (yas/expand)))
+
+(defun aa/company-tab ()
+    (interactive)
+      (if (or (not yas/minor-mode)
+              (null (do-yas-expand)))
+		  (company-complete-common-or-cycle)))
+
+(defun aa/company-sort (candidates)
+  (let (case-fold-search
+        (re "\\`[[:upper:]]*\\'"))
+    (sort candidates
+          (lambda (s1 s2)
+            (and (string-match-p re s2)
+                 (not (string-match-p re s1)))))))
+
 (use-package company
   :after lsp-mode
   :bind
   (:map company-active-map
+		("RET" . company-complete)
 		("C-l" . yas-next-field-or-maybe-expand)
-		("RET" . company-complete))
+		("<tab>" . aa/company-tab)
+		("TAB" . aa/company-tab))
   :config
   (global-company-mode)
-  (setq company-idle-delay 0.2)
+  (push 'aa/company-sort company-transformers)
+  (setq company-idle-delay 0)
+  (setq company-echo-delay 0)
   (setq company-minimum-prefix-length 1)
+  (setq company-tooltip-limit 15)
+  (setq company-dabbrev-downcase nil)
+  (setq-default company-backends
+		'((company-capf
+		   :with
+		   company-yasnippet
+		   company-files)))
   :hook (lsp-mode . company-mode))
+
+(use-package company-statistics
+  :ensure t
+  :after company
+  :init
+  (company-statistics-mode))
 
 (use-package company-box
   :hook (company-mode . company-box-mode)
   :config
-  (setq company-box-icons-alist 'company-box-icons-all-the-icons))
-
-(use-package rainbow-delimiters
-  :hook (prog-mode . rainbow-delimiters-mode))
+  (setq
+   company-box-backends-colors nil
+   company-box-icons-alist 'company-box-icons-all-the-icons))
 
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode))
 
 (with-eval-after-load 'flycheck
+  (setq flycheck-phpcs-standard "PSR2")
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
 ;; Set the default column width to 80. The default in emacs is 70 that is too small for me
@@ -93,3 +120,21 @@
 (use-package browse-at-remote :defer t)
 
 (use-package string-inflection :defer t)
+
+(defun aa/global-tab ()
+    (interactive)
+      (if (or (not yas/minor-mode)
+              (null (do-yas-expand)))
+		  (indent-for-tab-command)))
+
+(define-minor-mode aa-tab-mode
+  "Runs fmt on file save when this mode is turned on"
+  :lighter " aa-tab"
+  :global nil
+	(global-set-key (kbd "<tab>") 'aa/global-tab)
+	(global-set-key (kbd "TAB") 'aa/global-tab))
+
+(define-globalized-minor-mode global-aa-tab-mode aa-tab-mode
+  (lambda () (aa-tab-mode 1)))
+
+(global-aa-tab-mode)
