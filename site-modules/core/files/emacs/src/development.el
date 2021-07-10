@@ -67,6 +67,16 @@
 (with-eval-after-load 'flycheck
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
+;; Set the default column width to 80. The default in emacs is 70 that is too small for me
+(setq-default fill-column 80)
+(setq-default display-fill-column-indicator-column 80)
+
+
+;; Set the default line number style to relative so when they are turned on I
+;; dont need to worry about that
+(setq display-line-numbers-type 'relative)
+(add-hook 'prog-mode-hook 'display-line-numbers-mode)
+
 (use-package magit
   :ensure t
   :init
