@@ -21,3 +21,11 @@ function ggpushpr() {
 		ggpush -o merge_request.merge_when_pipeline_succeeds -o merge_request.create -o merge_request.remove_source_branch -o merge_request.target="$1"
     fi
 }
+
+function gc() {
+    if [[ -f "$(git rev-parse --show-toplevel)/.git/COMMIT_EDITMSG" ]]; then
+        git commit -t "$(git rev-parse --show-toplevel)/.git/COMMIT_EDITMSG"
+    else
+        git commit -v
+    fi
+}
