@@ -1,9 +1,9 @@
 class core::zsh {
-
-  exec { 'git clone ohmyzsh':
-    creates => "${user_home}/.oh-my-zsh",
-    path    => '/usr/bin:/usr/sbin:/bin',
-    command => "git clone git://github.com/robbyrussell/oh-my-zsh.git ${user_home}/.oh-my-zsh",
+  vcsrepo { "${user_home}/.oh-my-zsh":
+    source   => 'git://github.com/robbyrussell/oh-my-zsh.git',
+    provider =>  'git',
+    user     => $user,
+    revision => 'master',
   }
 
   file { "${user_home}/.zshrc":
@@ -21,7 +21,7 @@ class core::zsh {
     ensure  => 'link',
     owner   => $user,
     target  => find_file('core/oh-my-zsh/custom'),
-    require => [Exec['git clone ohmyzsh']],
+    require => [Vcsrepo["${user_home}/.oh-my-zsh"]],
     force   => true,
   }
 
@@ -29,7 +29,7 @@ class core::zsh {
     ensure  => 'link',
     owner   => $user,
     target  => find_file('core/oh-my-zsh/lib'),
-    require => [Exec['git clone ohmyzsh']],
+    require => [Vcsrepo["${user_home}/.oh-my-zsh"]],
     force   => true,
   }
 
@@ -37,7 +37,7 @@ class core::zsh {
     ensure  => 'link',
     owner   => $user,
     target  => find_file('core/oh-my-zsh/custom.zsh'),
-    require => [Exec['git clone ohmyzsh']],
+    require => [Vcsrepo["${user_home}/.oh-my-zsh"]],
     force   => true,
   }
 
@@ -45,7 +45,7 @@ class core::zsh {
     ensure  => 'link',
     owner   => $user,
     target  => find_file('core/oh-my-zsh/plugins/notmuch'),
-    require => [Exec['git clone ohmyzsh']],
+    require => [Vcsrepo["${user_home}/.oh-my-zsh"]],
     force   => true,
   }
 
