@@ -10,3 +10,5 @@
   :ensure t
   :hook (json-mode . lsp-deferred)
   :mode "\\.json\\'")
+
+(use-package jsonnet-mode :ensure t)

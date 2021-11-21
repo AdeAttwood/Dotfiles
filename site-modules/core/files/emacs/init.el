@@ -54,7 +54,6 @@
 (load-file (expand-file-name "src/lang/json.el" user-emacs-directory))
 (load-file (expand-file-name "src/lang/web.el" user-emacs-directory))
 (load-file (expand-file-name "src/lang/go.el" user-emacs-directory))
-(load-file (expand-file-name "src/lang/cue.el" user-emacs-directory))
 (load-file (expand-file-name "src/lang/docker.el" user-emacs-directory))
 (load-file (expand-file-name "src/lang/shell.el" user-emacs-directory))
 (load-file (expand-file-name "src/lang/c.el" user-emacs-directory))
