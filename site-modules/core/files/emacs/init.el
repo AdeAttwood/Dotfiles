@@ -94,6 +94,7 @@
     ;; Org Mode
     "o"		'(evil-window-map :which-key "Org Mode")
     "oa"	'org-agenda
+    "oc"    'org-capture
     ;; Git
     "g"		'(:ignore t :which-key "Git")
     "gs"    'magit-status
