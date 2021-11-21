@@ -36,10 +36,10 @@ fshow() {
         shas=$(sed '1,2d;s/^[^a-z0-9]*//;/^$/d' <<< "$out" | awk '{print $1}')
         [ -z "$shas" ] && continue
         if [ "$k" = ctrl-d ]; then
-            git diff --color=always $shas | less -R
+            git diff --color=always $shas
         else
             for sha in $shas; do
-                git show --color=always $sha | less -R
+                git show --color=always $sha
             done
         fi
     done
