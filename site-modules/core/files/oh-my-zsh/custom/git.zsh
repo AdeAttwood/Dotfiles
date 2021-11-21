@@ -30,5 +30,24 @@ function grc() {
 	git commit -t "$(git rev-parse --show-toplevel)/.git/COMMIT_TEMPLATE"
 }
 
+function my-clone() {
+    local url="$1"
+    local re="^(https|git)(:\/\/|@)([^\/:]+)[\/:](.*?).git$"
+
+	if [[ -z "$url" ]]; then
+		echo "ERROR: Invalid url"
+		return
+	fi
+
+    if [[ $url =~ $re ]]; then
+        local protocol="${match[1]}"
+        local separator="${match[2]}"
+        local hostname="${match[3]}"
+        local repo="${match[4]}"
+
+        full_path=~s/$hostname/$repo
+
+        git clone $url ~s/$hostname/$repo
+        cd ~s/$hostname/$repo
     fi
 }
