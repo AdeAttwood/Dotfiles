@@ -45,6 +45,7 @@
 
 ;; Development configuration
 (load-file (expand-file-name "src/development.el" user-emacs-directory))
+(load-file (expand-file-name "src/zoekt.el" user-emacs-directory))
 (load-file (expand-file-name "src/lang/php.el" user-emacs-directory))
 (load-file (expand-file-name "src/lang/c-sharp.el" user-emacs-directory))
 (load-file (expand-file-name "src/lang/js-ts.el" user-emacs-directory))
