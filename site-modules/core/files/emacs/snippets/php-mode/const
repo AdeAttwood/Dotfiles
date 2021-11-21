@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: const
+# key: const
+# --
+const ${1:NAME$(upcase yas-text)} = '${1:$(string-inflection-underscore-function yas-text)}';
