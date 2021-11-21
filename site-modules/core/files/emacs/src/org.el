@@ -8,61 +8,43 @@
 
 (defun efs/org-mode-setup ()
   (org-indent-mode)
-  (variable-pitch-mode 1)
   (visual-line-mode 1))
-
-(defun efs/org-font-setup ()
-  ;; Set faces for heading levels
-  (dolist (face '((org-level-1 . 1.2)
-                  (org-level-2 . 1.1)
-                  (org-level-3 . 1.05)
-                  (org-level-4 . 1.0)
-                  (org-level-5 . 1.1)
-                  (org-level-6 . 1.1)
-                  (org-level-7 . 1.1)
-                  (org-level-8 . 1.1)))
-    (set-face-attribute (car face) nil :font "Lato" :weight 'regular :height (cdr face)))
-
-  ;; Ensure that anything that should be fixed-pitch in Org files appears that way
-  (set-face-attribute 'org-block nil    :foreground nil :inherit 'fixed-pitch)
-  (set-face-attribute 'org-table nil    :inherit 'fixed-pitch)
-  (set-face-attribute 'org-formula nil  :inherit 'fixed-pitch)
-  (set-face-attribute 'org-code nil     :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-table nil    :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-verbatim nil :inherit '(shadow fixed-pitch))
-  (set-face-attribute 'org-special-keyword nil :inherit '(font-lock-comment-face fixed-pitch))
-  (set-face-attribute 'org-meta-line nil :inherit '(font-lock-comment-face fixed-pitch))
-  (set-face-attribute 'org-checkbox nil  :inherit 'fixed-pitch)
-  (set-face-attribute 'line-number nil :inherit 'fixed-pitch)
-  (set-face-attribute 'line-number-current-line nil :inherit 'fixed-pitch))
 
 (use-package org
   :pin org
   :hook (org-mode . efs/org-mode-setup)
   :config
-  (efs/org-font-setup)
   (setq org-ellipsis " ▾")
 
-  (setq org-agenda-start-with-log-mode t)
-  (setq org-log-done 'time)
-  (setq org-log-into-drawer t)
+  ;; Don't fold headers when opening files I find it better to see all of the
+  ;; files and navigate between the headers
+  (setq org-startup-folded nil)
 
-  (setq org-agenda-files
-	'("~/Nextcloud/org/Todo.org"))
+  ;;(setq org-agenda-start-with-log-mode t)
+  ;;(setq org-log-done 'time)
+  (setq org-agenda-window-setup 'current-window) 
+
   (setq org-refile-targets '(("Archive.org" :maxlevel . 1)))
-  (setq org-agenda-files '("~/Nextcloud/org"))
+  (setq org-agenda-files '("~/Nextcloud/org/workbook"
+						   "~/Nextcloud/org/notes"
+						   "~/Nextcloud/org/wiki"))
   (setq org-directory "~/Nextcloud/org")
 
-  (require 'org-habit)
-  (add-to-list 'org-modules 'org-habit)
-  (setq org-habit-graph-column 60)
+  ;; Add notmuch link capture mainly for org-capture
+  (org-link-set-parameters "notmuch"
+			 :follow 'org-notmuch-open
+			 :store 'org-notmuch-store-link)
 
   ;; Define a kanban style set of stages for todo tasks
   (setq org-todo-keywords
 	'((sequence "TODO" "WAITING" "REVIEW" "|" "DONE" "ARCHIVED")))
 
-  ;; Save Org buffers after refiling!
-  (advice-add 'org-refile :after 'org-save-all-org-buffers)
+  (require 'org-id)
+
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((emacs-lisp . t)
+	 (shell . t)))
 
   ;; Configure custom agenda views
   (setq org-agenda-custom-commands
@@ -85,9 +67,30 @@
 		   (org-agenda-files org-agenda-files)))))))
 
   (setq org-capture-templates
-    `(("t" "Tasks / Projects")
-      ("tt" "Task" entry (file+olp "~/Nextcloud/org/Todo.org" "Tasks")
-           "* TODO %?\n  %U\n  %a\n  %i" :empty-lines 1))))
+		`(("t" "Task" entry (file aa/create-workbook-file) "* TODO %?\n  %U\n  %a\n  %i")
+		  ("c" "Task Clock In" entry (file aa/create-workbook-file) "* TODO %?\n  %U\n  %a\n  %i" :clock-in t :clock-resume t)
+		  ("n" "New Note" entry (file aa/create-notes-file) "* Content"))))
+
+(defun aa/create-notes-file ()
+  "Create an org file in ~/notes/."
+  (expand-file-name (format "%s-%s.org"
+							(format-time-string "%Y-%m-%d")
+							(string-trim (shell-command-to-string "uuidgen")))
+					"~/Nextcloud/org/notes/"))
+
+(defun aa/create-workbook-file ()
+  "Create an org file in ~/workbook/."
+  (expand-file-name (format "%s.org"
+							(format-time-string "%Y-%m"))
+					"~/Nextcloud/org/workbook/"))
+
+(defun workbook-current ()
+  "Create an org file in ~/notes/."
+  (interactive)
+  (find-file
+   (expand-file-name (format "%s.org"
+							 (format-time-string "%Y-%m"))
+					 "~/Nextcloud/org/workbook/")))
 
 (use-package org-bullets
   :after org
@@ -100,7 +103,7 @@
 
 (use-package evil-org
   :ensure t
-  :after org
+  :after evil-mode
   :hook (org-mode . (lambda () evil-org-mode))
   :config
   (require 'evil-org-agenda)
@@ -111,11 +114,3 @@
 (add-to-list 'org-structure-template-alist '("sh" . "src shell"))
 (add-to-list 'org-structure-template-alist '("el" . "src emacs-lisp"))
 (add-to-list 'org-structure-template-alist '("php" . "src php"))
-
-(defun efs/org-mode-visual-fill ()
-  (setq visual-fill-column-width 100
-        visual-fill-column-center-text t)
-  (visual-fill-column-mode 1))
-
-(use-package visual-fill-column
-  :hook (org-mode . efs/org-mode-visual-fill))
