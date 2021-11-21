@@ -126,7 +126,7 @@
     "pd"	'counsel-projectile-find-dir
     "pp"	'counsel-projectile-switch-project
     "pf"	'counsel-projectile-find-file
-    "pt"	'spacemacs/treemacs-project-toggle
+    "pt"	'neotree-projectile-action
 	"ps"    'projectile-run-vterm
     ;; Toggles
     "t"		'(:ignore t :which-key "Toggles")
