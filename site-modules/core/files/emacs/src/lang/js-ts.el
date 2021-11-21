@@ -56,4 +56,4 @@
   (add-hook 'typescript-tsx-mode-hook 'tree-sitter-hl-mode)
   (add-hook 'typescript-tsx-mode-hook 'lsp-deferred))
 
-(use-package prettier-js :commands prettier-js)
+(use-package vue-mode)
