@@ -22,10 +22,13 @@ function ggpushpr() {
     fi
 }
 
-function gc() {
-    if [[ -f "$(git rev-parse --show-toplevel)/.git/COMMIT_EDITMSG" ]]; then
-        git commit -t "$(git rev-parse --show-toplevel)/.git/COMMIT_EDITMSG"
-    else
-        git commit -v
+function grc() {
+    cat "$(git rev-parse --show-toplevel)/.git/COMMIT_EDITMSG" \
+		| grep -B 99999999 '# ------------------------ >8 ------------------------' \
+		> "$(git rev-parse --show-toplevel)/.git/COMMIT_TEMPLATE"
+
+	git commit -t "$(git rev-parse --show-toplevel)/.git/COMMIT_TEMPLATE"
+}
+
     fi
 }
