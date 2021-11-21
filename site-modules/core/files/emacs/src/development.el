@@ -94,6 +94,18 @@
   (setq flycheck-phpcs-standard "PSR2")
   (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
+;; Define local checkers so we can add next checkers per mode. LSP mode takes
+;; priority and we can define the next checker in the mode hooks. Each language
+;; will define there checkers if needed.
+;;
+;; Example usage for adding the php checker for php-mode
+;; (setq flycheck-local-checkers '((lsp . ((next-checkers . (php))))))
+(defvar-local flycheck-local-checkers nil)
+(defun +flycheck-checker-get(fn checker property)
+  (or (alist-get property (alist-get checker flycheck-local-checkers))
+	  (funcall fn checker property)))
+(advice-add 'flycheck-checker-get :around '+flycheck-checker-get)
+
 ;; Set the default column width to 80. The default in emacs is 70 that is too small for me
 (setq-default fill-column 80)
 (setq-default display-fill-column-indicator-column 80)
