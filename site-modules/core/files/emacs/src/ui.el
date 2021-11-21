@@ -6,11 +6,10 @@
 ;; licence that can be found in the LICENCE file or at
 ;; https://www.practically.io/copyright/
 
+(tooltip-mode -1)       ; Disable tooltips
+(menu-bar-mode -1)      ; Disable the menu bar
 (scroll-bar-mode -1)    ; Disable visible scrollbar
 (tool-bar-mode -1)      ; Disable the toolbar
-(tooltip-mode -1)       ; Disable tooltips
-(set-fringe-mode 10)    ; Give some breathing room
-(menu-bar-mode -1)      ; Disable the menu bar
 
 ;; Display the line column in the modeline not just the line number
 (column-number-mode)
