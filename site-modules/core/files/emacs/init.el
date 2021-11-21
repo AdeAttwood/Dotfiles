@@ -111,6 +111,10 @@
     "b"		'(:ignore t :which-key "Buffers")
     "bd"	'kill-this-buffer
     "bb"	'counsel-switch-buffer
+    ;; LSP actions
+    "l"		'(:ignore t :which-key "LSP")
+    "lr"	'lsp-workspace-restart
+	"la"    'lsp-execute-code-action
     ;; Projects
     "p"		'(:ignore t :which-key "Projects")
     "p SPC"	'counsel-projectile
