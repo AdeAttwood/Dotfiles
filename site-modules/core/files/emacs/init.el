@@ -30,6 +30,7 @@
 
 ;; Genral and main configuration
 (load-file (expand-file-name "src/general.el" user-emacs-directory))
+(load-file (expand-file-name "src/file-operations.el" user-emacs-directory))
 (load-file (expand-file-name "src/evil.el" user-emacs-directory))
 (load-file (expand-file-name "src/ivy.el" user-emacs-directory))
 (load-file (expand-file-name "src/projectile.el" user-emacs-directory))
