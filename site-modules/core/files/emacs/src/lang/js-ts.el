@@ -9,7 +9,8 @@
 (use-package js2-mode
   :mode "\\.m?js\\'"
   :interpreter "node"
-  :hook (js2-mode . lsp-deferred)
+  :hook ((js2-mode . tree-sitter-hl-mode)
+		 (js2-mode . lsp-deferred))
   :commands js2-line-break
   :config
   (setq js-chain-indent t
@@ -30,7 +31,8 @@
 (use-package rjsx-mode
   :mode
   (("components/.+\\.js$" . rjsx-mode))
-  :hook (rjsx-mode . lsp-deferred)
+  :hook ((rjsz-mode . tree-sitter-hl-mode)
+		 (rjsx-mode . lsp-deferred))
   :init
   (defun +javascript-jsx-file-p ()
     "Detect React or preact imports early in the file."
@@ -51,6 +53,7 @@
 (progn
   (define-derived-mode typescript-tsx-mode web-mode "TypeScript-tsx")
   (add-to-list 'auto-mode-alist '("\\.tsx\\'" . typescript-tsx-mode))
+  (add-hook 'typescript-tsx-mode-hook 'tree-sitter-hl-mode)
   (add-hook 'typescript-tsx-mode-hook 'lsp-deferred))
 
 (use-package prettier-js :commands prettier-js)

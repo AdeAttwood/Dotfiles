@@ -102,6 +102,9 @@
 (setq display-line-numbers-type 'relative)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
+(use-package tree-sitter :ensure t)
+(use-package tree-sitter-langs :ensure t)
+
 (use-package magit
   :ensure t
   :init
