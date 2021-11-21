@@ -55,6 +55,7 @@
 (load-file (expand-file-name "src/lang/cue.el" user-emacs-directory))
 (load-file (expand-file-name "src/lang/docker.el" user-emacs-directory))
 (load-file (expand-file-name "src/lang/shell.el" user-emacs-directory))
+(load-file (expand-file-name "src/lang/c.el" user-emacs-directory))
 
 (use-package general
   :config
