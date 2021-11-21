@@ -110,6 +110,7 @@
 (setq-default fill-column 80)
 (setq-default display-fill-column-indicator-column 80)
 
+(setq compilation-scroll-output 'first-error)
 
 ;; Set the default line number style to relative so when they are turned on I
 ;; dont need to worry about that
