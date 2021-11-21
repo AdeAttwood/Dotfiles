@@ -31,6 +31,7 @@
     (enable-theme 'doom-tomorrow-day)))
 
 (use-package base16-theme
+  :quelpa (base16-theme :fetcher github :repo "AdeAttwood/base16-emacs")
   :init
   ;; Fix terminal color theme for base16
   ;; See: https://github.com/belak/base16-emacs#terminal-colors
