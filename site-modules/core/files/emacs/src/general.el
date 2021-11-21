@@ -11,7 +11,10 @@
 (use-package no-littering)
 (setq auto-save-file-name-transforms
       `((".*" ,(no-littering-expand-var-file-name "auto-save/") t)))
-(setq inhibit-startup-message t)
+
+;; Disable .# lock files. Then sends all directory watch tasks crazy. It also
+;; make compiling applications fail when you have unsaved files
+(setq create-lockfiles nil)
 
 ;; Don't wrap lines
 (set-default 'truncate-lines t)
