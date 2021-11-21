@@ -42,14 +42,6 @@
               (null (do-yas-expand)))
 		  (company-complete-common-or-cycle)))
 
-(defun aa/company-sort (candidates)
-  (let (case-fold-search
-        (re "\\`[[:upper:]]*\\'"))
-    (sort candidates
-          (lambda (s1 s2)
-            (and (string-match-p re s2)
-                 (not (string-match-p re s1)))))))
-
 (use-package company
   :after lsp-mode
   :bind
@@ -60,7 +52,6 @@
 		("TAB" . aa/company-tab))
   :config
   (global-company-mode)
-  (push 'aa/company-sort company-transformers)
   (setq company-idle-delay 0)
   (setq company-echo-delay 0)
   (setq company-minimum-prefix-length 1)
@@ -72,12 +63,6 @@
 		   company-yasnippet
 		   company-files)))
   :hook (lsp-mode . company-mode))
-
-(use-package company-statistics
-  :ensure t
-  :after company
-  :init
-  (company-statistics-mode))
 
 (use-package company-box
   :hook (company-mode . company-box-mode)
