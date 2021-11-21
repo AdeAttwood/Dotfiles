@@ -101,6 +101,7 @@
     ;; Email
     "e"		'(:ignore t :which-key "Email")
     "ei"    'aa/notmuch-search-inbox
+    "eu"    'aa/notmuch-search-inbox-unread
     "es"	'counsel-notmuch
     "en"	'notmuch
     "ej"	'notmuch-jump-search
