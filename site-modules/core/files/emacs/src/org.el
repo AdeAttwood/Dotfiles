@@ -22,7 +22,11 @@
 
   ;;(setq org-agenda-start-with-log-mode t)
   ;;(setq org-log-done 'time)
-  (setq org-agenda-window-setup 'current-window) 
+  (setq org-agenda-window-setup 'current-window)
+
+  ;; Open file links in current window, rather than new ones
+  ;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/config.el#L632
+  (setf (alist-get 'file org-link-frame-setup) #'find-file)
 
   (setq org-refile-targets '(("Archive.org" :maxlevel . 1)))
   (setq org-agenda-files '("~/Nextcloud/org/workbook"
@@ -39,7 +43,9 @@
   (setq org-todo-keywords
 	'((sequence "TODO" "WAITING" "REVIEW" "|" "DONE" "ARCHIVED")))
 
+  (require 'org-protocol)
   (require 'org-id)
+  (require 'org-habit)
 
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -49,11 +55,16 @@
   ;; Configure custom agenda views
   (setq org-agenda-custom-commands
 	'(("d" "Dashboard"
-	   ((agenda "" ((org-deadline-warning-days 7 )))
+	   ((agenda "" ((org-deadline-warning-days 7)))
+		(todo "WAITING"
+		  ((org-agenda-overriding-header "Waiting on External")))
+		(todo "TODO"
+			  ((org-agenda-overriding-header "Scheduled")
+			   (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottimestamp))))
 	    (todo "TODO"
-		  ((org-agenda-overriding-header "Todo")))
-	    (todo "WAITING"
-		  ((org-agenda-overriding-header "Waiting on External")))))
+			  ((org-agenda-overriding-header "Backlog")
+			   (org-agenda-todo-list-sublevels nil)
+			   (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))))
 
 	  ("w" "Workflow Status"
 	   ((todo "WAITING"
@@ -67,9 +78,31 @@
 		   (org-agenda-files org-agenda-files)))))))
 
   (setq org-capture-templates
-		`(("t" "Task" entry (file aa/create-workbook-file) "* TODO %?\n  %U\n  %a\n  %i")
-		  ("c" "Task Clock In" entry (file aa/create-workbook-file) "* TODO %?\n  %U\n  %a\n  %i" :clock-in t :clock-resume t)
-		  ("n" "New Note" entry (file aa/create-notes-file) "* Content"))))
+		`(("t" "Task" entry (file aa/create-workbook-file) "\n\n*  TODO %?\n  %U\n  %a\n  %i\n\n")
+		  ("c" "Task Clock In" entry (file aa/create-workbook-file) "\n\n* TODO %?\n:LOGBOOK:\nCLOCK: %U\n:END:\n  %U\n  %a\n  %i\n\n")
+		  ("n" "New Note" entry (file aa/create-notes-file) "* Content")
+
+
+		  ("p" "Protocol" entry (file aa/create-workbook-file) "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+		  ("L" "Protocol Link" entry (file aa/create-workbook-file) "* TODO %? [[%:link][%:description]] \nCaptured On: %U"))))
+
+(defun org-wiki-search ()
+  "Search the whole wiki for a pattern"
+  (interactive)
+  (let ((default-directory "~/Nextcloud/org"))
+	(counsel-ag)))
+
+(defun org-wiki-search-title ()
+  "Search the though all of the wiki titles for a pattern"
+  (interactive)
+  (let ((default-directory "~/Nextcloud/org"))
+	(counsel-ag "title: ")))
+
+(defun org-wiki-search-heading ()
+  "Search the though all of the wiki headings for a pattern"
+  (interactive)
+  (let ((default-directory "~/Nextcloud/org"))
+	(counsel-ag "^\\* ")))
 
 (defun aa/create-notes-file ()
   "Create an org file in ~/notes/."
@@ -103,7 +136,7 @@
 
 (use-package evil-org
   :ensure t
-  :after evil-mode
+  :after org
   :hook (org-mode . (lambda () evil-org-mode))
   :config
   (require 'evil-org-agenda)
