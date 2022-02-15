@@ -38,12 +38,12 @@ if [[ ! -z "$(git diff --name-only --diff-filter=U)" ]]; then
 	exit 1
 fi
 
-if [[ "$MERGE_BRANCH" == "--abort" ]]; then
+if [[ "$MERGE_BRANCH" == "--abort" ]] || [[ "$MERGE_BRANCH" == "--skip" ]]; then
 	#
 	# If we are in a rebase state then we want to abort that to
 	#
 	if [[ -f "$(git rev-parse --show-toplevel)/.git/REBASE_HEAD" ]]; then
-		git rebase --abort
+		git rebase $MERGE_BRANCH
 	fi
 
 	if [[ -f "$(git rev-parse --show-toplevel)/.git/MERGE_PATCH" ]]; then
