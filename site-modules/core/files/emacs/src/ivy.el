@@ -23,10 +23,6 @@
   :config
   (ivy-mode 1))
 
-(use-package ivy-rich
-  :init
-  (ivy-rich-mode 1))
-
 (use-package counsel
   :bind (:map minibuffer-local-map
          ("C-r" . 'counsel-minibuffer-history))
