@@ -26,6 +26,17 @@ HELP
     exit 1;
 fi
 
+#
+# Test for merge conflicts can abort if any are found. Theses need to be
+# resolved before you can continue
+#
+if [[ ! -z "$(git diff --name-only --diff-filter=U)" ]]; then
+	echo "ERROR: Conflicts found, you need to resolve them before you continue your"
+	echo "merge-patch. Use 'git am --show-current-patch' to see the failed patch. Then you"
+	echo "can continue the merge-patch with 'git merge-patch --continue'"
+
+	exit 1
+fi
 
 if [[ "$MERGE_BRANCH" == "--abort" ]]; then
 	#
