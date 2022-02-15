@@ -76,3 +76,5 @@
               (edit-server-start)
             (add-hook 'after-init-hook
                       #'(lambda() (edit-server-start)))))
+
+(add-hook 'edit-server-start-hook 'markdown-mode)
