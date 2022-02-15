@@ -17,21 +17,35 @@
 ;; Set up the visible bell
 (setq visible-bell t)
 
-(setq-default a-font-size 120)
-(setq-default a-font "LigaFreeMono")
+(defun aa/set-font (a-font-size)
+  "Sets the font size for the whole of emacs setting the font faces
 
-(set-face-attribute 'default nil :font a-font :height a-font-size)
-(set-face-attribute 'fixed-pitch nil :font a-font :height a-font-size)
-(set-face-attribute 'variable-pitch nil :font a-font :height a-font-size :weight 'regular)
+This is better than the `C-x +` and C-x - because this is global to emacs not
+just in in the current buffer."
+  (interactive "nFont Size: ")
+  (setq a-font "Rec Mono Casual")
+  ;; (setq a-font "LigaFreeMono")
+
+  (set-face-attribute 'default nil :font a-font :height a-font-size)
+  (set-face-attribute 'fixed-pitch nil :font a-font :height a-font-size)
+  (set-face-attribute 'variable-pitch nil :font a-font :height a-font-size :weight 'regular))
+
+;; Set the default font size when emacs starts
+(aa/set-font 120)
 
 (use-package doom-themes
   :init
   (load-theme 'doom-tomorrow-day t t)
   (when (display-graphic-p)
-    (enable-theme 'doom-tomorrow-day)))
+    (enable-theme 'doom-tomorrow-day))
+  :config
+  (setq doom-themes-enable-bold t    
+		doom-themes-enable-italic t)
+  (doom-themes-neotree-config)
+  (doom-themes-org-config))
 
 (use-package base16-theme
-  :quelpa (base16-theme :fetcher github :repo "AdeAttwood/base16-emacs")
+  :quelpa (aa-base16-theme :fetcher github :repo "AdeAttwood/base16-emacs")
   :init
   ;; Fix terminal color theme for base16
   ;; See: https://github.com/belak/base16-emacs#terminal-colors
