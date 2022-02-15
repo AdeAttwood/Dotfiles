@@ -10,8 +10,14 @@
   editor = $ZSH/plugins/emacs/emacsclient.sh -nw
   autocrlf = input
 
+[merge]
+  conflictstyle = diff3
+
 [rerere]
   enabled = true
+
+[push]
+  default = current
 
 [pager]
   diff = delta --light
