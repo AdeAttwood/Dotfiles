@@ -73,7 +73,6 @@
    company-box-icons-alist 'company-box-icons-all-the-icons))
 
 (use-package flycheck
-  :ensure t
   :init (global-flycheck-mode)
   :config
   (setq flycheck-check-syntax-automatically '(mode-enabled save))
@@ -103,23 +102,20 @@
 (setq display-line-numbers-type 'relative)
 (add-hook 'prog-mode-hook 'display-line-numbers-mode)
 
-(use-package tree-sitter :ensure t)
-(use-package tree-sitter-langs :ensure t)
+(use-package tree-sitter)
+(use-package tree-sitter-langs)
 
 (use-package magit
-  :quelpa t
-  :ensure t
   :init
   ;; Force magit status to go full screen
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
 
 (use-package magit-todos
-  :quelpa t
   :init
   (magit-todos-mode 1)
   (global-hl-todo-mode))
 
-(use-package martparens
+(use-package smartparens
   :config
   (require 'smartparens-config)
   :init

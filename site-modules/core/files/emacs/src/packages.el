@@ -23,6 +23,7 @@
 (setq use-package-always-ensure t)
 
 (use-package quelpa)
+(setq use-package-ensure-function 'quelpa)
 
 (quelpa
  '(quelpa-use-package

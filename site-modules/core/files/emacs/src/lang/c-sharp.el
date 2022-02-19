@@ -7,5 +7,4 @@
 ;; https://www.practically.io/copyright/
 
 (use-package csharp-mode
-  :ensure t
   :hook (csharp-mode . lsp-deferred))

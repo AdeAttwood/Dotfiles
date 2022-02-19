@@ -7,7 +7,6 @@
 ;; https://www.practically.io/copyright/
 
 (use-package languagetool
-  :quelpa t
   :config
   (setq languagetool-default-language "en-GB")
   (setq languagetool-language-tool-jar

@@ -7,8 +7,7 @@
 ;; https://www.practically.io/copyright/
 
 (use-package json-mode
-  :ensure t
   :hook (json-mode . lsp-deferred)
   :mode "\\.json\\'")
 
-(use-package jsonnet-mode :ensure t)
+(use-package jsonnet-mode)

@@ -18,4 +18,4 @@
   :init
   (add-hook 'sh-mode-hook 'flymake-shellcheck-load))
 
-(use-package bats-mode :ensure t);
+(use-package bats-mode);

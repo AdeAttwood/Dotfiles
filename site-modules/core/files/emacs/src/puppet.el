@@ -7,6 +7,5 @@
 ;; https://www.practically.io/copyright/
 
 (use-package puppet-mode
-  :ensure t
   :defer
   :mode "\\.pp\\'")

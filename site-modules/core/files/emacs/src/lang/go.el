@@ -8,6 +8,5 @@
 
 (setenv "PATH" (concat (getenv "PATH") ":" (getenv "HOME") "/.local/share/go/bin"))
 (use-package go-mode
-  :ensure t
   :hook (go-mode . lsp-deferred)
   :mode "\\.go\\'")

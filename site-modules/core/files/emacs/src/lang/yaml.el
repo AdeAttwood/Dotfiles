@@ -7,6 +7,5 @@
 ;; https://www.practically.io/copyright/
 
 (use-package yaml-mode
-  :ensure t
   :hook (yaml-mode . lsp-deferred)
   :mode "\\.\\(yml\\|yaml\\)\\'")

@@ -42,7 +42,6 @@
   (setq ispell-dictionary "british"))
 
 (use-package yasnippet
-  :ensure t
   :config
   (yas-global-mode)
   :init
@@ -70,7 +69,6 @@
 (load custom-file 'noerror)
 
 (use-package edit-server
-  :ensure t
   :commands edit-server-start
   :init (if after-init-time
               (edit-server-start)

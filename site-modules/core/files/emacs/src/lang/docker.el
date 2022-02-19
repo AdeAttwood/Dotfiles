@@ -7,10 +7,8 @@
 ;; https://www.practically.io/copyright/
 
 (use-package docker
-  :ensure t
   :bind ("C-c d" . docker))
 
 (use-package dockerfile-mode
-  :ensure t
   :hook (dockerfile-mode . lsp-deferred)
   :mode "\\Dockerfile\\'")

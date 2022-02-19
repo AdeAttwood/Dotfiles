@@ -8,7 +8,6 @@
 
 
 (use-package php-mode
-  :ensure t
   :hook ((php-mode . (lambda() (setq flycheck-local-checkers '((lsp . ((next-checkers . (php))))))))
 		 (php-mode . lsp-deferred)
 		 (php-mode . tree-sitter-hl-mode))
@@ -16,4 +15,4 @@
   (("\\.php\\'"      . php-mode)
    ("\\.phpstub\\'"  . php-mode)))
 
-(use-package flycheck-psalm :ensure t)
+(use-package flycheck-psalm)
