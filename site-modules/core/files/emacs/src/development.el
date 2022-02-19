@@ -27,9 +27,6 @@
 (use-package lsp-ui
   :hook (lsp-mode . lsp-ui-mode))
 
-(use-package lsp-treemacs
-  :after lsp)
-
 (use-package lsp-ivy)
 
 (defun do-yas-expand ()
