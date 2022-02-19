@@ -36,6 +36,7 @@
 (load-file (expand-file-name "src/projectile.el" user-emacs-directory))
 (load-file (expand-file-name "src/treemacs.el" user-emacs-directory))
 (load-file (expand-file-name "src/term.el" user-emacs-directory))
+(load-file (expand-file-name "src/language-tool.el" user-emacs-directory))
 
 ;; Set up puppet for editing the dotfiles config
 (load-file (expand-file-name "src/puppet.el" user-emacs-directory))

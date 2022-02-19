@@ -26,6 +26,7 @@ node default {
   include core::emacs
   include core::terminal
   include core::mkcert
+  include core::language_tool
 
   #
   # Add the private puppet module for all the proprietary bits only if the
