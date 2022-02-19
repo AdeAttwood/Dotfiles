@@ -32,11 +32,16 @@
     (let ((yas/fallback-behavior 'return-nil))
       (yas/expand)))
 
-(defun aa/company-tab ()
-    (interactive)
-      (if (or (not yas/minor-mode)
-              (null (do-yas-expand)))
-		  (company-complete-common-or-cycle)))
+(defun aa/expand ()
+  (interactive)
+  (if (or (not yas/minor-mode)
+		  (null (do-yas-expand)))
+	  (if (string-empty-p (thing-at-point 'word 'no-properties))
+		  (indent-for-tab-command)
+		(if (fboundp 'emmet-expand-yas)
+			(emmet-expand-yas)))))
+
+(define-key evil-insert-state-map (kbd "C-e") 'aa/expand)
 
 (use-package company
   :after lsp-mode
@@ -44,8 +49,8 @@
   (:map company-active-map
 		("RET" . company-complete)
 		("C-l" . yas-next-field-or-maybe-expand)
-		("<tab>" . aa/company-tab)
-		("TAB" . aa/company-tab))
+		("<tab>" . aa/expand)
+		("TAB" . aa/expand))
   :config
   (setq company-idle-delay 0)
   (setq company-echo-delay 0)
@@ -125,18 +130,12 @@
 
 (use-package string-inflection :defer t)
 
-(defun aa/global-tab ()
-    (interactive)
-      (if (or (not yas/minor-mode)
-              (null (do-yas-expand)))
-		  (indent-for-tab-command)))
-
 (define-minor-mode aa-tab-mode
-  "Runs fmt on file save when this mode is turned on"
+  "Tab mode by me"
   :lighter " aa-tab"
   :global nil
-	(global-set-key (kbd "<tab>") 'aa/global-tab)
-	(global-set-key (kbd "TAB") 'aa/global-tab))
+	(global-set-key (kbd "<tab>") 'aa/expand)
+	(global-set-key (kbd "TAB") 'aa/expand))
 
 (define-globalized-minor-mode global-aa-tab-mode aa-tab-mode
   (lambda () (aa-tab-mode 1)))
