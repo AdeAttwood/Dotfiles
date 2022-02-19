@@ -14,13 +14,12 @@
   :config
   (setq-default
    lsp-intelephense-completion-trigger-parameter-hints nil
+   lsp-clients-clangd-args '("--clang-tidy" "--header-insertion-decorators=0")
    lsp-auto-guess-root t
    lsp-headerline-breadcrumb-enable nil
    lsp-enable-file-watchers nil
    lsp-keep-workspace-alive nil
-   lsp-ui-doc-position 'top
-   lsp-modeline-diagnostics-scope :project
-   lsp-completion-provider :none))
+   lsp-modeline-diagnostics-scope :project))
 
 (advice-add 'lsp :before (lambda (&rest _args) (eval '(setf (lsp-session-server-id->folders (lsp-session)) (ht)))))
 
@@ -48,17 +47,17 @@
 		("<tab>" . aa/company-tab)
 		("TAB" . aa/company-tab))
   :config
-  (global-company-mode)
   (setq company-idle-delay 0)
   (setq company-echo-delay 0)
   (setq company-minimum-prefix-length 1)
   (setq company-tooltip-limit 15)
-  (setq company-dabbrev-downcase nil)
-  (setq-default company-backends
-		'((company-capf
-		   :with
-		   company-yasnippet
-		   company-files)))
+  ;; (setq company-dabbrev-downcase nil)
+  ;; (setq-default company-backends
+  ;; 		'((company-capf
+  ;; 		   :with
+  ;; 		   company-yasnippet
+  ;; 		   company-files)))
+  (global-company-mode)
   :hook (lsp-mode . company-mode))
 
 (use-package company-box
@@ -70,11 +69,11 @@
 
 (use-package flycheck
   :ensure t
-  :init (global-flycheck-mode))
-
-(with-eval-after-load 'flycheck
+  :init (global-flycheck-mode)
+  :config
+  (setq flycheck-check-syntax-automatically '(mode-enabled save))
   (setq flycheck-phpcs-standard "PSR2")
-  (setq-default flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
+  (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc)))
 
 ;; Define local checkers so we can add next checkers per mode. LSP mode takes
 ;; priority and we can define the next checker in the mode hooks. Each language
@@ -103,12 +102,19 @@
 (use-package tree-sitter-langs :ensure t)
 
 (use-package magit
+  :quelpa t
   :ensure t
   :init
   ;; Force magit status to go full screen
   (setq magit-display-buffer-function #'magit-display-buffer-fullframe-status-v1))
 
-(use-package smartparens
+(use-package magit-todos
+  :quelpa t
+  :init
+  (magit-todos-mode 1)
+  (global-hl-todo-mode))
+
+(use-package martparens
   :config
   (require 'smartparens-config)
   :init
@@ -136,3 +142,15 @@
   (lambda () (aa-tab-mode 1)))
 
 (global-aa-tab-mode)
+
+;; https://people.gnome.org/~federico/blog/compilation-notifications-in-emacs.html
+(setq compilation-finish-functions
+      (append compilation-finish-functions
+          '(fmq-compilation-finish)))
+
+(defun fmq-compilation-finish (buffer status)
+  (call-process "notify-send" nil nil nil
+        "-t" "30000" ;; Display notification for 30 seconds
+        "-i" "emacs"
+        "Compilation finished in Emacs"
+        status))
