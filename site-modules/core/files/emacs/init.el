@@ -33,7 +33,6 @@
 (load-file (expand-file-name "src/file-operations.el" user-emacs-directory))
 (load-file (expand-file-name "src/evil.el" user-emacs-directory))
 (load-file (expand-file-name "src/ivy.el" user-emacs-directory))
-(load-file (expand-file-name "src/projectile.el" user-emacs-directory))
 (load-file (expand-file-name "src/treemacs.el" user-emacs-directory))
 (load-file (expand-file-name "src/term.el" user-emacs-directory))
 (load-file (expand-file-name "src/language-tool.el" user-emacs-directory))
@@ -62,6 +61,10 @@
 (load-file (expand-file-name "src/lang/shell.el" user-emacs-directory))
 (load-file (expand-file-name "src/lang/c.el" user-emacs-directory))
 
+;; Load the projectile module last so we can override compilation errors regexp
+;; without other modules affecting it after
+(load-file (expand-file-name "src/projectile.el" user-emacs-directory))
+
 (use-package general
   :config
   (general-create-definer efs/leader-keys
@@ -74,6 +77,7 @@
     "/"		'(counsel-projectile-ag :which-key "Search Project")
     "TAB"	'(evil-switch-to-windows-last-buffer :which-key "Last Buffer")
     "SPC"	'(counsel-M-x :which-key "M-x")
+	"a"     '(projectile-toggle-between-implementation-and-test :which-key "Toggle test and implementation")
     ";"		'(evil-commentary-line :which-key "Comment")
 	;; Docker
     "d"		'(:ignore t :which-key "Docker")
