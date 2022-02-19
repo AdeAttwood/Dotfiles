@@ -16,3 +16,4 @@ alias k=kubectl
 alias kube-get-url="kubectl cluster-info | grep 'Kubernetes master' | awk '/http/ {print \$NF}'"
 alias kube-get-cert="kubectl get secret \`kubectl get secrets | grep default-token | cut -d \" \" -f1\` -o jsonpath=\"{['data']['ca\.crt']}\" | base64 --decode"
 alias kube-get-token="kubectl get secret \`kubectl get secrets | grep default-token | cut -d \" \" -f1\` -o jsonpath=\"{['data']['token']}\" | base64 --decode"
+alias kube-context="kubectl config set-context --current"
