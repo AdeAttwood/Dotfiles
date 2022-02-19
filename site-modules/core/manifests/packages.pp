@@ -33,10 +33,10 @@ class core::packages {
   }
 
   exec { 'Link catbat to bat':
-    command => 'ln -s /usr/bin/batcat /usr/bin/bat',
-    onlyif  => 'test -e /usr/bin/batcat',
-    creates => '/usr/bin/bat',
-    path    => '/bin:/usr/bin',
+    command  => 'ln -s /usr/bin/batcat /usr/bin/bat',
+    onlyif   => 'test -e /usr/bin/batcat',
+    creates  => '/usr/bin/bat',
+    path     => '/bin:/usr/bin',
     provider => 'shell',
   }
 
