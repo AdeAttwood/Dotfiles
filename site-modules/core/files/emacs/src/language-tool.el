@@ -7,7 +7,9 @@
 ;; https://www.practically.io/copyright/
 
 (use-package languagetool
+  :commands (languagetool-check languagetool-server-start)
+  :init
+  (setq languagetool-correction-language "en-GB")
   :config
-  (setq languagetool-default-language "en-GB")
-  (setq languagetool-language-tool-jar
-		"/.local/share/LanguageTool/LanguageTool-5.6/languagetool-commandline.jar"))
+  (setq languagetool-server-command "~/.local/share/LanguageTool/LanguageTool-5.6/languagetool-server.jar")
+  (setq languagetool-console-command "~/.local/share/LanguageTool/LanguageTool-5.6/languagetool-commandline.jar"))
