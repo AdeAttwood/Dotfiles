@@ -130,8 +130,8 @@
   "Tab mode by me"
   :lighter " aa-tab"
   :global nil
-	(global-set-key (kbd "<tab>") 'aa/expand)
-	(global-set-key (kbd "TAB") 'aa/expand))
+	(define-key prog-mode-map (kbd "<tab>") 'aa/expand)
+	(define-key prog-mode-map (kbd "TAB") 'aa/expand))
 
 (define-globalized-minor-mode global-aa-tab-mode aa-tab-mode
   (lambda () (aa-tab-mode 1)))
