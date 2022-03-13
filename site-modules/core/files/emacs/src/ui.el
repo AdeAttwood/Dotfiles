@@ -33,17 +33,6 @@ just in in the current buffer."
 ;; Set the default font size when emacs starts
 (aa/set-font 120)
 
-(use-package doom-themes
-  :init
-  (load-theme 'doom-tomorrow-day t t)
-  (when (display-graphic-p)
-    (enable-theme 'doom-tomorrow-day))
-  :config
-  (setq doom-themes-enable-bold t    
-		doom-themes-enable-italic t)
-  (doom-themes-neotree-config)
-  (doom-themes-org-config))
-
 (use-package base16-theme
   :quelpa (aa-base16-theme :fetcher github :repo "AdeAttwood/base16-emacs")
   :init
@@ -53,8 +42,7 @@ just in in the current buffer."
   (setq base16-theme-256-color-source 'base16-shell)
   (setq base16-distinct-fringe-background nil)
   (load-theme 'base16-tomorrow t t)
-  (unless (display-graphic-p)
-    (enable-theme 'base16-tomorrow)))
+  (enable-theme 'base16-tomorrow))
 
 (use-package all-the-icons)
 
