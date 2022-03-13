@@ -5,131 +5,97 @@
 ;; Use of this source is governed by a BSD-style
 ;; licence that can be found in the LICENCE file or at
 ;; https://www.practically.io/copyright/
+;;
+;;; Commentary:
+;; 
+;;; Code:
 
-(defun fmt--goto-line (line)
-  "Move cursor to line LINE."
-  (goto-char (point-min))
-    (forward-line (1- line)))
+;; Ensure the reformatter package is installed
+(quelpa '(reformatter :fetcher git :url "https://github.com/purcell/emacs-reformatter"))
+(require 'reformatter)
+(require 'projectile)
 
-(defcustom fmt-show-errors 'buffer
-    "Where to display prettier error output.
-It can either be displayed in its own buffer, in the echo area, or not at all.
-Please note that Emacs outputs to the echo area when writing
-files and will overwrite prettier's echo output if used from inside
-a `before-save-hook'."
-    :type '(choice
-            (const :tag "Own buffer" buffer)
-            (const :tag "Echo area" echo)
-            (const :tag "None" nil))
-      :group 'fmt)
+(defun fmt--find-prettier ()
+  "Find the 'prittier' executable.
+This will be found from the project node_modules with a fall back to the
+globally installed package"
+  (let ((project-prittier (concat (projectile-project-root) "node_modules/.bin/prettier")))
+	(message project-prittier)
+	(if (file-exists-p project-prittier)
+		project-prittier
+	  "prettier")))
 
-(defun fmt--apply-rcs-patch (patch-buffer)
-  "Apply an RCS-formatted diff from PATCH-BUFFER to the current buffer."
-  (let ((target-buffer (current-buffer))
-        ;; Relative offset between buffer line numbers and line numbers
-        ;; in patch.
-        ;;
-        ;; Line numbers in the patch are based on the source file, so
-        ;; we have to keep an offset when making changes to the
-        ;; buffer.
-        ;;
-        ;; Appending lines decrements the offset (possibly making it
-        ;; negative), deleting lines increments it. This order
-        ;; simplifies the forward-line invocations.
-        (line-offset 0))
-    (save-excursion
-      (with-current-buffer patch-buffer
-        (goto-char (point-min))
-        (while (not (eobp))
-          (unless (looking-at "^\\([ad]\\)\\([0-9]+\\) \\([0-9]+\\)")
-            (error "Invalid rcs patch or internal error in fmt--apply-rcs-patch"))
-          (forward-line)
-          (let ((action (match-string 1))
-                (from (string-to-number (match-string 2)))
-                (len  (string-to-number (match-string 3))))
-            (cond
-             ((equal action "a")
-              (let ((start (point)))
-                (forward-line len)
-                (let ((text (buffer-substring start (point))))
-                  (with-current-buffer target-buffer
-                    (setq line-offset (- line-offset len))
-                    (goto-char (point-min))
-                    (forward-line (- from len line-offset))
-                    (insert text)))))
-             ((equal action "d")
-              (with-current-buffer target-buffer
-                (fmt--goto-line (- from line-offset))
-                (setq line-offset (+ line-offset len))
-                (let ((beg (point)))
-                  (forward-line len)
-                  (delete-region (point) beg))))
-             (t
-              (error "Invalid rcs patch or internal error in fmt--apply-rcs-patch")))))))))
+(defun fmt--find-phpcbf ()
+  "Find the phpcbf executable.
+It will look first in the locally installed version in your vendor folder, if
+that cant be fond then it will try and use the globally installed executable"
+  (let ((project-prittier (concat (projectile-project-root) "vendor/bin/phpcbf")))
+	(message project-prittier)
+	(if (file-exists-p project-prittier)
+		project-prittier
+	  "phpcbf")))
 
-(defun fmt--process-errors (filename errorfile errbuf)
-  "Process errors for FILENAME, using an ERRORFILE and display the output in ERRBUF."
-  (with-current-buffer errbuf
-    (if (eq fmt-show-errors 'echo)
-        (progn
-          (message "%s" (buffer-string))
-          (fmt--kill-error-buffer errbuf))
-      (insert-file-contents errorfile nil nil nil)
-      ;; Convert the prettier stderr to something understood by the compilation mode.
-      (goto-char (point-min))
-      (insert "fmt errors:\n")
-      (while (search-forward-regexp "^stdin" nil t)
-        (replace-match (file-name-nondirectory filename)))
-      (compilation-mode)
-      (display-buffer errbuf))))
+(defun fmt--find-php-ruleset ()
+  "Find the phpcs ruleset for the current project.
+If there is a 'ruleset.xml' file in your project root that will be used, if not
+then the 'psr2' ruleset will be used"
+  (let ((project-prittier (concat (projectile-project-root) "ruleset.xml")))
+	(message project-prittier)
+	(if (file-exists-p project-prittier)
+		project-prittier
+	  "psr2")))
 
-(defun fmt--kill-error-buffer (errbuf)
-  "Kill buffer ERRBUF."
-  (let ((win (get-buffer-window errbuf)))
-    (if win
-        (quit-window t win)
-      (with-current-buffer errbuf
-        (erase-buffer))
-      (kill-buffer errbuf))))
+(reformatter-define prettier-fmt
+  :program (fmt--find-prettier)
+  :args (list "--stdin-filepath" (buffer-file-name))
+  :group 'fmt
+  :lighter " PrettierFMT")
+
+(reformatter-define phpcbf-fmt
+  :program (fmt--find-phpcbf)
+  :args (list (format "--standard=%s" (fmt--find-php-ruleset)) "-")
+  :group 'fmt
+  :exit-code-success-p (lambda (number) (= 1 number))
+  :lighter " PhpCbfFMT")
+
+(reformatter-define clang-fmt
+  :program "clang-format"
+  :args (list "--assume-filename" (buffer-file-name))
+  :group 'fmt
+  :lighter " ClangFMT")
+
+;; Define our own jsonnet formatter. This is way faster then the
+;; 'jsonnet-reformat-buffer command that comes with jsonnet-mode
+(reformatter-define jsonnet-fmt
+  :program "jsonnetfmt"
+  :args (list "-")
+  :group 'fmt
+  :lighter " JsonnetFMT")
+
+;; Set the gofmt command to be goimports we can use the built in functions in
+;; go-mode they work just fine
+(setq gofmt-command "goimports")
 
 (defun fmt-buffer ()
-   "Format the current buffer according to the fmt tool."
-   (interactive)
-   (let* ((ext (file-name-extension buffer-file-name t))
-          (bufferfile (make-temp-file "fmt" nil ext))
-          (outputfile (make-temp-file "fmt" nil ext))
-          (errorfile (make-temp-file "fmt" nil ext))
-          (errbuf (if fmt-show-errors (get-buffer-create "*fmt errors*")))
-          (patchbuf (get-buffer-create "*fmt patch*"))
-          (coding-system-for-read 'utf-8)
-          (coding-system-for-write 'utf-8))
-     (unwind-protect
-         (save-restriction
-           (widen)
-           (write-region nil nil bufferfile)
-           (if errbuf
-               (with-current-buffer errbuf
-                 (setq buffer-read-only nil)
-                 (erase-buffer)))
-           (with-current-buffer patchbuf
-             (erase-buffer))
-           (if (zerop (apply 'call-process "fmtcli" bufferfile (list (list :file outputfile) errorfile) nil (list "-input" bufferfile "-formatting_file" buffer-file-name)))
-               (progn
-                 (call-process-region (point-min) (point-max) "diff" nil patchbuf nil "-n" "--strip-trailing-cr" "-"
-                                      outputfile)
-                 (fmt--apply-rcs-patch patchbuf)
-                 (if errbuf (fmt--kill-error-buffer errbuf)))
-             (message "Could not apply fmt")
-             (if errbuf
-                 (fmt--process-errors (buffer-file-name) errorfile errbuf))))
-       (kill-buffer patchbuf)
-       (delete-file errorfile)
-       (delete-file bufferfile)
-       (delete-file outputfile))))
+  "Format the current buffer."
+  (interactive)
+  (cond
+   ((eq major-mode 'c++-mode)            (clang-fmt))
+   ((eq major-mode 'go-mode)             (gofmt))
+   ((eq major-mode 'js2-mode)            (prettier-fmt))
+   ((eq major-mode 'jsonnet-mode)        (jsonnet-fmt))
+   ((eq major-mode 'markdown-mode)       (prettier-fmt))
+   ((eq major-mode 'php-mode)            (phpcbf-fmt))
+   ((eq major-mode 'typescript-mode)     (prettier-fmt))
+   ((eq major-mode 'css-mode)            (prettier-fmt))
+   ((eq major-mode 'scss-mode)           (prettier-fmt))
+   ((eq major-mode 'typescript-tsx-mode) (prettier-fmt))
+   ((eq major-mode 'yaml-mode)           (prettier-fmt))
+   ((eq 1 1)                             (message "No formatter found"))))
 
 ;;;###autoload
 (define-minor-mode fmt-mode
-  "Runs fmt on file save when this mode is turned on"
+  "Run fmt on file save when this mode is turned on."
   :lighter " fmt"
   :global nil
   (if fmt-mode
@@ -138,3 +104,7 @@ a `before-save-hook'."
 
 (define-globalized-minor-mode global-fmt-mode fmt-mode
   (lambda () (fmt-mode 1)))
+
+(provide 'format)
+;;; format.el ends here
+
