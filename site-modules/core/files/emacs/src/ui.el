@@ -41,8 +41,8 @@ just in in the current buffer."
   ;; See: https://github.com/belak/base16-emacs/issues/73#issuecomment-721942335
   (setq base16-theme-256-color-source 'base16-shell)
   (setq base16-distinct-fringe-background nil)
-  (load-theme 'base16-tomorrow t t)
-  (enable-theme 'base16-tomorrow))
+  (load-theme 'base16-tomorrow-night t t)
+  (enable-theme 'base16-tomorrow-night))
 
 (use-package all-the-icons)
 

@@ -27,10 +27,12 @@
   ;; spawn another if want one.
   (setq vterm-kill-buffer-on-exit t))
 
+;; TODO(ade): Add the face into the base16 theme fork
 (use-package auto-dim-other-buffers
   :config (auto-dim-other-buffers-mode)
   :custom-face
-    (auto-dim-other-buffers-face ((t (:background "#e0e0e0")))))
+    ;;(auto-dim-other-buffers-face ((t (:background "#e0e0e0"))))) ;; For light theme
+    (auto-dim-other-buffers-face ((t (:background "#282828"))))) ;; For dark theme
 
 (unless (display-graphic-p)
   (use-package tmux-pane
