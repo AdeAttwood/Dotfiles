@@ -27,7 +27,7 @@ COMPLETION_WAITING_DOTS="true"
 # More plug-ins are loaded in ~/.oh-my-zsh/custom/lib/misc.zsh file so we dint
 # have to define all of the custom installed plug ins here.
 #
-plugins=(git nvim extract)
+plugins=(git extract)
 
 #
 # map ecs to caps lock
