@@ -139,13 +139,17 @@
 (global-aa-tab-mode)
 
 ;; https://people.gnome.org/~federico/blog/compilation-notifications-in-emacs.html
+;; (setq compilation-finish-functions
+;;       (append compilation-finish-functions
+;;           '(fmq-compilation-finish)))
+
 (setq compilation-finish-functions
-      (append compilation-finish-functions
-          '(fmq-compilation-finish)))
+          '(fmq-compilation-finish))
 
 (defun fmq-compilation-finish (buffer status)
+  (print status)
   (call-process "notify-send" nil nil nil
         "-t" "30000" ;; Display notification for 30 seconds
-        "-i" "emacs"
+        "-i" (if (string-match "^finished" status) "dialog-ok" "dialog-no")
         "Compilation finished in Emacs"
         status))
