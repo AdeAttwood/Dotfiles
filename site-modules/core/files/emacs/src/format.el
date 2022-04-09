@@ -81,15 +81,16 @@ then the 'psr2' ruleset will be used"
   (interactive)
   (cond
    ((eq major-mode 'c++-mode)            (clang-fmt))
+   ((eq major-mode 'css-mode)            (prettier-fmt))
    ((eq major-mode 'go-mode)             (gofmt))
    ((eq major-mode 'js2-mode)            (prettier-fmt))
    ((eq major-mode 'jsonnet-mode)        (jsonnet-fmt))
    ((eq major-mode 'markdown-mode)       (prettier-fmt))
    ((eq major-mode 'php-mode)            (phpcbf-fmt))
-   ((eq major-mode 'typescript-mode)     (prettier-fmt))
-   ((eq major-mode 'css-mode)            (prettier-fmt))
    ((eq major-mode 'scss-mode)           (prettier-fmt))
+   ((eq major-mode 'typescript-mode)     (prettier-fmt))
    ((eq major-mode 'typescript-tsx-mode) (prettier-fmt))
+   ((eq major-mode 'web-mode)            (prettier-fmt))
    ((eq major-mode 'yaml-mode)           (prettier-fmt))
    ((eq 1 1)                             (message "No formatter found"))))
 
