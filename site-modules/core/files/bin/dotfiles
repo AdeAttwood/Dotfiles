@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+#
+# Cli app for managing files with puppet
+# see https://github.com/adeattwood/dotfiles
+#
+# Author:  Ade Attwood <code@adeattwood.co.uk>
+# Version: 0.0.2
+# Updated: 2018-07-16
+#
+
+SCRIPT="$(realpath "$(readlink -f "$0")")";
+DOTFILES_DIR=${SCRIPT%%site-modules/core/files/bin/dotfiles*}
+
+case $1 in
+    apply)
+        cd "$DOTFILES_DIR"
+        bolt module install
+        bolt apply manifests/root.pp --targets localhost --run-as root --sudo-password-prompt
+        bolt apply manifests/workstation.pp --targets localhost
+        exit 0;
+        ;;
+    apply-root)
+        cd "$DOTFILES_DIR"
+        bolt apply manifests/root.pp --targets localhost --run-as root --sudo-password-prompt
+        exit 0;
+        ;;
+    apply-user)
+        cd "$DOTFILES_DIR"
+        bolt apply manifests/workstation.pp --targets localhost
+        exit 0;
+    ;;
+esac
+
+cat << HELP
+    ____        __  _____ __         
+   / __ \____  / /_/ __(_) /__  _____
+  / / / / __ \/ __/ /_/ / / _ \/ ___/
+ / /_/ / /_/ / /_/ __/ / /  __(__  ) 
+/_____/\____/\__/_/ /_/_/\___/____/  
+                                     
+Usage: dotfiles <command>
+
+Author: Ade Attwood <code@adeattwood.co.uk>
+
+Commands:
+    apply       Applies a puppet configuration with the dotfiles config and facts
+    apply-root  Applies the root puppet manifestes
+    apply-user  Applies the user puppet manifestes
+
+Examples:
+
+Apply all of the puppet config
+$ dotfiles apply
+
+HELP
