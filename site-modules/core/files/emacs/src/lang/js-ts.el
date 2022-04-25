@@ -31,7 +31,7 @@
 (use-package rjsx-mode
   :mode
   (("components/.+\\.js$" . rjsx-mode))
-  :hook ((rjsz-mode . tree-sitter-hl-mode)
+  :hook ((rjsx-mode . tree-sitter-hl-mode)
 		 (rjsx-mode . lsp-deferred))
   :init
   (defun +javascript-jsx-file-p ()
