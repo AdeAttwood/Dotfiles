@@ -22,7 +22,6 @@ node default {
   include core::ssh
   include core::tmux
   include core::fonts
-  include core::vscode
   include core::emacs
   include core::terminal
   include core::mkcert
