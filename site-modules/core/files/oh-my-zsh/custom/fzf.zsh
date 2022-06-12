@@ -10,8 +10,7 @@
 # Edit commands with file previews using `fd` to search files to exclude files
 # to improve performance
 #
-alias fe="e \"\$(FZF_DEFAULT_COMMAND=\"fd -t f\" fzf --layout=reverse --preview 'bat --style=numbers ---color=always {}')\""
-alias fte="te \"\$(FZF_DEFAULT_COMMAND=\"fd -t f\" fzf --layout=reverse --preview 'bat --style=numbers ---color=always {}')\""
+alias fe="vim \"\$(FZF_DEFAULT_COMMAND=\"fd -t f\" fzf --layout=reverse --preview 'bat --style=numbers ---color=always {}')\""
 
 #
 # cd in to a porject directory

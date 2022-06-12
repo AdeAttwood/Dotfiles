@@ -84,7 +84,7 @@ fi
 #
 source $ZSH/oh-my-zsh.sh
 
-export EDITOR="emacsclient -nw"
+export EDITOR="vim"
 
 #
 # Import local alases if the file exists
