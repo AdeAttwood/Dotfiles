@@ -1,6 +1,6 @@
 class core::zsh {
   vcsrepo { "${user_home}/.oh-my-zsh":
-    source   => 'git://github.com/robbyrussell/oh-my-zsh.git',
+    source   => 'https://github.com/robbyrussell/oh-my-zsh.git',
     provider =>  'git',
     user     => $user,
     revision => 'master',
@@ -50,13 +50,13 @@ class core::zsh {
   }
 
   vcsrepo { "${user_home}/.oh-my-zsh/custom/plugins/zsh-autosuggestions":
-    source   => 'git://github.com/zsh-users/zsh-autosuggestions',
+    source   => 'https://github.com/zsh-users/zsh-autosuggestions',
     provider =>  'git',
     user     => $user,
   }
 
   vcsrepo { "${user_home}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting":
-    source   => 'git://github.com/zsh-users/zsh-syntax-highlighting.git',
+    source   => 'https://github.com/zsh-users/zsh-syntax-highlighting.git',
     provider => 'git',
     user     =>  $user,
   }

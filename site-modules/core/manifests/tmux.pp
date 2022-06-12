@@ -20,21 +20,21 @@ class core::tmux {
 
   vcsrepo { "${user_home}/.tmux/plugins/tmux-yank":
     ensure   => latest,
-    source   => 'git://github.com/tmux-plugins/tmux-yank.git',
+    source   => 'https://github.com/tmux-plugins/tmux-yank.git',
     provider => git,
     revision => 'master',
   }
 
   vcsrepo { "${user_home}/.tmux/plugins/tmux-open":
     ensure   => latest,
-    source   => 'git://github.com/tmux-plugins/tmux-open.git',
+    source   => 'https://github.com/tmux-plugins/tmux-open.git',
     provider => git,
     revision => 'master',
   }
 
   vcsrepo { "${user_home}/.tmux/plugins/tmux-copycat":
     ensure   => latest,
-    source   => 'git://github.com/tmux-plugins/tmux-copycat.git',
+    source   => 'https://github.com/tmux-plugins/tmux-copycat.git',
     provider => git,
     revision => 'master',
   }
