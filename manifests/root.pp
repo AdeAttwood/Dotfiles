@@ -16,7 +16,7 @@ node default {
   # Install docker and docker-compose
   #
   class { 'docker': version => 'latest' }
-  class { 'docker::compose': ensure  => present }
+  class { 'docker::compose': ensure  => present, version => '1.29.2' }
 
   #
   # Install vscode
