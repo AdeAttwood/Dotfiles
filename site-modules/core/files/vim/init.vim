@@ -70,7 +70,11 @@ au BufWritePost <buffer> lua require('lint').try_lint()
 
 inoremap jj <esc>:w<cr>
 nnoremap <leader><tab> <c-^>
-set wildignore+=*/vendor/*,*/node_modules/*,*/runtime/*,*/public_html/*,*/pack/*
+
+" Use the CommandTWildIgnore insted of the wildignore so I can still get
+" completion for :e in folders like vendor or node_modules but, they will be
+" ignored from command-t file searches.
+let g:CommandTWildIgnore="*/node_modules/*,*/vendor/*,*/runtime/*,*/public_html/*,*/pack/*"
 
 " Required for complietion with nvim-cmp
 set completeopt=menu,menuone,noselect
