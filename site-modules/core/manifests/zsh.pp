@@ -1,6 +1,6 @@
 class core::zsh {
   vcsrepo { "${user_home}/.oh-my-zsh":
-    source   => 'https://github.com/robbyrussell/oh-my-zsh.git',
+    source   => 'https://github.com/ohmyzsh/ohmyzsh.git',
     provider =>  'git',
     user     => $user,
     revision => 'master',
