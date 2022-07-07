@@ -37,7 +37,7 @@ node default {
   #
   # Neovim PPA to get a better version
   #
-  apt::ppa { 'ppa:neovim-ppa/stable': }
+  apt::ppa { 'ppa:neovim-ppa/unstable': }
 
 
   #
