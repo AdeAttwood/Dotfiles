@@ -43,5 +43,6 @@ lint.linters_by_ft = {
     javascript = {'eslint'},
     typescriptreact = {'eslint'},
     javascriptreact = {'eslint'},
+    lua = {'luacheck'},
 }
 
