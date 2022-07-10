@@ -10,6 +10,7 @@ cmp.setup({
     mapping = cmp.mapping.preset.insert({
         ['<C-j>'] = cmp.get_config().mapping['<Down>'],
         ['<C-k>'] = cmp.get_config().mapping['<Up>'],
+        ['<C-e>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping(function(_fallback)
             if cmp.visible() then
                 cmp.confirm({ select = true })
