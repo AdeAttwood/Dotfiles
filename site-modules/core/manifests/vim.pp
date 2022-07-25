@@ -41,30 +41,30 @@ class core::vim {
   }
 
   $plugins_start= {
-    'auto-pairs'     => { url => 'https://github.com/jiangmiao/auto-pairs.git' },
-    'base16-vim'     => { url => 'https://github.com/chriskempson/base16-vim.git' },
-    'cmp_luasnip' => { url => 'https://github.com/saadparwaiz1/cmp_luasnip.git' },
-    'cmp-buffer' => { url => 'https://github.com/hrsh7th/cmp-buffer.git', revision => 'main' },
-    'cmp-nvim-lsp' => { url => 'https://github.com/hrsh7th/cmp-nvim-lsp.git', revision => 'main' },
-    'cmp-path' => { url => 'https://github.com/hrsh7th/cmp-path.git', revision => 'main' },
-    'Comment.nvim' => { url => 'https://github.com/numToStr/Comment.nvim.git' },
-    'ferret'    => { url => 'https://github.com/wincent/ferret.git' },
-    'indent-line'    => { url => 'https://github.com/Yggdroot/indentLine.git' },
-    'LuaSnip' => { url => 'https://github.com/L3MON4D3/LuaSnip.git' },
-    'nvim-cmp' => { url => 'https://github.com/hrsh7th/nvim-cmp.git', revision => 'main' },
-    'nvim-lint' => { url => 'https://github.com/mfussenegger/nvim-lint.git' },
-    'nvim-lspconfig' => { url => 'https://github.com/neovim/nvim-lspconfig.git' },
-    'nvim-treesitter' => { url => 'https://github.com/nvim-treesitter/nvim-treesitter.git' },
-    'orgmode' => { url => 'https://github.com/nvim-orgmode/orgmode.git' },
-    'vim-puppet' => { url => 'https://github.com/rodjek/vim-puppet.git' },
-    'vim-surround' => { url => 'https://github.com/tpope/vim-surround.git' },
+    'auto-pairs'         => { url => 'https://github.com/jiangmiao/auto-pairs.git' },
+    'base16-vim'         => { url => 'https://github.com/chriskempson/base16-vim.git' },
+    'cmp_luasnip'        => { url => 'https://github.com/saadparwaiz1/cmp_luasnip.git' },
+    'cmp-buffer'         => { url => 'https://github.com/hrsh7th/cmp-buffer.git', revision => 'main' },
+    'cmp-nvim-lsp'       => { url => 'https://github.com/hrsh7th/cmp-nvim-lsp.git', revision => 'main' },
+    'cmp-path'           => { url => 'https://github.com/hrsh7th/cmp-path.git', revision => 'main' },
+    'Comment.nvim'       => { url => 'https://github.com/numToStr/Comment.nvim.git' },
+    'ferret'             => { url => 'https://github.com/wincent/ferret.git' },
+    'indent-line'        => { url => 'https://github.com/Yggdroot/indentLine.git' },
+    'LuaSnip'            => { url => 'https://github.com/L3MON4D3/LuaSnip.git' },
+    'nvim-cmp'           => { url => 'https://github.com/hrsh7th/nvim-cmp.git', revision => 'main' },
+    'nvim-lint'          => { url => 'https://github.com/mfussenegger/nvim-lint.git' },
+    'nvim-lspconfig'     => { url => 'https://github.com/neovim/nvim-lspconfig.git' },
+    'nvim-treesitter'    => { url => 'https://github.com/nvim-treesitter/nvim-treesitter.git' },
+    'orgmode'            => { url => 'https://github.com/nvim-orgmode/orgmode.git' },
+    'vim-puppet'         => { url => 'https://github.com/rodjek/vim-puppet.git' },
+    'vim-surround'       => { url => 'https://github.com/tpope/vim-surround.git' },
     'vim-tmux-navigator' => { url => 'https://github.com/christoomey/vim-tmux-navigator.git' },
   }
 
   create_resources(core::vim::plugin_start, $plugins_start)
 
   $plugins_opt= {
-    'command-t'    => { url => 'https://github.com/wincent/command-t.git' },
+    'command-t' => { url => 'https://github.com/wincent/command-t.git' },
   }
 
   create_resources(core::vim::plugin_opt, $plugins_opt)
