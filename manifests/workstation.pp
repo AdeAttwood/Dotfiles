@@ -25,6 +25,7 @@ node default {
   include core::emacs
   include core::terminal
   include core::mkcert
+  include core::delta
   include core::language_tool
 
   #
