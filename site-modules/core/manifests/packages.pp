@@ -4,26 +4,16 @@ class core::packages {
   #
   package { [
       'cmake',
-      'filezilla',
-      'firefox',
       'git',
-      'mutt',
       'neovim',
-      'notmuch-mutt',
-      'notmuch',
-      'offlineimap',
       'silversearcher-ag',
       'tmux',
       'bat',
-      'urlscan',
-      'vim',
       'zsh',
       'build-essential',
-      'chromium-browser',
-      'keepass2',
-      'python-dev',
-      'ruby-dev',
       'software-properties-common',
+      'fd-find'
+      'fzf'
     ]:
       ensure => installed,
   }
@@ -36,6 +26,14 @@ class core::packages {
     command  => 'ln -s /usr/bin/batcat /usr/bin/bat',
     onlyif   => 'test -e /usr/bin/batcat',
     creates  => '/usr/bin/bat',
+    path     => '/bin:/usr/bin',
+    provider => 'shell',
+  }
+
+  exec { 'Link fdfind to fd':
+    command  => 'ln -s /usr/bin/fdfind /usr/bin/fd',
+    onlyif   => 'test -e /usr/bin/fdfind',
+    creates  => '/usr/bin/fd',
     path     => '/bin:/usr/bin',
     provider => 'shell',
   }
