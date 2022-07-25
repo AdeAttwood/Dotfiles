@@ -59,6 +59,8 @@ class core::vim {
     'vim-puppet'         => { url => 'https://github.com/rodjek/vim-puppet.git' },
     'vim-surround'       => { url => 'https://github.com/tpope/vim-surround.git' },
     'vim-tmux-navigator' => { url => 'https://github.com/christoomey/vim-tmux-navigator.git' },
+    'vim-fugitive'       => { url => 'https://github.com/tpope/vim-fugitive.git' },
+    'vim-rhubarb'        => { url => 'https://github.com/tpope/vim-rhubarb.git' },
   }
 
   create_resources(core::vim::plugin_start, $plugins_start)
