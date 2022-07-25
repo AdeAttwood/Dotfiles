@@ -43,9 +43,6 @@ set noswapfile
 " Disable line wrapping
 set nowrap
 
-packadd! command-t
-
-noremap <leader>p :CommandT<cr>
 noremap <silent> <leader>q :bdelete<cr>
 noremap <silent> <leader>fs :w<cr>
 
