@@ -37,7 +37,7 @@ end
 lspconfig.emmet_ls.setup({
     on_attach = on_attach,
     capabilities = capabilities,
-    filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'scss' },
+    filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'scss', 'eruby' },
     init_options = {
         usePlaceholders = true,
     }
