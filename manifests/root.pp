@@ -24,17 +24,6 @@ node default {
   class { 'vscode': }
 
   #
-  # Install emacs
-  #
-  apt::ppa { 'ppa:kelleyk/emacs': }
-  package { 'emacs27':
-    ensure  => installed,
-    require => [
-      Apt::Ppa['ppa:kelleyk/emacs'],
-    ],
-  }
-
-  #
   # Neovim PPA to get a better version
   #
   apt::ppa { 'ppa:neovim-ppa/unstable': }
