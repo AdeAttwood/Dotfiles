@@ -19,11 +19,6 @@ node default {
   class { 'docker::compose': ensure  => present, version => '1.29.2' }
 
   #
-  # Install vscode
-  #
-  class { 'vscode': }
-
-  #
   # Neovim PPA to get a better version
   #
   apt::ppa { 'ppa:neovim-ppa/unstable': }
