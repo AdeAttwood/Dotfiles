@@ -1,6 +1,7 @@
 " Set color theme
 let base16colorspace=256
-colorscheme base16-eighties
+let g:github_dark_sidebar = 0
+colorscheme github_light
 
 " Set tailing white space to errors
 match ErrorMsg '\s\+$'
@@ -21,10 +22,10 @@ highlight Comment cterm=italic gui=italic
 highlight CursorLineNr cterm=none
 
 " Set the LSP diagnostics feedback to be italic
-highlight DiagnosticError cterm=italic guibg=#51202A guifg=#FF0000 gui=italic
-highlight DiagnosticWarn cterm=italic guibg=#51412A guifg=#FFA500 gui=italic
-highlight DiagnosticInfo cterm=italic guibg=#1E535D guifg=#00FFFF gui=italic
-highlight DiagnosticHint cterm=italic guibg=#1E205D guifg=#0000FF gui=italic
+highlight DiagnosticError cterm=italic gui=italic
+highlight DiagnosticWarn cterm=italic gui=italic
+highlight DiagnosticInfo cterm=italic gui=italic
+highlight DiagnosticHint cterm=italic gui=italic
 
 " hi ActiveWindow ctermbg=00 | hi InactiveWindow ctermbg=22
 " set winhighlight=Normal:ActiveWindow,NormalNC:InactiveWindow
