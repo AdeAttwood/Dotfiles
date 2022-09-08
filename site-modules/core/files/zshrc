@@ -108,6 +108,21 @@ if [ -d "${PHPENV_ROOT}" ]; then
     eval "$(phpenv init -)"
 fi
 
+# Ruby version manager (RVM)
+if [ -f "/etc/profile.d/rvm.sh" ]; then
+    source "/etc/profile.d/rvm.sh"
+fi
+
+# Set up the rust dev environment
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
+
+# Node version manager (NVM)
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # Export the bat theme to integrate with base16 nicely
 # https://github.com/sharkdp/bat#highlighting-theme
 export BAT_THEME="base16"
