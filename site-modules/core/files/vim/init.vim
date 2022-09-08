@@ -16,6 +16,11 @@ set scrolloff=20
 " Using the mouse
 set mouse=a
 
+" Ensure `split` is made below and `vsplit` are make to the right of the
+" current window
+set splitright
+set splitbelow
+
 " Tabs and indenting
 set tabstop=4
 set shiftwidth=4
