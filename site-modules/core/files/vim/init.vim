@@ -64,12 +64,6 @@ inoremap <M-;> <esc>A;
 noremap <leader>; gcc
 "vnoremap <leader>; gc
 
-" Lint code with nvim-lint on save. This will lint all filetypes with cspell
-" and then any other filetypes will be linted per the config.
-au BufWritePost,BufReadPost <buffer> lua require('lint').try_lint('cspell')
-au BufWritePost,BufReadPost <buffer> lua require('lint').try_lint()
-
-
 inoremap jj <esc>:w<cr>
 nnoremap <leader><tab> <c-^>
 

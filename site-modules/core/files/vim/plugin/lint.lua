@@ -46,3 +46,17 @@ lint.linters_by_ft = {
     lua = {'luacheck'},
 }
 
+
+-- Lint code with nvim-lint on save. This will lint all filetypes with cspell
+-- and then any other filetypes will be linted per the config.
+local lint_auto_command_group = vim.api.nvim_create_augroup("aa_lint", { clear = true })
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
+  group = lint_auto_command_group,
+  desc = "Lint the buffer",
+  pattern = "*",
+  callback = function()
+    lint.try_lint('cspell')
+    lint.try_lint()
+  end,
+})
+
