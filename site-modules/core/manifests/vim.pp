@@ -70,12 +70,4 @@ class core::vim {
   }
 
   create_resources(core::vim::plugin_opt, $plugins_opt)
-
-  exec { 'Compile command t':
-      path     => [ '/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/' ],
-      command  => 'ruby extconf.rb && make',
-      cwd      => "${user_home}/.config/nvim/pack/bundle/opt/command-t/ruby/command-t/ext/command-t",
-      provider => 'shell',
-      #require  => [Vim::Plugin_start[command-t]],
-  }
 }
