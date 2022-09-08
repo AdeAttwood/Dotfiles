@@ -1,5 +1,5 @@
 require'nvim-treesitter.configs'.setup {
-    indent = { enable = true },
+    indent = { enable = false },
     rainbow = { enable = true },
     highlight = {
         -- `false` will disable the whole extension
