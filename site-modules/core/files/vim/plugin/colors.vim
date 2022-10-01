@@ -1,7 +1,7 @@
 " Set color theme
 let base16colorspace=256
 let g:github_dark_sidebar = 0
-colorscheme github_light
+colorscheme github_dark
 
 " Set tailing white space to errors
 match ErrorMsg '\s\+$'
