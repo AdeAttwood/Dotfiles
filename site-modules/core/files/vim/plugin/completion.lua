@@ -37,6 +37,9 @@ cmp.setup({
     mapping = cmp.mapping.preset.insert({
         ['<C-j>'] = cmp.get_config().mapping['<Down>'],
         ['<C-k>'] = cmp.get_config().mapping['<Up>'],
+        ['<C-l>'] = function() luasnip.jump(1) end,
+        ['<C-h>'] = function() luasnip.jump(-1) end,
+
         ['<C-e>'] = cmp.mapping.abort(),
         ['<CR>'] = cmp.mapping(function(_fallback)
             if cmp.visible() then
