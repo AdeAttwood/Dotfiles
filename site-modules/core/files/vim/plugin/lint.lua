@@ -37,6 +37,30 @@ lint.linters.psalm = {
     end
 }
 
+lint.linters.cspell = {
+	cmd = "cspell",
+	stdin = true,
+	args = {
+		"lint",
+		"--no-color",
+		"--no-progress",
+		"--no-summary",
+    "--config=" .. os.getenv("HOME") .. "/.cspell.json",
+		function()
+			local file_type = vim.api.nvim_buf_get_option(0, "filetype")
+      return "--language-id=" .. file_type
+		end,
+		"--",
+		"stdin",
+	},
+	stream = "stdout",
+	parser = require("lint.parser").from_errorformat("/:%l:%c - %m", {
+		source = "cspell",
+		severity = vim.diagnostic.severity.INFO,
+	}),
+}
+
+
 lint.linters_by_ft = {
     php = {'phpcs'},
     typescript = {'eslint'},
