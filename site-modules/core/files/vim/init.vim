@@ -75,8 +75,3 @@ let g:CommandTWildIgnore="*/node_modules/*,*/vendor/*,*/runtime/*,*/public_html/
 " Required for complietion with nvim-cmp
 set completeopt=menu,menuone,noselect
 
-" Format code on save
-augroup fmt
-  autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
-augroup END
