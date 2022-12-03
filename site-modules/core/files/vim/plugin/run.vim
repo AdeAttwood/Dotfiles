@@ -13,15 +13,15 @@ function! s:aa_run(command)
             let l:split = '-v'
         endif
 
-        execute 'silent !tmux split-window -p 50 ' . l:split . ' && tmux send-keys "' . a:command . ' && exit" C-m'
+        execute 'silent !tmux split-window -p 50 ' . l:split . ' && tmux send-keys "' . a:command . '" C-m'
         return
     endif
 
     if has('nvim')
         if (&columns > 180)
-            execute 'VTerm ' . a:command . ' && exit'
+            execute 'VTerm ' . a:command
         else
-            execute 'HTerm ' . a:command . ' && exit'
+            execute 'HTerm ' . a:command
         endif
     endif
 endfunction
