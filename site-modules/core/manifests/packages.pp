@@ -49,10 +49,10 @@ class core::packages {
   #
   # Ruby gems to install globally
   #
-  core::packages::gem { [
-      'neovim',
-      'mail',
-      'pandoc-ruby',
-      'puppet-lint',
-  ]: }
+  #core::packages::gem { [
+  #    'neovim',
+  #    'mail',
+  #    'pandoc-ruby',
+  #    'puppet-lint',
+  #]: }
 }
