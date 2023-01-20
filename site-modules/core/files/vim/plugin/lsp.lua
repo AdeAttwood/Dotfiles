@@ -2,8 +2,16 @@ local lspconfig = require "lspconfig"
 
 local servers = {
   -- Language servers for the day to day web development, could probably think
-  -- about loosing the html and css one and living with typescript and emmet
+  -- about loosing the html and css one and living with typescript, rescript
+  -- and emmet
   tsserver = {},
+  rescriptls = {
+    cmd = {
+      os.getenv "NVM_BIN" .. "/node",
+      os.getenv "HOME" .. "/.config/nvim/pack/bundle/start/vim-rescript/server/out/server.js",
+      "--stdio",
+    },
+  },
   html = {},
   cssls = {},
   emmet_ls = {
