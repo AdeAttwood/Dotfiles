@@ -70,3 +70,16 @@ vim.fn.sign_define(
   "DiagnosticSignError",
   { text = "✖", texthl = "DiagnosticSignError", numhl = "DiagnosticSignError" }
 )
+
+local border = 'rounded'
+
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = border})
+vim.lsp.handlers["textDocument/show_line_diagnostics"] = vim.lsp.with(vim.lsp.handlers.hover, {border = border})
+vim.lsp.handlers["textDocument/diagnostic"] = vim.lsp.with(vim.lsp.handlers.hover, {border = border})
+vim.lsp.handlers["textDocument/diagnostics"] = vim.lsp.with(vim.lsp.handlers.hover, {border = border})
+vim.diagnostic.config({
+  float = {
+    focusable=false,
+    border = border
+  }
+})
