@@ -42,7 +42,7 @@ class core::vim {
 
   $plugins_start= {
     'auto-pairs'         => { url => 'https://github.com/jiangmiao/auto-pairs.git' },
-    'base16-vim'         => { url => 'https://github.com/chriskempson/base16-vim.git' },
+    'base16-vim'         => { url => 'https://github.com/tinted-theming/base16-vim.git', revision => 'main' },
     'cmp_luasnip'        => { url => 'https://github.com/saadparwaiz1/cmp_luasnip.git' },
     'cmp-buffer'         => { url => 'https://github.com/hrsh7th/cmp-buffer.git', revision => 'main' },
     'cmp-nvim-lsp'       => { url => 'https://github.com/hrsh7th/cmp-nvim-lsp.git', revision => 'main' },
