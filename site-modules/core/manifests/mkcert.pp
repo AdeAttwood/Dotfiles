@@ -1,8 +1,8 @@
 class core::mkcert {
   archive { "${user_home}/.local/bin/mkcert":
     ensure        => present,
-    source        => 'https://github.com/FiloSottile/mkcert/releases/download/v1.4.2/mkcert-v1.4.2-linux-amd64',
-    checksum      => 'e116543bfabb4d88010dda8a551a5d01abbdf9b4f2c949c044b862365038f632',
+    source        => 'https://github.com/FiloSottile/mkcert/releases/download/v1.4.4/mkcert-v1.4.4-linux-amd64',
+    checksum      => '6d31c65b03972c6dc4a14ab429f2928300518b26503f58723e532d1b0a3bbb52',
     checksum_type => 'sha256',
   }
 
