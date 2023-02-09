@@ -10,13 +10,13 @@
 # Edit commands with file previews using `fd` to search files to exclude files
 # to improve performance
 #
-alias fe="vim \"\$(FZF_DEFAULT_COMMAND=\"fd -t f\" fzf --layout=reverse --preview 'bat --style=numbers ---color=always {}')\""
+alias fe="vim \"\$(FZF_DEFAULT_COMMAND=\"fd -t f\" fzf --preview-window=top:70% --preview 'bat --style=numbers ---color=always {}')\""
 
 #
 # cd in to a porject directory
 #
 fp() {
-	cd ~/Code/src/$(cd ~/Code/src && FZF_DEFAULT_COMMAND="fd -t d --exact-depth 3" fzf --layout=reverse --preview 'bat --style=numbers ---color=always {}/README.md')
+	cd ~/Code/src/$(cd ~/Code/src && FZF_DEFAULT_COMMAND="fd -t d --exact-depth 3" fzf --preview-window=top:70% --preview 'bat --style=numbers ---color=always {}/README.md')
 }
 #
 # Searching the git history with diff and show preview support. When selecting a
@@ -44,11 +44,16 @@ fshow() {
     done
 }
 
+fl() {
+  local format="%C(red)%h%Creset %s %Cgreen(%cr)%Creset %C(bold blue)<%an>%Creset"
+  FZF_DEFAULT_COMMAND="git log --color=always --format=\"$format\"" fzf --preview-window=top:70% --ansi --preview 'git show --color=always {1}'
+}
+
 #
 # Checkout a git branch in a fzf context
 #
 fco() {
-    git checkout "$(git branch -vl | fzf --layout=reverse | awk '{print $1}')"
+    git checkout "$(git branch -vl | fzf | awk '{print $1}')"
 }
 
 #
