@@ -19,7 +19,6 @@ node default {
   include core::zsh
   include core::bin
   include core::vim
-  include core::ssh
   include core::tmux
   include core::fonts
   include core::emacs
