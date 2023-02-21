@@ -74,6 +74,3 @@ nnoremap <leader><tab> <c-^>
 " ignored from command-t file searches.
 let g:CommandTWildIgnore="*/node_modules/*,*/vendor/*,*/runtime/*,*/public_html/*,*/pack/*"
 
-" Required for complietion with nvim-cmp
-set completeopt=menu,menuone,noselect
-
