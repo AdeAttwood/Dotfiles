@@ -32,6 +32,8 @@ filetype plugin indent on
 set cursorline
 let g:vim_json_conceal=0
 
+set list listchars=tab:--▷,trail:•,precedes:«,extends:»
+
 " Relative line numbers, this set line numbers a swell so the current line is
 " displayed correctly. If this is not set then the current line is always 0
 set relativenumber
