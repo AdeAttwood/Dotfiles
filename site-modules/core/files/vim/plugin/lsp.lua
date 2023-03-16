@@ -83,3 +83,27 @@ vim.diagnostic.config({
     border = border
   }
 })
+
+vim.cmd([[set updatetime=1000]])
+vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+  callback = function ()
+    -- Highlight document symbles for every file type other erb files because
+    -- solargraph only supports textDocument/documentHighlight in rb files.
+    local file_type = vim.api.nvim_buf_get_option(0, "filetype")
+    if file_type ~= "eruby" then
+      vim.lsp.buf.document_highlight()
+    end
+
+    vim.diagnostic.open_float()
+  end,
+  group = "lsp_document_highlight",
+  desc = "Document Highlight",
+})
+vim.api.nvim_create_autocmd("CursorMoved", {
+  callback = function ()
+    vim.lsp.buf.clear_references()
+  end,
+  group = "lsp_document_highlight",
+  desc = "Clear All the References",
+})
