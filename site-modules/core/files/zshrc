@@ -77,11 +77,6 @@ if [ -d $HOME/Code ]; then
     export PATH=$PATH:$GOPATH/bin
 fi
 
-#
-# Init oh-my-zsh
-#
-source $ZSH/oh-my-zsh.sh
-
 export EDITOR="nvim"
 
 #
@@ -124,6 +119,11 @@ export NVM_DIR="$HOME/.nvm"
 # Export the bat theme to integrate with base16 nicely
 # https://github.com/sharkdp/bat#highlighting-theme
 export BAT_THEME="base16"
+
+#
+# Init oh-my-zsh
+#
+source $ZSH/oh-my-zsh.sh
 
 export ANDROID_HOME=$HOME/Android/Sdk
 export PATH=$PATH:$ANDROID_HOME/emulator
