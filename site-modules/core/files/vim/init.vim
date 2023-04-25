@@ -54,7 +54,7 @@ set nowrap
 noremap <silent> <leader>q :bdelete<cr>
 noremap <silent> <leader>fs :w ++p<cr>
 
-noremap <silent> <leader>o :Open    
+noremap <silent> <leader>o :Open<cr>
 
 noremap <silent> [b :bp<cr>
 noremap <silent> ]b :bn<cr>
