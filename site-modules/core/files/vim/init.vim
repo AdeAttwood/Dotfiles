@@ -52,7 +52,7 @@ set noswapfile
 set nowrap
 
 noremap <silent> <leader>q :bdelete<cr>
-noremap <silent> <leader>fs :w<cr>
+noremap <silent> <leader>fs :w ++p<cr>
 
 noremap <silent> <leader>o :Open    
 
