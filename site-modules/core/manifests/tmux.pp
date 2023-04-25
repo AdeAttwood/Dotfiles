@@ -38,4 +38,11 @@ class core::tmux {
     provider => git,
     revision => 'master',
   }
+
+  vcsrepo { "${user_home}/.tmux/plugins/base16-tmux":
+    ensure   => latest,
+    source   => 'https://github.com/tinted-theming/base16-tmux.git',
+    provider => git,
+    revision => 'main',
+  }
 }
