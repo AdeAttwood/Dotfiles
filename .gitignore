@@ -3,7 +3,6 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=puppet,emacs,code,vim,linux
 
 ### Application ###
-modules
 .resource_types
 info.rb
 .rerun.json

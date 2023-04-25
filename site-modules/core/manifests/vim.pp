@@ -61,6 +61,7 @@ class core::vim {
     'vim-tmux-navigator' => { url => 'https://github.com/christoomey/vim-tmux-navigator.git' },
     'vim-fugitive'       => { url => 'https://github.com/tpope/vim-fugitive.git' },
     'vim-rhubarb'        => { url => 'https://github.com/tpope/vim-rhubarb.git' },
+    'conjure'            => { url => 'https://github.com/Olical/conjure.git' }
   }
 
   create_resources(core::vim::plugin_start, $plugins_start)

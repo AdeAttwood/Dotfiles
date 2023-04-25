@@ -1,5 +1,6 @@
 " Set leader as space bar
 let mapleader="\<Space>"
+let maplocalleader="\<Space>"
 
 " Use the system clipboard with yank and paste
 set clipboard=unnamedplus

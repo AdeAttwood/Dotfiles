@@ -81,7 +81,12 @@ vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
   desc = "Lint the buffer",
   pattern = "*",
   callback = function()
-    lint.try_lint('cspell')
+    -- Only try and run spell checking on buffers that have a filetype. This is
+    -- mainly to disable spell checking in vim lsp popup buffers.
+    if vim.bo.filetype ~= "" then
+      lint.try_lint('cspell')
+    end
+
     lint.try_lint()
   end,
 })

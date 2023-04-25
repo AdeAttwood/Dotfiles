@@ -14,6 +14,7 @@ local servers = {
   },
   html = {},
   cssls = {},
+  clojure_lsp = {},
   emmet_ls = {
     filetypes = { "html", "typescriptreact", "javascriptreact", "css", "scss", "eruby" },
   },
