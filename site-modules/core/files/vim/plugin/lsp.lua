@@ -22,7 +22,7 @@ local servers = {
   -- Rust
   rust_analyzer = {},
   -- Lua for the vim config and plugin dev
-  sumneko_lua = {
+  lua_ls = {
     settings = {
       Lua = {
         runtime = { version = "LuaJIT" },
