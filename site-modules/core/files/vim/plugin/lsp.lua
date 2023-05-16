@@ -50,6 +50,31 @@ local on_attach = function(_, bufnr)
 
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
   vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+
+  vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+  vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+    buffer = bufnr,
+    callback = function ()
+      -- Highlight document symbles for every file type other erb files because
+      -- solargraph only supports textDocument/documentHighlight in rb files.
+      local file_type = vim.api.nvim_buf_get_option(0, "filetype")
+      if file_type ~= "eruby" then
+        vim.lsp.buf.document_highlight()
+      end
+    end,
+    group = "lsp_document_highlight",
+    desc = "Document Highlight",
+  })
+
+  vim.api.nvim_create_autocmd("CursorMoved", {
+    buffer = bufnr,
+    callback = function ()
+      vim.lsp.buf.clear_references()
+    end,
+    group = "lsp_document_highlight",
+    desc = "Clear All the References",
+  })
+
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -86,25 +111,11 @@ vim.diagnostic.config({
 })
 
 vim.cmd([[set updatetime=1000]])
-vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+vim.api.nvim_create_augroup("diagnostic_float", { clear = true })
 vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
   callback = function ()
-    -- Highlight document symbles for every file type other erb files because
-    -- solargraph only supports textDocument/documentHighlight in rb files.
-    local file_type = vim.api.nvim_buf_get_option(0, "filetype")
-    if file_type ~= "eruby" then
-      vim.lsp.buf.document_highlight()
-    end
-
     vim.diagnostic.open_float()
   end,
-  group = "lsp_document_highlight",
-  desc = "Document Highlight",
-})
-vim.api.nvim_create_autocmd("CursorMoved", {
-  callback = function ()
-    vim.lsp.buf.clear_references()
-  end,
-  group = "lsp_document_highlight",
-  desc = "Clear All the References",
+  group = "diagnostic_float",
+  desc = "Open Diagnostic Float",
 })
