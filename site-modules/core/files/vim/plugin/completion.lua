@@ -73,7 +73,7 @@ cmp.setup({
       fields = {   'menu', 'abbr', 'kind' },
       format = function(entry, vim_item)
         -- Give the completion menu a consistent size to stop it jumping arround
-        local width = 34
+        local width = 40
         if #vim_item.abbr > width then
           vim_item.abbr = string.sub(vim_item.abbr, 1, width)
         else
