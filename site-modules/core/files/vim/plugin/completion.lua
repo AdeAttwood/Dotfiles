@@ -81,7 +81,7 @@ cmp.setup({
         end
 
         vim_item.menu = icons[vim_item.kind] or " "
-        vim_item.kind = "(" .. vim_item.kind .. ")"
+        vim_item.kind = "(" .. entry.source.name .. ")"
         return vim_item
       end,
     },
