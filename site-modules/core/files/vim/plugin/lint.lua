@@ -70,6 +70,7 @@ lint.linters_by_ft = {
   typescriptreact = {'eslint'},
   javascriptreact = {'eslint'},
   lua = {'luacheck'},
+  scss = {'stylelint'},
 }
 
 
