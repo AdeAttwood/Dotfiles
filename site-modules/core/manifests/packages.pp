@@ -12,7 +12,7 @@ class core::packages {
       'zsh',
       'build-essential',
       'software-properties-common',
-      'fd-find'
+      'fd-find',
       'fzf'
     ]:
       ensure => installed,
