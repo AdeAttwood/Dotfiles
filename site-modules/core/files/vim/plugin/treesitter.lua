@@ -1,4 +1,5 @@
 require'nvim-treesitter.configs'.setup {
+    playground = { enable = true },
     indent = { enable = false },
     rainbow = { enable = true },
     highlight = {
