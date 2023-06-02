@@ -8,13 +8,6 @@ local servers = {
   -- about loosing the html and css one and living with typescript, rescript
   -- and emmet
   tsserver = {},
-  rescriptls = {
-    cmd = {
-      os.getenv "NVM_BIN" .. "/node",
-      os.getenv "HOME" .. "/.config/nvim/pack/bundle/start/vim-rescript/server/out/server.js",
-      "--stdio",
-    },
-  },
   html = {},
   cssls = {},
   clojure_lsp = {},
