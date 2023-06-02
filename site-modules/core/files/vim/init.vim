@@ -70,6 +70,15 @@ noremap <leader>; gcc
 inoremap jj <esc>:w<cr>
 nnoremap <leader><tab> <c-^>
 
+
+" Add mapping to "Run" tasks from the taskfile
+"
+" This needs to be added here so its defined before the Ferret plugin is
+" loaded. Ferret adds a mapping to <leader>r only if one is not defined. If we
+" do this in the taksfile plugin it will be too late and the Ferret mapping
+" will only be added.
+nmap <silent> <Leader>r :IvyTaskfile<cr>
+
 " Use the CommandTWildIgnore insted of the wildignore so I can still get
 " completion for :e in folders like vendor or node_modules but, they will be
 " ignored from command-t file searches.
