@@ -62,6 +62,12 @@ noremap <silent> ]b :bn<cr>
 noremap <silent> [q :cprevious<cr>
 noremap <silent> ]q :cnext<cr>
 
+" Add binding to "git open" to open the current file in the browser at the
+" current line. For some reason `:GBrowse` will only open the file and not go
+" to the line unless I use visual mode to select the line and then run
+" `:GBrowse`
+noremap <silent> go <c-v>:GBrowse<cr>
+
 inoremap <M-;> <esc>A;
 
 noremap <leader>; gcc
