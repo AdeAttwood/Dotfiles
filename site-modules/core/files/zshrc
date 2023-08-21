@@ -106,6 +106,10 @@ if [ -f "/etc/profile.d/rvm.sh" ]; then
     source "/etc/profile.d/rvm.sh"
 fi
 
+if [ -d "$HOME/.local/share/adr-tools/src" ]; then
+  PATH="$PATH:$HOME/.local/share/adr-tools/src"
+fi
+
 # Set up the rust dev environment
 if [ -f "$HOME/.cargo/env" ]; then
     . "$HOME/.cargo/env"
