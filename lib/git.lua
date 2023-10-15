@@ -8,7 +8,7 @@ local git = {}
 --- Tracks a git repo keeping it up to date with a revision. Will clone the
 --- repo if its already cloned. Will then checkout the required revision.
 ---@param config GitRepoConfig
-git.repo = function (config)
+git.repo = function(config)
   assert(config.src ~= nil, "Git repo must have a source")
   assert(config.target ~= nil, "Git repo must have a target")
   assert(config.version ~= nil, "Git repo must have a version")

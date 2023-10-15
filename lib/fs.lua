@@ -1,4 +1,4 @@
-local fs = {};
+local fs = {}
 
 --- Read the content of a file and return the content
 ---@param file_path string

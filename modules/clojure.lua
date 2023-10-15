@@ -1,5 +1,5 @@
 -- Configz module for the clojure dev tools
-local v_cache = require("lib.v-cache")
+local v_cache = require "lib.v-cache"
 
 if not v_cache.is_installed("closure-lsp", "2023.02.27-13.12.12") then
   configz.download("/tmp/closure-lsp.zip", {
