@@ -15,7 +15,9 @@ local servers = {
     filetypes = { "html", "typescriptreact", "javascriptreact", "css", "scss", "eruby" },
   },
   -- Ruby
-  solargraph = {},
+  solargraph = {
+    cmd = { "bundle", "exec", "solargraph", "stdio" },
+  },
   -- Rust
   rust_analyzer = {},
   -- Lua for the vim config and plugin dev
