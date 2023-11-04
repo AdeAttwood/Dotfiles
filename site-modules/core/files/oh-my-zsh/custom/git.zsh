@@ -5,6 +5,7 @@ alias gml="git merge --log"
 alias gl="git --no-pager log --format=\"%C(red)%h%Creset %s %Cgreen(%cr)%Creset %C(bold blue)<%an>%Creset\" --reverse --max-count=40"
 alias gap="git add -p"
 alias gs="gss"
+alias checkpoint="git commit -m 'fixup: checkpoint'"
 
 function git_get_fetch_url() {
     git remote show origin -n | awk '/Fetch URL:/{print $3}'
