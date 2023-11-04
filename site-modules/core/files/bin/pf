@@ -1,0 +1,80 @@
+#!/usr/bin/env bb
+;; vi: ft=clojure
+;;
+;; A Procfile runner for tmux. Each procfile will have its own tmux session and
+;; each process will have its own window. This way you can use tmux to attach
+;; view logs and also restart individual processes.
+;;
+(require '[babashka.process :refer [shell]]
+         '[babashka.cli :as cli]
+         '[babashka.fs :as fs]
+         '[clojure.string :as string])
+
+(defn current-project-name
+  "Returns the current project name based on the current working directory.
+  This assumes you have our porjects organised in a GOPATH style. This will
+  return  the last two components of the current working directory, that should
+  be {org}/{project}"
+  []
+  (string/join "/" (map #(.toString %) (take 2 (reverse(fs/components (fs/cwd)))))))
+
+(defn parse-procfile 
+  "Parses a procfile file and returns a list of [name command] pairs."
+  []
+  (map #(string/split % #":\s+") (string/split (slurp "Procfile.dev") #"\n" )))
+
+(defn has-session?
+  "Tests to see if a session already exists with a given name."
+  [session-name]
+  (string/includes? (:out (shell {:out :string} "tmux list-sessions")) session-name))
+
+(defn has-window?
+  "Tests to see if a window already exists within a tmux session."
+  [session-name window-name]
+  (string/includes? (:out (shell {:out :string} (format "tmux list-windows -t '%s'" session-name))) window-name))
+
+(defn create-window
+  "Creates a new tmux window in a session if it dose not already exists. Then
+  it will run any commands that are passed inside the new window."
+  [project name & commands]
+  (when-not (has-window? project name)
+    (shell (format "tmux new-window -t '%s' -n '%s'" project name))
+    (doseq [command commands]
+      (shell (format "tmux send-keys -t %s:'%s' '%s' C-m" project name command)))))
+
+(defn command-start [_]
+  (when (not (fs/exists? "Procfile.dev"))
+    (println "No Procfile.dev found in the current directory")
+    (System/exit 0))
+
+  (when (not (has-session? (current-project-name)))
+    (shell (format "tmux new-session -d -c %s -s '%s'" (fs/cwd) (current-project-name))))
+
+  (doseq [[name command] (parse-procfile)]
+    (create-window (current-project-name) name command)))
+
+(defn command-stop [_]
+  (when (has-session? (current-project-name))
+    (shell (format "tmux kill-session -t '%s'" (current-project-name)))))
+
+(defn command-restart [args]
+  (command-stop args)
+  (command-start args))
+
+(defn help [_m]
+  (println "A Procfile runner for tmux")
+  (println "")
+  (println "\033[1mCommands:\033[0m")
+  (println "  start    Start all of the processes in your Procfile.dev")
+  (println "  stop     Stop all the currently running processes")
+  (println "  restart  Restart all of the processes")
+  (println ""))
+
+(def command-table
+  [{:cmds ["start"]   :fn command-start}
+   {:cmds ["stop"]    :fn command-stop}
+   {:cmds ["restart"] :fn command-restart}
+   {:cmds []          :fn help}])
+
+(cli/dispatch command-table *command-line-args*)
+
