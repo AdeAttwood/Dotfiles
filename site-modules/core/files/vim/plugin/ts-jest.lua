@@ -68,105 +68,24 @@ local function get_all_tests()
   return tests
 end
 
-local function parse_results(results)
-  local issues = {}
-
-  for _, result in ipairs(results.testResults) do
-    if result.status ~= "passed" then
-      local file = result.message:match "([^:(]+):%d+:%d+"
-      local line = result.message:match "[^:]+:(%d+):%d+"
-      local message = result.message:match "\n\n%s+([^\n]+)"
-
-      table.insert(issues, { text = message, filename = file, lnum = line })
-    end
-  end
-
-  return issues
-end
+local base_jest_command = "jest --maxWorkers=25\\% --silent"
 
 local function run_at_cursor()
-  vim.fn.jobstart({
-    "jest",
-    "--maxWorkers=25%",
-    "--silent",
-    "--json",
-    "-t",
-    get_test_name_at_cursor(),
-    vim.fn.expand "%",
-  }, {
-    stdout_buffered = true,
-    on_stdout = function(_, output)
-      local results = vim.json.decode(output[1])
-      local issues = parse_results(results)
-
-      if #issues == 0 then
-        -- print "All tests passed"
-      else
-        vim.fn.setqflist({}, "r", { title = "Jest Failers", items = issues })
-        vim.cmd "copen"
-      end
-    end,
-    on_stderr = function(_, data)
-      -- This will display the progress for the tests
-      print(data[1])
-    end,
-  })
+  local command = string.format("%s -t '%s' %s", base_jest_command, get_test_name_at_cursor(), vim.fn.expand "%")
+  vim.cmd("Run " .. command)
 end
 
 local function run_file()
-  vim.fn.jobstart({
-    "jest",
-    "--maxWorkers=25%",
-    "--silent",
-    "--json",
-    vim.fn.expand "%",
-  }, {
-    stdout_buffered = true,
-    on_stdout = function(_, output)
-      local results = vim.json.decode(output[1])
-      local issues = parse_results(results)
-
-      if #issues == 0 then
-        -- print "All tests passed"
-      else
-        vim.fn.setqflist({}, "r", { title = "Jest Failers", items = issues })
-        vim.cmd "copen"
-      end
-    end,
-    on_stderr = function(_, data)
-      -- This will display the progress for the tests
-      print(data[1])
-    end,
-  })
+  local command = string.format("%s %s", base_jest_command, vim.fn.expand "%")
+  vim.cmd("Run " .. command)
 end
 
 local function run_all()
-  vim.fn.jobstart({
-    "jest",
-    "--maxWorkers=25%",
-    "--silent",
-    "--json",
-  }, {
-    stdout_buffered = true,
-    on_stdout = function(_, output)
-      local results = vim.json.decode(output[1])
-      local issues = parse_results(results)
-
-      if #issues == 0 then
-        -- print "All tests passed"
-      else
-        vim.fn.setqflist({}, "r", { title = "Jest Failers", items = issues })
-        vim.cmd "copen"
-      end
-    end,
-    on_stderr = function(_, data)
-      -- This will display the progress for the tests
-      print(data[1])
-    end,
-  })
+  vim.cmd("Run " .. base_jest_command)
 end
 
 vim.api.nvim_create_user_command("Jest", run_all, { bang = true })
 vim.api.nvim_create_user_command("JestFile", run_file, { bang = true })
 vim.api.nvim_create_user_command("JestAtCursor", run_at_cursor, { bang = true })
-vim.api.nvim_set_keymap("n", "t", "<cmd>JestAtCursor<CR>", { nowait = true, silent = true })
+vim.api.nvim_set_keymap("n", "tt", "<cmd>JestAtCursor<CR>", { nowait = true, silent = true })
+vim.api.nvim_set_keymap("n", "tf", "<cmd>JestFile<CR>", { nowait = true, silent = true })
