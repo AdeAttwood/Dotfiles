@@ -17,6 +17,7 @@ case $1 in
         bolt module install
         bolt apply manifests/root.pp --targets localhost --run-as root --sudo-password-prompt
         bolt apply manifests/workstation.pp --targets localhost
+        RUST_LOG=info configz --module manifests/configz-user
         exit 0;
         ;;
     apply-root)
@@ -27,6 +28,7 @@ case $1 in
     apply-user)
         cd "$DOTFILES_DIR"
         bolt apply manifests/workstation.pp --targets localhost
+        RUST_LOG=info configz --module manifests/configz-user
         exit 0;
     ;;
 esac
