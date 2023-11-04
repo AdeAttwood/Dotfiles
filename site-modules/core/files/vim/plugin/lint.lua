@@ -73,22 +73,30 @@ lint.linters_by_ft = {
   scss = {'stylelint'},
 }
 
+local file_types_map = { [ "" ] = false, qf = false, ivy = false }
 
 -- Lint code with nvim-lint on save. This will lint all filetypes with cspell
 -- and then any other filetypes will be linted per the config.
 local lint_auto_command_group = vim.api.nvim_create_augroup("aa_lint", { clear = true })
-vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
+
+vim.api.nvim_create_autocmd({ "BufReadPost", "BufWritePost" }, {
   group = lint_auto_command_group,
   desc = "Lint the buffer",
   pattern = "*",
   callback = function()
-    -- Only try and run spell checking on buffers that have a filetype. This is
-    -- mainly to disable spell checking in vim lsp popup buffers.
-    if vim.bo.filetype ~= "" then
-      lint.try_lint('cspell')
+    local linters = lint._resolve_linter_by_ft(vim.bo.filetype)
+    local should_lint = file_types_map[vim.bo.filetype]
+    if should_lint == nil then
+      should_lint = true
     end
 
-    lint.try_lint()
+    -- Only try and run spell checking on buffers that have a filetype. This is
+    -- mainly to disable spell checking in vim lsp popup buffers.
+    if should_lint then
+      table.insert(linters, 'cspell')
+    end
+
+    lint.try_lint(linters)
   end,
 })
 
