@@ -1,0 +1,5 @@
+#! /bin/bash
+
+codeclimate analyze -f json $@ \
+  | jq -r '.[] | "\(.location.path):\(.location.lines.begin): \(.description)"' \
+  | grep -v '^null'
