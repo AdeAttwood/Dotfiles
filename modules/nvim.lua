@@ -48,6 +48,7 @@ local start_plugins = {
   ["vim-fugitive"] = { url = "https://github.com/tpope/vim-fugitive.git" },
   ["vim-rhubarb"] = { url = "https://github.com/tpope/vim-rhubarb.git" },
   ["conjure"] = { url = "https://github.com/Olical/conjure.git" },
+  ["cmp-cmdline"] = { url = "https://github.com/hrsh7th/cmp-cmdline.git", revision = "main" },
 }
 
 local opt_plugins = {
