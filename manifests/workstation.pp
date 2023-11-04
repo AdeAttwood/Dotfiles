@@ -18,7 +18,6 @@ node default {
   include core::git
   include core::zsh
   include core::bin
-  include core::tmux
   include core::fonts
   include core::emacs
   include core::terminal
