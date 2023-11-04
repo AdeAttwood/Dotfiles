@@ -8,6 +8,7 @@ set clipboard=unnamedplus
 " Setup better searching
 set ignorecase
 set incsearch
+set nohlsearch
 set smartcase
 
 " Stay 20 chars from the top and bottom of the buffer so I am always editing
