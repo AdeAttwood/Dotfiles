@@ -49,6 +49,8 @@ local start_plugins = {
   ["vim-rhubarb"] = { url = "https://github.com/tpope/vim-rhubarb.git" },
   ["conjure"] = { url = "https://github.com/Olical/conjure.git" },
   ["cmp-cmdline"] = { url = "https://github.com/hrsh7th/cmp-cmdline.git", revision = "main" },
+  ["copilot"] = { url = "https://github.com/zbirenbaum/copilot.lua.git" },
+  ["copilot-cmp"] = { url = "https://github.com/zbirenbaum/copilot-cmp.git" },
 }
 
 local opt_plugins = {

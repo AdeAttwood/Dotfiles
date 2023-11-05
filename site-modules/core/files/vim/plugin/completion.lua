@@ -1,6 +1,14 @@
 local cmp = require'cmp'
 local luasnip = require'luasnip'
 
+require("copilot").setup({
+  suggestion = { enabled = false },
+  panel = { enabled = false },
+})
+
+require("copilot_cmp").setup()
+
+
 local icons = {
 Text = "",
     Method = "",
@@ -55,6 +63,7 @@ cmp.setup({
     }),
     sources = {
         { name = "luasnip" },
+        { name = "copilot" },
         { name = 'nvim_lsp' },
         { name = 'buffer' },
         { name = 'path' },
