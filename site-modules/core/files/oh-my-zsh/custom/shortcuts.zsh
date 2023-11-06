@@ -22,3 +22,4 @@ mutt_scripts=~/.mutt/scripts
 #
 hash -d code=~/Code
 hash -d s=~/Code/src
+hash -d gh=~/Code/src/github.com
