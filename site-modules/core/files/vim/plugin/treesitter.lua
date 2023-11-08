@@ -8,6 +8,6 @@ require'nvim-treesitter.configs'.setup {
         additional_vim_regex_highlighting = true,
     },
     ensure_installed = {
-        "typescript", "javascript", "tsx", "php", "html", "go", "org", "clojure"
+        "typescript", "javascript", "tsx", "php", "html", "go", "clojure"
     },
 }

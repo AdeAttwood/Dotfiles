@@ -35,19 +35,16 @@ local start_plugins = {
   ["cmp-path"] = { url = "https://github.com/hrsh7th/cmp-path.git", revision = "main" },
   ["Comment.nvim"] = { url = "https://github.com/numToStr/Comment.nvim.git" },
   ["ferret"] = { url = "https://github.com/wincent/ferret.git" },
-  ["indent-line"] = { url = "https://github.com/Yggdroot/indentLine.git" },
   ["LuaSnip"] = { url = "https://github.com/L3MON4D3/LuaSnip.git" },
   ["nvim-cmp"] = { url = "https://github.com/hrsh7th/nvim-cmp.git", revision = "main" },
   ["nvim-lint"] = { url = "https://github.com/mfussenegger/nvim-lint.git" },
   ["nvim-lspconfig"] = { url = "https://github.com/neovim/nvim-lspconfig.git" },
   ["nvim-treesitter"] = { url = "https://github.com/nvim-treesitter/nvim-treesitter.git" },
-  ["orgmode"] = { url = "https://github.com/nvim-orgmode/orgmode.git" },
   ["vim-puppet"] = { url = "https://github.com/rodjek/vim-puppet.git" },
   ["vim-surround"] = { url = "https://github.com/tpope/vim-surround.git" },
   ["vim-tmux-navigator"] = { url = "https://github.com/christoomey/vim-tmux-navigator.git" },
   ["vim-fugitive"] = { url = "https://github.com/tpope/vim-fugitive.git" },
   ["vim-rhubarb"] = { url = "https://github.com/tpope/vim-rhubarb.git" },
-  ["conjure"] = { url = "https://github.com/Olical/conjure.git" },
   ["cmp-cmdline"] = { url = "https://github.com/hrsh7th/cmp-cmdline.git", revision = "main" },
   ["copilot"] = { url = "https://github.com/zbirenbaum/copilot.lua.git" },
   ["copilot-cmp"] = { url = "https://github.com/zbirenbaum/copilot-cmp.git" },
@@ -74,3 +71,7 @@ for plugin, config in pairs(opt_plugins) do
     version = config.revision or "master",
   }
 end
+
+configz.run(string.format("rm -rf %s/conjure", nvim_plugin_dir_start))
+configz.run(string.format("rm -rf %s/orgmode", nvim_plugin_dir_start))
+configz.run(string.format("rm -rf %s/indent-line", nvim_plugin_dir_start))
