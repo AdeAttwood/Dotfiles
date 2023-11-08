@@ -20,7 +20,7 @@ maybe_nvm_install() {
     nvm install "${version}"
 
     echo "Installing all of the JS developer tools for this version of node with npm"
-    npm install -g yarn typescript-language-server typescript emmet-ls cspell vscode-langservers-extracted prettier jsdoc eslint
+    npm install -g yarn typescript-language-server typescript emmet-ls cspell vscode-langservers-extracted prettier jsdoc eslint eslint_d
   fi
 }
 
