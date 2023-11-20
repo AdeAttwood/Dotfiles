@@ -48,6 +48,7 @@ local start_plugins = {
   ["cmp-cmdline"] = { url = "https://github.com/hrsh7th/cmp-cmdline.git", revision = "main" },
   ["copilot"] = { url = "https://github.com/zbirenbaum/copilot.lua.git" },
   ["copilot-cmp"] = { url = "https://github.com/zbirenbaum/copilot-cmp.git" },
+  ["oil.nvim"] = { url = "https://github.com/stevearc/oil.nvim.git" },
 }
 
 local opt_plugins = {
