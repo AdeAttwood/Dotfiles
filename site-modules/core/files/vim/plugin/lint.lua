@@ -63,15 +63,26 @@ lint.linters.cspell =  {
   })
 }
 
-lint.linters_by_ft = {
-  php = {'phpcs'},
-  typescript = {'eslint_d'},
-  javascript = {'eslint_d'},
-  typescriptreact = {'eslint_d'},
-  javascriptreact = {'eslint_d'},
-  lua = {'luacheck'},
-  scss = {'stylelint'},
-}
+lint.linters_by_ft = {};
+
+if vim.fn.executable('phpcs') == 1 then
+  lint.linters_by_ft.php = { "phpcs" }
+end
+
+if vim.fn.executable('eslint_d') == 1 then
+  lint.linters_by_ft.typescript = { "eslint_d" }
+  lint.linters_by_ft.javascript = { "eslint_d" }
+  lint.linters_by_ft.typescriptreact = { "eslint_d" }
+  lint.linters_by_ft.javascriptreact = { "eslint_d" }
+end
+
+if vim.fn.executable('luacheck') == 1 then
+  lint.linters_by_ft.lua = { "luacheck" }
+end
+
+if vim.fn.executable('stylelint') == 1 then
+  lint.linters_by_ft.scss = { "stylelint" }
+end
 
 local file_types_map = { [ "" ] = false, qf = false, ivy = false }
 
