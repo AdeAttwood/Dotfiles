@@ -84,6 +84,14 @@ if vim.fn.executable('stylelint') == 1 then
   lint.linters_by_ft.scss = { "stylelint" }
 end
 
+if vim.fn.executable('rubocop') == 1 then
+  lint.linters_by_ft.ruby = { "rubocop" }
+end
+
+if vim.fn.executable('erb_lint') == 1 then
+  lint.linters_by_ft.eruby = { "erb_lint" }
+end
+
 local file_types_map = { [ "" ] = false, qf = false, ivy = false }
 
 -- Lint code with nvim-lint on save. This will lint all filetypes with cspell
