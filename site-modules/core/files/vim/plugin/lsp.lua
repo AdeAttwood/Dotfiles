@@ -1,7 +1,7 @@
 local lspconfig = require "lspconfig"
 
 local workspace_library = vim.api.nvim_get_runtime_file("lua", true)
-table.insert(workspace_library, os.getenv("HOME") .. "/Code/src/github.com/AdeAttwood/Configz/definitions/configz.lua")
+table.insert(workspace_library, os.getenv "HOME" .. "/Code/src/github.com/AdeAttwood/Configz/definitions/configz.lua")
 
 local servers = {
   -- Language servers for the day to day web development, could probably think
@@ -56,7 +56,7 @@ local on_attach = function(_, bufnr)
   vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
   vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
     buffer = bufnr,
-    callback = function ()
+    callback = function()
       -- Highlight document symbles for every file type other erb files because
       -- solargraph only supports textDocument/documentHighlight in rb files.
       local file_type = vim.api.nvim_buf_get_option(0, "filetype")
@@ -70,13 +70,12 @@ local on_attach = function(_, bufnr)
 
   vim.api.nvim_create_autocmd("CursorMoved", {
     buffer = bufnr,
-    callback = function ()
+    callback = function()
       vim.lsp.buf.clear_references()
     end,
     group = "lsp_document_highlight",
     desc = "Clear All the References",
   })
-
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
@@ -99,23 +98,23 @@ vim.fn.sign_define(
   { text = "✖", texthl = "DiagnosticSignError", numhl = "DiagnosticSignError" }
 )
 
-local border = 'rounded'
+local border = "rounded"
 
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {border = border})
-vim.lsp.handlers["textDocument/show_line_diagnostics"] = vim.lsp.with(vim.lsp.handlers.hover, {border = border})
-vim.lsp.handlers["textDocument/diagnostic"] = vim.lsp.with(vim.lsp.handlers.hover, {border = border})
-vim.lsp.handlers["textDocument/diagnostics"] = vim.lsp.with(vim.lsp.handlers.hover, {border = border})
-vim.diagnostic.config({
+vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+vim.lsp.handlers["textDocument/show_line_diagnostics"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+vim.lsp.handlers["textDocument/diagnostic"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+vim.lsp.handlers["textDocument/diagnostics"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
+vim.diagnostic.config {
   float = {
-    focusable=false,
-    border = border
-  }
-})
+    focusable = false,
+    border = border,
+  },
+}
 
-vim.cmd([[set updatetime=1000]])
+vim.cmd [[set updatetime=1000]]
 vim.api.nvim_create_augroup("diagnostic_float", { clear = true })
 vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-  callback = function ()
+  callback = function()
     vim.diagnostic.open_float()
   end,
   group = "diagnostic_float",

@@ -23,4 +23,3 @@ vim.api.nvim_create_user_command("PrrGoToLine", function()
   vim.cmd("e " .. target_file)
   vim.fn.cursor(target_line - 1, column)
 end, { bang = true, desc = "Open the current file at the poin in a prr buffer" })
-

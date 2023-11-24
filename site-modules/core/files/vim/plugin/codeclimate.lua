@@ -14,7 +14,7 @@
 -- locations the duplication exists.
 --
 
-local codeclimate_namespace = vim.api.nvim_create_namespace("codeclimate")
+local codeclimate_namespace = vim.api.nvim_create_namespace "codeclimate"
 local codeclimate_auto_command_group = vim.api.nvim_create_augroup("codeclimate", { clear = true })
 
 -- Get the relative path of a `buffer` to the vim current working directory
@@ -31,7 +31,7 @@ local function read_line(file_path, line_number)
     return ""
   end
 
-  local index = 0;
+  local index = 0
   while index < line_number do
     file:read()
     index = index + 1
@@ -46,8 +46,10 @@ end
 -- Populates the vim diagnostics with the codeclimate issues from '/tmp/cc.json'
 local function codeclimate_add_diagnostics()
   local file = io.open("/tmp/cc.json", "rb")
-  if not file then return nil end
-  local issues = vim.json.decode(file:read("*a"))
+  if not file then
+    return nil
+  end
+  local issues = vim.json.decode(file:read "*a")
 
   local buffer = vim.api.nvim_win_get_buf(0)
   local buffer_name = get_relative_path(buffer)
@@ -55,9 +57,8 @@ local function codeclimate_add_diagnostics()
 
   for index = 1, #issues do
     if issues[index]["location"] ~= nil and issues[index]["location"]["path"] == buffer_name then
-
-      local start_line = 0;
-      local end_line = 0;
+      local start_line = 0
+      local end_line = 0
 
       if issues[index]["location"]["lines"] ~= nil then
         start_line = issues[index]["location"]["lines"]["begin"] - 1
@@ -86,8 +87,8 @@ local function codeclimate_add_diagnostics()
         message = issues[index]["description"],
         severity = vim.diagnostic.severity.ERROR,
         user_data = {
-          other_locations = issues[index]["other_locations"]
-        }
+          other_locations = issues[index]["other_locations"],
+        },
       })
 
       ::continue::
@@ -99,7 +100,7 @@ end
 
 local function other_to_quick_fix()
   local point = vim.api.nvim_win_get_cursor(0)
-  local diagnostics = vim.diagnostic.get(0, {lnum = point[1] - 1})
+  local diagnostics = vim.diagnostic.get(0, { lnum = point[1] - 1 })
   local issues = {}
 
   -- TODO(ade): Add in a message to say this issues dose not have any other
@@ -126,7 +127,7 @@ local function other_to_quick_fix()
     })
   end
 
-  vim.fn.setqflist({}, "r", {title = "Code Climate Other Locations", items = issues})
+  vim.fn.setqflist({}, "r", { title = "Code Climate Other Locations", items = issues })
   vim.cmd "copen"
 end
 
