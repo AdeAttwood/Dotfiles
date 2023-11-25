@@ -48,6 +48,7 @@ printf '\033[5 q'
 # emacs or vim
 #
 if [[ -z "$VIM" ]] && [[ -z "$INSIDE_EMACS" ]] && [[ -z "$SSH_TTY" ]] ; then
+  export BASE16_SHELL_ENABLE_VARS=1
   BASE16_CONFIG_PATH="$HOME/.config/base16-shell/"
   [ -s "$BASE16_CONFIG_PATH/profile_helper.sh" ] && source "$BASE16_CONFIG_PATH/profile_helper.sh"
 fi
