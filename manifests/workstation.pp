@@ -16,8 +16,6 @@ node default {
   # Set up core components
   #
   include core::git
-  include core::zsh
-  include core::bin
   include core::fonts
   include core::emacs
   include core::terminal
