@@ -57,11 +57,16 @@ noremap <silent> <leader>fs :w ++p<cr>
 
 noremap <silent> <leader>o :Open<cr>
 
+noremap <silent> <leader><leader> za
+
 noremap <silent> [b :bp<cr>
 noremap <silent> ]b :bn<cr>
 
 noremap <silent> [q :cprevious<cr>
 noremap <silent> ]q :cnext<cr>
+
+noremap <silent> [f zk
+noremap <silent> ]f zj
 
 " Add binding to "git open" to open the current file in the browser at the
 " current line. For some reason `:GBrowse` will only open the file and not go
