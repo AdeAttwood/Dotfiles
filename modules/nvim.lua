@@ -49,6 +49,7 @@ local start_plugins = {
   ["copilot"] = { url = "https://github.com/zbirenbaum/copilot.lua.git" },
   ["copilot-cmp"] = { url = "https://github.com/zbirenbaum/copilot-cmp.git" },
   ["oil.nvim"] = { url = "https://github.com/stevearc/oil.nvim.git" },
+  ["neoformat"] = { url = "https://github.com/sbdchd/neoformat" },
 }
 
 local opt_plugins = {
