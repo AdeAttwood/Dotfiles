@@ -32,6 +32,16 @@ local function find_buffer_by_name(name)
   return -1
 end
 
+local function append_text(buffer, text)
+  -- Get the total number of lines in the buffer
+  local total_lines = vim.api.nvim_buf_line_count(buffer)
+  local last_line = vim.api.nvim_buf_get_lines(buffer, total_lines - 1, -1, false)[1]
+  local col = #last_line
+
+  -- Append the text to the end of the buffer
+  vim.api.nvim_buf_set_text(buffer, total_lines - 1, col, total_lines - 1, col, text)
+end
+
 local function process_line(results_buffer, line)
   local ok, chunk = pcall(vim.json.decode, line)
   if not ok then
@@ -39,9 +49,9 @@ local function process_line(results_buffer, line)
   end
 
   if chunk.response and chunk.response == "\n" then
-    vim.api.nvim_buf_set_text(results_buffer, -1, -1, -1, -1, { "", "" })
+    append_text(results_buffer, { "", "" })
   elseif chunk.response then
-    vim.api.nvim_buf_set_text(results_buffer, -1, -1, -1, -1, { chunk.response })
+    append_text(results_buffer, { chunk.response })
   end
 
   if chunk.done then
@@ -61,9 +71,9 @@ local function ollama_send()
   local prompt_lines = vim.api.nvim_buf_get_lines(prompt_buffer, 0, -1, false)
 
   -- Update the results buffer with your prompt and then start off the response.
-  vim.api.nvim_buf_set_text(results_buffer, -1, -1, -1, -1, prompt_lines)
+  append_text(results_buffer, prompt_lines)
   local ollama_prompt = { "", "", string.format("<<< Ollama %s", ollama_model), "" }
-  vim.api.nvim_buf_set_text(results_buffer, -1, -1, -1, -1, ollama_prompt)
+  append_text(results_buffer, ollama_prompt)
 
   -- Clear the prompt buffer so it's ready for the next prompt
   vim.api.nvim_buf_set_lines(prompt_buffer, 0, -1, false, {})
@@ -84,7 +94,7 @@ local function ollama_send()
       end
     end,
     on_exit = function()
-      vim.api.nvim_buf_set_text(results_buffer, -1, -1, -1, -1, { "", "", ">>> You", "", "" })
+      append_text(results_buffer, { "", "", ">>> You", "", "" })
     end,
   })
 
@@ -112,7 +122,7 @@ local function ollama_init()
 
   -- Open the response buffer and add the first part of the response
   vim.cmd [[tab new /tmp/ollama-response.md]]
-  vim.api.nvim_buf_set_text(0, -1, -1, -1, -1, { ">>> You", "", "" })
+  append_text(0, { ">>> You", "", "" })
 
   -- Set up the propt buffer read for the user to start chatting
   vim.cmd [[botright split /tmp/ollama-prompt.md | resize 14]]
