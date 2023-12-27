@@ -116,9 +116,18 @@ local function ollama_send()
   vim.fn.chanclose(job_id, "stdin")
 end
 
-local function ollama_init()
+local function ollama_close()
+  local results_buffer = find_buffer_by_name "/tmp/ollama-response.md"
+  local prompt_buffer = find_buffer_by_name "/tmp/ollama-prompt.md"
+
+  vim.cmd("bdelete! " .. results_buffer)
+  vim.cmd("bdelete! " .. prompt_buffer)
+end
+
+local function ollama_init(props)
   -- Reset the context so we get a new convo
   ollama_context = {}
+  ollama_model = props.args or ollama_model
 
   -- Open the response buffer and add the first part of the response
   vim.cmd [[tab new /tmp/ollama-response.md]]
@@ -127,7 +136,13 @@ local function ollama_init()
   -- Set up the propt buffer read for the user to start chatting
   vim.cmd [[botright split /tmp/ollama-prompt.md | resize 14]]
   vim.api.nvim_buf_create_user_command(0, "OllamaSend", ollama_send, { bang = true })
+  vim.api.nvim_buf_create_user_command(0, "OllamaClose", ollama_close, { bang = true })
   vim.api.nvim_buf_set_keymap(0, "n", "<leader>s", ":OllamaSend<CR>", {})
+  vim.api.nvim_buf_set_keymap(0, "n", "<leader>q", ":OllamaClose<CR>", {})
 end
 
-vim.api.nvim_create_user_command("Ollama", ollama_init, { bang = true })
+local function ollama_complete()
+  return { "codellama", "llama2", "mistral", "starcoder", "codeup" }
+end
+
+vim.api.nvim_create_user_command("Ollama", ollama_init, { bang = true, nargs = 1, complete = ollama_complete })
