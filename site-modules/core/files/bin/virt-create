@@ -1,0 +1,76 @@
+#!/usr/bin/env bb
+;; vi: ft=clojure
+;;
+;; Create virtual machine with one command cuz sometimes you need more than a container
+;;
+(require '[babashka.process :refer [shell]]
+         '[babashka.cli :as cli]
+         '[babashka.http-client :as http]
+         '[babashka.fs :as fs]
+         '[clojure.java.io :as io]
+         '[clojure.string :as string])
+
+(def spec {:name {:require true :alias :n :desc "The name of your new VM"}
+           :base {:require true :alias :b :desc "The base image that you want to create your VM from"}})
+
+(def images {:ubuntu-20 {:url "https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img"
+                         :image-name "focal-server-cloudimg-amd64.img"}
+             :ubuntu-22 {:url "https://cloud-images.ubuntu.com/jammy/current/jammy-server-cloudimg-amd64.img"
+                         :image-name "jammy-server-cloudimg-amd64.img"}})
+
+(defn parse-args
+  "Parse command line arguments"
+  [args]
+  (cli/parse-opts args {:spec spec
+                        :error-fn
+                        (fn [{:keys [spec type cause msg option] :as data}]
+                          (if (= :org.babashka/cli type)
+                            (case cause
+                              :require
+                              (println
+                                (format "Missing required argument:\n%s"
+                                        (cli/format-opts {:spec (select-keys spec [option])})))
+                              (println msg))
+                            (throw (ex-info msg data)))
+                          (System/exit 1))}))
+
+(def args (parse-args *command-line-args*))
+(def image (get images (keyword (:base args))))
+
+(when (nil? image)
+  ;; TODO(AdeAttwood): Add a list of images to choose from
+  (println "Image not found")
+  (System/exit 1))
+
+(def base-image-path (format "/var/lib/libvirt/images/%s", (:image-name image)))
+
+(when (not (fs/exists? base-image-path))
+  (println "Base image not found downloading it now")
+  (io/copy (:body (http/get (:url image) {:as :stream}))
+           (io/file base-image-path)))
+
+
+(if (fs/exists? (format "/var/lib/libvirt/images/%s.img", (:name args)))
+  (println "VM already exists")
+  (shell (format "sudo qemu-img create -b %s -f qcow2 -F qcow2 /var/lib/libvirt/images/%s.img 10G" base-image-path (:name args))))
+
+(spit "/tmp/cloud-metadata", (format "instance-id: %s\nlocal-hostname: %s\n", (:name args) (:name args)))
+(spit "/tmp/cloud-userdata", (format
+                               (clojure.string/join
+                                 "\n" ["#cloud-config"
+                                       ""
+                                       "users:"
+                                       "  - name: vm"
+                                       "    password: vm"
+                                       "    ssh_authorized_keys:"
+                                       "      - %s"
+                                       "    sudo: \"ALL=(ALL) NOPASSWD:ALL\""
+                                       "    groups: sudo"
+                                       "    shell: /bin/bash"])
+                               (slurp (format "%s/.ssh/id_ed25519.pub" (System/getenv "HOME")) )))
+
+(shell (format
+         "sudo virt-install --name=%s --ram=2048 --vcpus=4 --import --disk path=%s,format=qcow2 --cloud-init meta-data=/tmp/cloud-metadata,user-data=/tmp/cloud-userdata --os-variant=ubuntu20.04 --network bridge=virbr0,model=virtio --graphics vnc,listen=0.0.0.0 --noautoconsole"
+        (:name args)
+        (format "/var/lib/libvirt/images/%s.img" (:name args))))
+
