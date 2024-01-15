@@ -1,0 +1,40 @@
+#
+# !!           DO NOT EDIT            !!
+# !! This file is managed by configz  !!
+#
+
+[user]
+  name = {{ data.user_name }}
+  email = {{ data.email }}
+
+[core]
+  editor = nvim
+  autocrlf = input
+
+[merge]
+  conflictstyle = diff3
+
+[rerere]
+  enabled = true
+
+[push]
+  default = current
+
+[pager]
+  diff = delta
+  log = delta
+  reflog = delta
+  show = delta
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  line-numbers = true
+  navigate = true
+  hunk-header-style = raw
+  hunk-header-decoration-style = ul
+  file-modified-label = "modified:"
+  file-removed-label = "removed:"
+  file-added-label = "added:"
+  file-renamed-label = "renamed:"
