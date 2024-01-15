@@ -1,0 +1,27 @@
+#
+# !!           DO NOT EDIT            !!
+# !! This file is managed by configz  !!
+#
+
+[ui]
+# name and email, e.g.
+username = {{ data.user_name }} <{{ data.email }}>
+
+# Don't let the sl cli colors interfere with the delta colors. The diff
+# highlighting dose not work well when the two colors are conflicting each
+# other.
+#
+# uncomment to disable color in command output
+# (see 'sl help color' for details)
+color = never
+
+# uncomment to disable command output pagination
+# (see 'sl help pager' for details)
+#paginate = always
+
+# User delta as the pager so that the diff is highlighted nicely.in the
+# terminal. This give a better diff coloring than the built in sl pager, also
+# keeps things looking the same as git so I can keep the familiarity when
+# switching between git and sl.
+[pager]
+pager = delta
