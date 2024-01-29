@@ -1,7 +1,10 @@
 # Alias sl to s. This is so we can keep the workflow much the same as git. You
 # can mostly replace `g` with `s` and you are using sapling instead of git.
 alias s="\\sl"
-alias sl="sl log --remote -l25 -T '\\033[31m{node|short} \\033[0;34;3m{desc|firstline}\\033[0m \\033[3;32m{date|age} \\033[35;1;3mby {author|person} {if(github_pull_request_number, \"\033[31mPR #{github_pull_request_number}\")}\n' | tac"
+alias sl="\\sl log --remote -l40 -T '\\033[31m{node|short}\\033[0m {truncatelonglines(desc|firstline, 80)} \\033[32m({date|age}) \\033[34;1m<{author|person}> {if(github_pull_request_number, \"\033[31mPR #{github_pull_request_number}\")}\\033[0m\n' | tac"
+alias sc="\\sl commit -iv"
+alias sd="\\sl diff"
+alias ss="\\sl status"
 
 function sl-convert() {
   if ! [ -d .git ]; then
