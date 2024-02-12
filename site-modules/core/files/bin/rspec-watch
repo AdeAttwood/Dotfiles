@@ -1,0 +1,17 @@
+#!/bin/bash
+#
+# Run rspec tests when files are modified in the spec or app directory.
+#
+# Example usage:
+#
+#  # Run the two tests whenever a file is changed.
+#  rspec-watch spec/models/user_spec.rb spec/controllers/users_controller_spec.rb
+
+while inotifywait -r -e modify spec app; do
+  clear
+
+  echo "Running tests..."
+  echo ""
+
+  RSPEC_COVERAGE=0 bundle exec rspec -fd $@
+done
