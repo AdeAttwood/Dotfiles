@@ -96,3 +96,7 @@ nmap <silent> <Leader>r :IvyTaskfile<cr>
 " ignored from command-t file searches.
 let g:CommandTWildIgnore="*/node_modules/*,*/vendor/*,*/runtime/*,*/public_html/*,*/pack/*"
 
+let g:FerretExecutableArguments = {
+  \   'rg': '--no-require-git --vimgrep --no-heading --no-config --max-columns 4096'
+  \ }
+
