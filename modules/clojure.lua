@@ -12,13 +12,13 @@ if not v_cache.is_installed("closure-lsp", "2023.02.27-13.12.12") then
   v_cache.install("closure-lsp", "2023.02.27-13.12.12")
 end
 
-if not v_cache.is_installed("babashka", "v1.3.176") then
+if not v_cache.is_installed("babashka", "v1.3.188") then
   configz.download("/tmp/babashka.tar.gz", {
-    sha256 = "46c866c28ea9d99a5544c75c554b0c1e22edfa20843d927d3c175b7021ca7252",
-    url = "https://github.com/babashka/babashka/releases/download/v1.3.176/babashka-1.3.176-linux-amd64.tar.gz",
+    sha256 = "535357fa38e81f9a3c5e739988983083b6c5f126590d982e022e062e4f1df519",
+    url = "https://github.com/babashka/babashka/releases/download/v1.3.188/babashka-1.3.188-linux-amd64.tar.gz",
   })
 
   configz.run "cd /tmp; tar -xzf babashka.tar.gz"
   configz.file(os.getenv "HOME" .. "/.local/bin/bb", { source = "/tmp/bb" })
-  v_cache.install("babashka", "v1.3.176")
+  v_cache.install("babashka", "v1.3.188")
 end
