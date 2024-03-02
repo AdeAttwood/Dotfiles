@@ -1,5 +1,8 @@
 local wezterm = require "wezterm"
 
+local window_frame_fg = "#000000"
+local window_frame_bg = "#ffffff"
+
 return {
   -- Use a sexy terminal font with ligatures.
   --font = wezterm.font("Liga SFMono Nerd Font"),
@@ -51,5 +54,18 @@ return {
       key = "Backspace",
       action = wezterm.action.SendKey { mods = "CTRL", key = "w" },
     },
+  },
+
+  window_frame = {
+    inactive_titlebar_bg = window_frame_bg,
+    active_titlebar_bg = window_frame_bg,
+    inactive_titlebar_fg = window_frame_fg,
+    active_titlebar_fg = window_frame_fg,
+    inactive_titlebar_border_bottom = window_frame_bg,
+    active_titlebar_border_bottom = window_frame_bg,
+    button_fg = window_frame_fg,
+    button_bg = window_frame_bg,
+    button_hover_fg = window_frame_bg,
+    button_hover_bg = window_frame_fg,
   },
 }
