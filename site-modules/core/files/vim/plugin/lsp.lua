@@ -13,7 +13,7 @@ local servers = {
   marksman = {},
   clojure_lsp = {},
   emmet_ls = {
-    filetypes = { "html", "typescriptreact", "javascriptreact", "css", "scss", "eruby" },
+    filetypes = { "html", "typescriptreact", "javascriptreact", "css", "scss", "eruby", "liquid" },
   },
   -- Ruby
   solargraph = {
