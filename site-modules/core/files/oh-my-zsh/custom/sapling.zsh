@@ -1,10 +1,12 @@
 # Alias sl to s. This is so we can keep the workflow much the same as git. You
 # can mostly replace `g` with `s` and you are using sapling instead of git.
 alias s="\\sl"
-alias sl="\\sl log --pager never --remote -T ' {graphnode} {ifeq(phase, \"public\", \"\\033[31m\", \"\\033[34m\")}{node|short}\\033[0m {truncatelonglines(desc|firstline, 80)} \\033[32m({date|age}) \\033[34;1m<{author|person}> {if(github_pull_request_number, \"\033[31mPR #{github_pull_request_number}\")}\\033[0m\n' -r '.::top() or last(::., 40)'"
+alias sl="\\sl log --pager never --remote -r '.::top() or last(::., 40)'"
 alias sc="\\sl commit -iv"
 alias sd="\\sl diff"
 alias ss="\\sl status"
+alias sco="\\sl log -r 'heads(draft())' -T'{node} {truncatelonglines(desc|firstline, 80)} <{author|person}>\n' | fzf | cut -d' ' -f1 | xargs \\sl goto"
+
 
 function sl-convert() {
   if ! [ -d .git ]; then

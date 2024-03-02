@@ -19,6 +19,8 @@ color = never
 # (see 'sl help pager' for details)
 #paginate = always
 
+logtemplate = ' {graphnode} {ifeq(phase, "public", "\033[31m", "\033[34m")}{node|short}\033[0m {truncatelonglines(desc|firstline, 80)} \033[32m({date|age}) \033[34;1m<{author|person}>{if(github_pull_request_number, " \033[31mPR #{github_pull_request_number}")}\033[0m{if(bookmarks, " [{bookmarks}]")}\n'
+
 # User delta as the pager so that the diff is highlighted nicely.in the
 # terminal. This give a better diff coloring than the built in sl pager, also
 # keeps things looking the same as git so I can keep the familiarity when
