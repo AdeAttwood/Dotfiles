@@ -15,25 +15,25 @@ configz.directory(zsh_dir .. "/custom/plugins")
 
 if not configz.is_directory(zsh_dir .. "/custom/custom") then
   configz.link(zsh_dir .. "/custom/custom", {
-    source = os.getenv "PWD" .. "/site-modules/core/oh-my-zsh/custom",
+    source = os.getenv "PWD" .. "/site-modules/core/files/oh-my-zsh/custom",
   })
 end
 
 if not configz.is_directory(zsh_dir .. "/custom/lib") then
   configz.link(zsh_dir .. "/custom/lib", {
-    source = os.getenv "PWD" .. "/site-modules/core/oh-my-zsh/lib",
+    source = os.getenv "PWD" .. "/site-modules/core/files/oh-my-zsh/lib",
   })
 end
 
 if not configz.is_file(zsh_dir .. "/custom/custom.zsh") then
   configz.link(zsh_dir .. "/custom/custom.zsh", {
-    source = os.getenv "PWD" .. "/site-modules/core/oh-my-zsh/custom.zsh",
+    source = os.getenv "PWD" .. "/site-modules/core/files/oh-my-zsh/custom.zsh",
   })
 end
 
 if not configz.is_directory(zsh_dir .. "/custom/plugins/notmuch") then
   configz.link(zsh_dir .. "/custom/plugins/notmuch", {
-    source = os.getenv "PWD" .. "/site-modules/core/oh-my-zsh/plugins/notmuch",
+    source = os.getenv "PWD" .. "/site-modules/core/files/oh-my-zsh/plugins/notmuch",
   })
 end
 

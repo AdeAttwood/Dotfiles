@@ -21,7 +21,7 @@ for _, dir in ipairs(dirs_to_link) do
   local dir_to_link = nvim_dir .. "/" .. dir
   if not configz.is_directory(dir_to_link) then
     configz.link(dir_to_link, {
-      source = os.getenv "PWD" .. "/site-modules/core/files/vim/" .. dir_to_link,
+      source = os.getenv "PWD" .. "/site-modules/core/files/vim/" .. dir,
     })
   end
 end
