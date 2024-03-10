@@ -27,7 +27,6 @@ for _, dir in ipairs(dirs_to_link) do
 end
 
 local start_plugins = {
-  ["auto-pairs"] = { url = "https://github.com/jiangmiao/auto-pairs.git" },
   ["base16-vim"] = { url = "https://github.com/tinted-theming/base16-vim.git", revision = "main" },
   ["cmp_luasnip"] = { url = "https://github.com/saadparwaiz1/cmp_luasnip.git" },
   ["cmp-buffer"] = { url = "https://github.com/hrsh7th/cmp-buffer.git", revision = "main" },
@@ -40,7 +39,6 @@ local start_plugins = {
   ["nvim-lint"] = { url = "https://github.com/mfussenegger/nvim-lint.git" },
   ["nvim-lspconfig"] = { url = "https://github.com/neovim/nvim-lspconfig.git" },
   ["nvim-treesitter"] = { url = "https://github.com/nvim-treesitter/nvim-treesitter.git" },
-  ["vim-puppet"] = { url = "https://github.com/rodjek/vim-puppet.git" },
   ["vim-surround"] = { url = "https://github.com/tpope/vim-surround.git" },
   ["vim-tmux-navigator"] = { url = "https://github.com/christoomey/vim-tmux-navigator.git" },
   ["vim-fugitive"] = { url = "https://github.com/tpope/vim-fugitive.git" },
@@ -77,3 +75,5 @@ end
 configz.run(string.format("rm -rf %s/conjure", nvim_plugin_dir_start))
 configz.run(string.format("rm -rf %s/orgmode", nvim_plugin_dir_start))
 configz.run(string.format("rm -rf %s/indent-line", nvim_plugin_dir_start))
+configz.run(string.format("rm -rf %s/auto-pairs", nvim_plugin_dir_start))
+configz.run(string.format("rm -rf %s/vim-puppet", nvim_plugin_dir_start))
