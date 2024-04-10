@@ -66,7 +66,7 @@ cmp.setup {
     end, { "i", "s" }),
   },
   sources = {
-    { name = "luasnip" },
+    { name = "luasnip", priority = 1000 },
     { name = "copilot" },
     { name = "nvim_lsp" },
     { name = "buffer" },
