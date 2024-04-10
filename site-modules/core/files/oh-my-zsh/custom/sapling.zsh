@@ -5,7 +5,7 @@ alias sl="\\sl log --pager never --remote -r '.::top() or last(::., 40)'"
 alias sc="\\sl commit -iv"
 alias sd="\\sl diff"
 alias ss="\\sl status"
-alias sco="\\sl log -r 'heads(draft())' -T'{node} {truncatelonglines(desc|firstline, 80)} <{author|person}>\n' | fzf | cut -d' ' -f1 | xargs \\sl goto"
+alias sco="\\sl log -r 'heads(draft())' | fzf  --ansi | cut -d' ' -f3 | xargs \\sl goto"
 
 
 function sl-convert() {
