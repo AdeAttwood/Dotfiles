@@ -1,4 +1,5 @@
 require("nvim-treesitter.configs").setup {
+  auto_install = true,
   playground = { enable = true },
   indent = { enable = false },
   rainbow = { enable = true },
@@ -7,13 +8,9 @@ require("nvim-treesitter.configs").setup {
     enable = true,
     additional_vim_regex_highlighting = true,
   },
-  ensure_installed = {
-    "typescript",
-    "javascript",
-    "tsx",
-    "php",
-    "html",
-    "go",
-    "clojure",
-  },
 }
+
+
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldenable = false
