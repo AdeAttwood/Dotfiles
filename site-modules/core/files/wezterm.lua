@@ -1,34 +1,22 @@
 local wezterm = require "wezterm"
 
-local window_frame_fg = "#000000"
-local window_frame_bg = "#ffffff"
+-- Base16 Theme: Tomorrow
+-- local window_frame_fg = "#000000"
+-- local window_frame_bg = "#ffffff"
+
+-- Base16 Theme: Tomorrow Night
+local window_frame_bg = "#1d1f21"
+local window_frame_fg = "#ffffff"
 
 return {
   -- Use a sexy terminal font with ligatures.
   --font = wezterm.font("Liga SFMono Nerd Font"),
   font = wezterm.font {
-    family = "Monaspace Neon",
-    -- Enable all the ligatures except for SS04 and SS07 groups. I mainly want
-    -- this form arrows and equals. I have got quite used to using them.
-    --
-    -- SS04 is /> and make JSX look a bit odd
-    -- SS07 is /* and makes comments look a bit odd
-    harfbuzz_features = {
-      "calt=1",
-      "clig=1",
-      "liga=1",
-      "ss01=1",
-      "ss02=1",
-      "ss03=1",
-      "ss05=1",
-      "ss06=1",
-      "ss08=1",
-      "CALT=1",
-    },
+    family = "CommitMono",
   },
 
   -- Give the font some more line height, just makes thinks look a bit nicer
-  line_height = 1.2,
+  line_height = 1.4,
 
   -- Who wants their music interrupted every time there is no tab completion
   -- available in the shell, Who wants their music interrupted evert time there
