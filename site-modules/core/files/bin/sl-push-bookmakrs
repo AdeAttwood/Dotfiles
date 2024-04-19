@@ -1,0 +1,28 @@
+#!/bin/bash
+
+default_path="$(sl config paths.default)"
+url="${default_path%*.git}"
+
+#
+# "top % public()" => non-public commits in my stack
+#   "top" => from the top of my stack
+#   "% X" => except not in X
+#   "public()" => public commits
+#
+previous_bookmark_query=""
+previous_bookmark=""
+for i in $(sl log -r "top % public()" -T "{bookmarks} "); do
+  commits="$(sl log -r "::$i % public()$previous_bookmark_query")"
+
+  if [[ -z "$previous_bookmark" ]]; then
+    echo "$url/compare/$i"
+  else
+    echo "$url/compare/$previous_bookmark...$i"
+  fi
+
+  echo "$commits"
+  sl push -f -r "$i" --to "remote/$i" 2>&1 | grep -E "[\+\*]"
+
+  previous_bookmark_query=" % ::$i"
+  previous_bookmark="$i"
+done
