@@ -82,6 +82,8 @@ noremap <leader>; gcc
 inoremap jj <esc>:w<cr>
 nnoremap <leader><tab> <c-^>
 
+let g:fsharp#lsp_auto_setup = 0
+
 
 " Add mapping to "Run" tasks from the taskfile
 "

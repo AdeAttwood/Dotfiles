@@ -48,6 +48,8 @@ local start_plugins = {
   ["copilot-cmp"] = { url = "https://github.com/zbirenbaum/copilot-cmp.git" },
   ["oil.nvim"] = { url = "https://github.com/stevearc/oil.nvim.git" },
   ["neoformat"] = { url = "https://github.com/sbdchd/neoformat" },
+  ["csharpls-extended-lsp"] = { url = "https://github.com/Decodetalkers/csharpls-extended-lsp.nvim" },
+  ["Ionide-vim"] = { url = "https://github.com/ionide/Ionide-vim" },
 }
 
 local opt_plugins = {

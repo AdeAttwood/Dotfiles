@@ -35,6 +35,12 @@ local servers = {
       },
     },
   },
+  csharp_ls = {
+    handlers = {
+      ["textDocument/definition"] = require("csharpls_extended").handler,
+      ["textDocument/typeDefinition"] = require("csharpls_extended").handler,
+    },
+  },
 }
 
 local on_attach = function(_, bufnr)
@@ -88,6 +94,8 @@ for lsp, config in pairs(servers) do
 
   lspconfig[lsp].setup(config)
 end
+
+require("ionide").setup({ on_attach = on_attach, capabilities = capabilities })
 
 -- Change the diagnostic signs
 vim.fn.sign_define("DiagnosticSignHint", { text = "➤", texthl = "DiagnosticSignHint", numhl = "DiagnosticSignHint" })
