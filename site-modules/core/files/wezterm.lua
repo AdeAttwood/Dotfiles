@@ -32,6 +32,8 @@ return {
 
   warn_about_missing_glyphs = false,
 
+  enable_wayland = false,
+
   keys = {
     -- Bind <CTRL-Backspace> to <CTRL-w> to `werase` in bash. This is to keep
     -- the terminal binding the same to delete a word. The default <CTRL-w> has
