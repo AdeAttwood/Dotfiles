@@ -66,7 +66,7 @@ local on_attach = function(_, bufnr)
       -- Highlight document symbles for every file type other erb files because
       -- solargraph only supports textDocument/documentHighlight in rb files.
       local file_type = vim.api.nvim_buf_get_option(0, "filetype")
-      if file_type ~= "eruby" and file_type ~= "markdown" then
+      if file_type ~= "eruby" and file_type ~= "markdown" and file_type ~= "liquid" then
         vim.lsp.buf.document_highlight()
       end
     end,
