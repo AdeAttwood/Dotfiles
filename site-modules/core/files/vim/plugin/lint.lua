@@ -61,11 +61,11 @@ if vim.fn.executable "phpcs" == 1 then
   lint.linters_by_ft.php = { "phpcs" }
 end
 
-if vim.fn.executable "eslint_d" == 1 then
-  lint.linters_by_ft.typescript = { "eslint_d" }
-  lint.linters_by_ft.javascript = { "eslint_d" }
-  lint.linters_by_ft.typescriptreact = { "eslint_d" }
-  lint.linters_by_ft.javascriptreact = { "eslint_d" }
+if vim.fn.executable "eslint" == 1 then
+  lint.linters_by_ft.typescript = { "eslint" }
+  lint.linters_by_ft.javascript = { "eslint" }
+  lint.linters_by_ft.typescriptreact = { "eslint" }
+  lint.linters_by_ft.javascriptreact = { "eslint" }
 end
 
 if vim.fn.executable "luacheck" == 1 then
