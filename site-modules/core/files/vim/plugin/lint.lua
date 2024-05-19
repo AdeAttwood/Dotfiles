@@ -1,4 +1,5 @@
 local lint = require "lint"
+local cspell_linter = require "lint.linters.cspell"
 
 local severities = {
   error = vim.diagnostic.severity.ERROR,
@@ -42,25 +43,16 @@ local get_language_id = function()
   return "--language-id=" .. file_type
 end
 
-lint.linters.cspell = {
-  cmd = "cspell",
-  stdin = true,
-  ignore_exitcode = true,
-  args = {
-    "lint",
-    "--no-color",
-    "--no-progress",
-    "--no-summary",
-    "--config=" .. os.getenv "HOME" .. "/.cspell.json",
-    get_language_id,
-    "--",
-    "stdin",
-  },
-  stream = "stdout",
-  parser = require("lint.parser").from_errorformat("%f:%l:%c - %m", {
-    source = "cspell",
-    severity = vim.diagnostic.severity.INFO,
-  }),
+lint.linters.cspell = cspell_linter
+lint.linters.cspell.args = {
+  "lint",
+  "--no-color",
+  "--no-progress",
+  "--no-summary",
+  "--config=" .. os.getenv "HOME" .. "/.cspell.json",
+  get_language_id,
+  "--",
+  "stdin",
 }
 
 lint.linters_by_ft = {}
