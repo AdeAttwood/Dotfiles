@@ -2,7 +2,7 @@
 # can mostly replace `g` with `s` and you are using sapling instead of git.
 alias s="\\sl"
 alias sl="\\sl log --pager never --remote -r '.::top() or last(::., 40)'"
-alias sc="sl addremove . && \\sl commit -iv"
+alias sc="\\sl addremove . && \\sl commit -iv"
 alias sd="\\sl diff"
 alias ss="\\sl status"
 alias sco="\\sl log -r 'heads(draft())' | fzf  --ansi | cut -d' ' -f3 | xargs \\sl goto"
