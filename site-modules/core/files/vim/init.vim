@@ -102,3 +102,5 @@ let g:FerretExecutableArguments = {
   \   'rg': '--no-require-git --vimgrep --no-heading --no-config --max-columns 4096'
   \ }
 
+
+let g:neoformat_enabled_cs = ['csharpier']
