@@ -16,7 +16,7 @@ if not configz.is_file(nvim_dir .. "/init.vim") then
 end
 
 -- Link all of the configs into the nvim config directory
-local dirs_to_link = { "after", "ftplugin", "snippets", "plugin", "spell" }
+local dirs_to_link = { "after", "ftdetect", "ftplugin", "snippets", "plugin", "spell" }
 for _, dir in ipairs(dirs_to_link) do
   local dir_to_link = nvim_dir .. "/" .. dir
   if not configz.is_directory(dir_to_link) then
