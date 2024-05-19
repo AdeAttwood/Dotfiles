@@ -13,7 +13,7 @@ function! s:aa_run(command)
             let l:split = '-v'
         endif
 
-        execute 'silent !tmux split-window -p 50 ' . l:split . ' && tmux send-keys "' . a:command . '" C-m'
+        execute 'silent !tmux split-window ' . l:split . ' && tmux send-keys "' . a:command . '" C-m'
         return
     endif
 
