@@ -28,6 +28,10 @@ local alternates = {
     { type = alternate_type.SPEC, file = "spec/%1.spec.%2" },
     { type = alternate_type.SPEC, file = "tests/%1.spec.%2", default = true },
   },
+
+  ["(.*)%.lua$"] = {
+    { type = alternate_type.SPEC, file = "spec/%1_spec.lua", default = true },
+  },
 }
 
 local function file_exists(filename)
