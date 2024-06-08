@@ -2,8 +2,8 @@
 
 default_path="$(sl config paths.default)"
 url="${default_path%*.git}"
+project="$(basename $(dirname "$url"))/$(basename "$url")"
 
-#
 # "top % public()" => non-public commits in my stack
 #   "top" => from the top of my stack
 #   "% X" => except not in X
@@ -12,9 +12,12 @@ url="${default_path%*.git}"
 previous_bookmark_query=""
 previous_bookmark=""
 for i in $(sl log -r "top % public()" -T "{bookmarks} "); do
-  commits="$(sl log -r "::$i % public()$previous_bookmark_query")"
+  commits="$(sl log -T"  -  {firstline(desc)} ({node|short})\n" -r "::$i % public()$previous_bookmark_query")"
+  pr_url="$(gh pr view -R "$project" --json "url" --jq '.url' "$i" 2>&1)"
 
-  if [[ -z "$previous_bookmark" ]]; then
+  if [[ "$pr_url" != "no pull requests found for branch"* ]]; then
+    echo "$pr_url"
+  elif [[ -z "$previous_bookmark" ]]; then
     echo "$url/compare/$i"
   else
     echo "$url/compare/$previous_bookmark...$i"
@@ -22,6 +25,7 @@ for i in $(sl log -r "top % public()" -T "{bookmarks} "); do
 
   echo "$commits"
   sl push -f -r "$i" --to "remote/$i" 2>&1 | grep -E "[\+\*]"
+  echo ""
 
   previous_bookmark_query=" % ::$i"
   previous_bookmark="$i"
