@@ -44,16 +44,6 @@ xmodmap -e 'clear Lock' -e 'keycode 0x42 = Escape'
 printf '\033[5 q'
 
 #
-# Configure base16 shell for colors if the terminal is not running inside of
-# emacs or vim
-#
-if [[ -z "$VIM" ]] && [[ -z "$INSIDE_EMACS" ]] && [[ "$TERM_PROGRAM" != "WarpTerminal" ]] && [[ -z "$SSH_TTY" ]] ; then
-  export BASE16_SHELL_ENABLE_VARS=1
-  BASE16_CONFIG_PATH="$HOME/.config/base16-shell/"
-  [ -s "$BASE16_CONFIG_PATH/profile_helper.sh" ] && source "$BASE16_CONFIG_PATH/profile_helper.sh"
-fi
-
-#
 # Setup and export $PATH
 #
 if [ -d $HOME/.local/share/go ]; then
@@ -124,9 +114,8 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Export the bat theme to integrate with base16 nicely
 # https://github.com/sharkdp/bat#highlighting-theme
-export BAT_THEME="base16"
+export BAT_THEME="Nord"
 
 #
 # Init oh-my-zsh

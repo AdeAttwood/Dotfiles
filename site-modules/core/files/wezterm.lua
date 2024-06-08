@@ -1,22 +1,21 @@
 local wezterm = require "wezterm"
 
--- Base16 Theme: Tomorrow
--- local window_frame_fg = "#000000"
--- local window_frame_bg = "#ffffff"
-
--- Base16 Theme: Tomorrow Night
-local window_frame_bg = "#1d1f21"
-local window_frame_fg = "#ffffff"
-
 return {
   -- Use a sexy terminal font with ligatures.
-  --font = wezterm.font("Liga SFMono Nerd Font"),
+  -- You will need to install the beta version of the font to get the ligatures
+  -- https://github.com/intel/intel-one-mono/issues/9#issuecomment-1994958719
   font = wezterm.font {
-    family = "CommitMono",
+    family = "Intel One Mono",
   },
+
+  -- The nord theme to fit with everyting else
+  color_scheme = 'nord',
 
   -- Give the font some more line height, just makes thinks look a bit nicer
   line_height = 1.4,
+
+  -- Remove the window boarders so we have a nice clean look
+  window_decorations = "NONE",
 
   -- Who wants their music interrupted every time there is no tab completion
   -- available in the shell, Who wants their music interrupted evert time there
@@ -28,7 +27,7 @@ return {
 
   -- Disabled all the padding, this makes vim look a lot nicer when all the
   -- window bars go to the edges of the terminal
-  window_padding = { left = 0, right = 0, top = 0, bottom = 0 },
+  window_padding = { left = 0, right = 0, top = 10, bottom = 0 },
 
   warn_about_missing_glyphs = false,
 
@@ -44,18 +43,5 @@ return {
       key = "Backspace",
       action = wezterm.action.SendKey { mods = "CTRL", key = "w" },
     },
-  },
-
-  window_frame = {
-    inactive_titlebar_bg = window_frame_bg,
-    active_titlebar_bg = window_frame_bg,
-    inactive_titlebar_fg = window_frame_fg,
-    active_titlebar_fg = window_frame_fg,
-    inactive_titlebar_border_bottom = window_frame_bg,
-    active_titlebar_border_bottom = window_frame_bg,
-    button_fg = window_frame_fg,
-    button_bg = window_frame_bg,
-    button_hover_fg = window_frame_bg,
-    button_hover_bg = window_frame_fg,
   },
 }

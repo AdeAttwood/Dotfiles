@@ -27,7 +27,7 @@ for _, dir in ipairs(dirs_to_link) do
 end
 
 local start_plugins = {
-  ["base16-vim"] = { url = "https://github.com/tinted-theming/base16-vim.git", revision = "main" },
+  ["nord.nvim"] = { url = "https://github.com/gbprod/nord.nvim.git", revision = "main" },
   ["cmp_luasnip"] = { url = "https://github.com/saadparwaiz1/cmp_luasnip.git" },
   ["cmp-buffer"] = { url = "https://github.com/hrsh7th/cmp-buffer.git", revision = "main" },
   ["cmp-nvim-lsp"] = { url = "https://github.com/hrsh7th/cmp-nvim-lsp.git", revision = "main" },
@@ -80,3 +80,4 @@ configz.run(string.format("rm -rf %s/orgmode", nvim_plugin_dir_start))
 configz.run(string.format("rm -rf %s/indent-line", nvim_plugin_dir_start))
 configz.run(string.format("rm -rf %s/auto-pairs", nvim_plugin_dir_start))
 configz.run(string.format("rm -rf %s/vim-puppet", nvim_plugin_dir_start))
+configz.run(string.format("rm -rf %s/base16-vim", nvim_plugin_dir_start))

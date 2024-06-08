@@ -17,7 +17,7 @@ local plugins = {
   ["tmux-yank"] = { url = "https://github.com/tmux-plugins/tmux-yank.git" },
   ["tmux-open"] = { url = "https://github.com/tmux-plugins/tmux-open.git" },
   ["tmux-copycat"] = { url = "https://github.com/tmux-plugins/tmux-copycat.git" },
-  ["base16-tmux"] = { url = "https://github.com/tinted-theming/base16-tmux.git", revision = "main" },
+  ["tmux-nord"] = { url = "https://github.com/nordtheme/tmux.git", revision = "main" },
 }
 
 for plugin, config in pairs(plugins) do
@@ -27,3 +27,5 @@ for plugin, config in pairs(plugins) do
     version = config.revision or "master",
   }
 end
+
+configz.run(string.format("rm -rf %s/base16-tmux", plugin_dir))
