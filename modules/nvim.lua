@@ -41,8 +41,6 @@ local start_plugins = {
   ["nvim-treesitter"] = { url = "https://github.com/nvim-treesitter/nvim-treesitter.git" },
   ["vim-surround"] = { url = "https://github.com/tpope/vim-surround.git" },
   ["vim-tmux-navigator"] = { url = "https://github.com/christoomey/vim-tmux-navigator.git" },
-  ["vim-fugitive"] = { url = "https://github.com/tpope/vim-fugitive.git" },
-  ["vim-rhubarb"] = { url = "https://github.com/tpope/vim-rhubarb.git" },
   ["cmp-cmdline"] = { url = "https://github.com/hrsh7th/cmp-cmdline.git", revision = "main" },
   ["copilot"] = { url = "https://github.com/zbirenbaum/copilot.lua.git" },
   ["copilot-cmp"] = { url = "https://github.com/zbirenbaum/copilot-cmp.git" },
@@ -81,3 +79,5 @@ configz.run(string.format("rm -rf %s/indent-line", nvim_plugin_dir_start))
 configz.run(string.format("rm -rf %s/auto-pairs", nvim_plugin_dir_start))
 configz.run(string.format("rm -rf %s/vim-puppet", nvim_plugin_dir_start))
 configz.run(string.format("rm -rf %s/base16-vim", nvim_plugin_dir_start))
+configz.run(string.format("rm -rf %s/vim-fugitive", nvim_plugin_dir_start))
+configz.run(string.format("rm -rf %s/vim-rhubarb", nvim_plugin_dir_start))
