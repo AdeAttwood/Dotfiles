@@ -50,6 +50,7 @@ local start_plugins = {
   ["neoformat"] = { url = "https://github.com/sbdchd/neoformat" },
   ["csharpls-extended-lsp"] = { url = "https://github.com/Decodetalkers/csharpls-extended-lsp.nvim" },
   ["Ionide-vim"] = { url = "https://github.com/ionide/Ionide-vim" },
+  ["baleia.nvim"] = { url = "https://github.com/m00qek/baleia.nvim", revision = "main" },
 }
 
 local opt_plugins = {
