@@ -27,7 +27,9 @@ local servers = {
       Lua = {
         telemetry = { enable = false },
         runtime = { version = "LuaJIT" },
-        diagnostics = { globals = { "vim", "configz", "describe", "it", "assert", "spy" } },
+        diagnostics = {
+          globals = { "vim", "configz", "describe", "it", "assert", "spy", "stub", "before_each", "after_each" },
+        },
         workspace = {
           library = workspace_library,
           checkThirdParty = false,
