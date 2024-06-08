@@ -17,7 +17,7 @@ local plugins = {
   ["tmux-yank"] = { url = "https://github.com/tmux-plugins/tmux-yank.git" },
   ["tmux-open"] = { url = "https://github.com/tmux-plugins/tmux-open.git" },
   ["tmux-copycat"] = { url = "https://github.com/tmux-plugins/tmux-copycat.git" },
-  ["tmux-nord"] = { url = "https://github.com/nordtheme/tmux.git", revision = "main" },
+  ["tmux-nord"] = { url = "https://github.com/nordtheme/tmux.git", revision = "develop" },
 }
 
 for plugin, config in pairs(plugins) do
