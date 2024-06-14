@@ -39,6 +39,7 @@ local start_plugins = {
   ["nvim-lint"] = { url = "https://github.com/mfussenegger/nvim-lint.git" },
   ["nvim-lspconfig"] = { url = "https://github.com/neovim/nvim-lspconfig.git" },
   ["nvim-treesitter"] = { url = "https://github.com/nvim-treesitter/nvim-treesitter.git" },
+  ["nvim-treesitter-textobjects"] = { url = "https://github.com/nvim-treesitter/nvim-treesitter-textobjects.git" },
   ["vim-surround"] = { url = "https://github.com/tpope/vim-surround.git" },
   ["vim-tmux-navigator"] = { url = "https://github.com/christoomey/vim-tmux-navigator.git" },
   ["cmp-cmdline"] = { url = "https://github.com/hrsh7th/cmp-cmdline.git", revision = "main" },
