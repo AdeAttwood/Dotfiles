@@ -37,11 +37,11 @@ function dkip() {
 #
 # Docker Compose
 #
-alias dkc="docker-compose"
-alias dkcdown="docker-compose down"
-alias dkcup="docker-compose up -d"
+alias dkc="docker compose"
+alias dkcdown="docker compose down"
+alias dkcup="docker compose up -d"
 
 function dkcrestart() {
-    docker-compose stop $1
-    docker-compose up -d $1
+    docker compose stop $1
+    docker compose up -d $1
 }
