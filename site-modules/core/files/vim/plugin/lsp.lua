@@ -20,7 +20,15 @@ local servers = {
     cmd = { "bundle", "exec", "solargraph", "stdio" },
   },
   -- Rust
-  rust_analyzer = {},
+  rust_analyzer = {
+    settings = {
+      ["rust-analyzer"] = {
+        checkOnSave = {
+          command = "clippy",
+        },
+      },
+    },
+  },
   -- Lua for the vim config and plugin dev
   lua_ls = {
     settings = {
