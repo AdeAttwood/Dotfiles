@@ -18,43 +18,83 @@
   []
   (string/join "/" (map #(.toString %) (take 2 (reverse(fs/components (fs/cwd)))))))
 
-(defn parse-procfile 
+(defn parse-procfile
   "Parses a procfile file and returns a list of [name command] pairs."
-  []
-  (map #(string/split % #":\s+") (string/split (slurp "Procfile.dev") #"\n" )))
+  [file]
+  (map #(string/split % #":\s+") (string/split (slurp file) #"\n" )))
 
-(defn has-session?
+(defn has-tmux-session?
   "Tests to see if a session already exists with a given name."
   [session-name]
   (string/includes? (:out (shell {:out :string} "tmux list-sessions")) session-name))
 
-(defn has-window?
+(defn has-tmux-window?
   "Tests to see if a window already exists within a tmux session."
   [session-name window-name]
   (string/includes? (:out (shell {:out :string} (format "tmux list-windows -t '%s'" session-name))) window-name))
 
-(defn create-window
+(defn create-tmux-window
   "Creates a new tmux window in a session if it dose not already exists. Then
   it will run any commands that are passed inside the new window."
   [project name & commands]
-  (when-not (has-window? project name)
+  (when-not (has-tmux-window? project name)
     (shell (format "tmux new-window -t '%s' -n '%s'" project name))
     (doseq [command commands]
       (shell (format "tmux send-keys -t %s:'%s' '%s' C-m" project name command)))))
 
-(defn command-start [_]
-  (when (not (fs/exists? "Procfile.dev"))
-    (println "No Procfile.dev found in the current directory")
-    (System/exit 0))
-
-  (when (not (has-session? (current-project-name)))
+(defn tmux-start [file]
+  (when (not (has-tmux-session? (current-project-name)))
     (shell (format "tmux new-session -d -c %s -s '%s'" (fs/cwd) (current-project-name))))
 
-  (doseq [[name command] (parse-procfile)]
-    (create-window (current-project-name) name command)))
+  (doseq [[name command] (parse-procfile file)]
+    (create-tmux-window (current-project-name) name command)))
+
+(defn is-in-tmux?
+  "Tests to see if we are in a tmux session or not."
+  []
+  (not (nil? (System/getenv "TMUX"))))
+
+(defn has-wezterm-pane?
+  "Tests to see if a wezterm pane already exists."
+  [name]
+  (string/includes? (:out (shell {:out :string} "wezterm cli list")) (format "pf: %s" name)))
+
+(defn create-wezterm-pane
+  "Create a new wezterm pane and spawn a command in it."
+  [name command]
+  (let [pane-id (:out (shell {:out :string} (format "wezterm cli spawn --cwd %s" (fs/cwd))))]
+    (shell (format "wezterm cli set-tab-title --pane-id %s 'pf: %s'" pane-id name))
+    (shell {:in command} (format "wezterm cli send-text --pane-id %s" pane-id))
+    (shell {:in "\n"} (format "wezterm cli send-text --pane-id %s" pane-id))))
+
+(defn wezterm-start [file]
+  (let [pane-id (System/getenv "WEZTERM_PANE")]
+    (doseq [[name command] (parse-procfile file)]
+      (when (not (has-wezterm-pane? name))
+        (create-wezterm-pane name command)))
+
+      (shell (format "wezterm cli activate-pane --pane-id %s" pane-id))))
+
+(defn is-in-wezterm?
+  "Tests to see if we are in a wezterm session or not."
+  []
+  (not (nil? (System/getenv "WEZTERM_PANE"))))
+
+(defn command-start [m]
+  (let [file (get-in m [:opts :file] "Procfile.dev")]
+    (when (not (fs/exists? file))
+      (println "No Procfile.dev found in the current directory")
+      (System/exit 0))
+
+    (cond
+      (is-in-tmux?) (tmux-start file)
+      (is-in-wezterm?) (wezterm-start file)
+      :else (println "Unable to spawn processes in the current environment"))
+
+      (System/exit 0)))
 
 (defn command-stop [_]
-  (when (has-session? (current-project-name))
+  (when (has-tmux-session? (current-project-name))
     (shell (format "tmux kill-session -t '%s'" (current-project-name)))))
 
 (defn command-restart [args]
@@ -71,7 +111,7 @@
   (println ""))
 
 (def command-table
-  [{:cmds ["start"]   :fn command-start}
+  [{:cmds ["start"]   :fn command-start :opts {:file "Procfile.dev"}}
    {:cmds ["stop"]    :fn command-stop}
    {:cmds ["restart"] :fn command-restart}
    {:cmds []          :fn help}])
