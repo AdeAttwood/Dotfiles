@@ -1,5 +1,6 @@
 local lint = require "lint"
 local cspell_linter = require "lint.linters.cspell"
+local eslint_linter = require "lint.linters.eslint"
 
 local severities = {
   error = vim.diagnostic.severity.ERROR,
@@ -44,16 +45,14 @@ local get_language_id = function()
 end
 
 lint.linters.cspell = cspell_linter
-lint.linters.cspell.args = {
-  "lint",
-  "--no-color",
-  "--no-progress",
-  "--no-summary",
-  "--config=" .. os.getenv "HOME" .. "/.cspell.json",
-  get_language_id,
-  "--",
-  "stdin",
-}
+table.insert(lint.linters.cspell.args, "--config=" .. os.getenv "HOME" .. "/.cspell.json")
+table.insert(lint.linters.cspell.args, get_language_id)
+table.insert(lint.linters.cspell.args, "--")
+table.insert(lint.linters.cspell.args, "stdin")
+
+lint.linters.eslint = eslint_linter
+table.insert(lint.linters.eslint.args, 1, "--flag")
+table.insert(lint.linters.eslint.args, 2, "unstable_ts_config")
 
 lint.linters_by_ft = {}
 
