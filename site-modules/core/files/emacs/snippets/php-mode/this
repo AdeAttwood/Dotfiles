@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: This
-# key: this
-# --
-$this->$0

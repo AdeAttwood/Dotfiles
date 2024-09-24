@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: It testing helper function
-# key: it
-# --
-it('${1: description}', async () => {
-    $0 
-});

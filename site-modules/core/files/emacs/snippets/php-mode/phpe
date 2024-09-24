@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: PHP Echo tags
-# key: phpe
-# --
-<?= $0 ?>

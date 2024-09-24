@@ -1,146 +1,402 @@
 ;;; init.el --- AMACS -*- lexical-binding: t -*-
-;;
-;; Copyright 2021 Practically.io All rights reserved
-;;
-;; Use of this source is governed by a BSD-style
-;; licence that can be found in the LICENCE file or at
-;; https://www.practically.io/copyright/
-;; ;;; Commentary:
-;;
-;;  The entrypoint to AMACS
-;;
-;;; Code:
 
-;; (setq user-emacs-directory "~/development/emacs")
-;; (customize-set-value 'custom-theme-directory user-emacs-directory)
+;;; Package management
+(defvar bootstrap-version)
+(let ((bootstrap-file
+        (expand-file-name
+          "straight/repos/straight.el/bootstrap.el"
+          (or (bound-and-true-p straight-base-dir)
+              user-emacs-directory)))
+      (bootstrap-version 7))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+      (url-retrieve-synchronously
+        "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+        'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-;; Load package loading with `use-package` this must be the first
-;; thing loaded so we can install the packages with `use-package`
-(load-file (expand-file-name "src/packages.el" user-emacs-directory))
+(straight-use-package 'use-package)
 
-;; Load the ui tweeks and theme to limit the time we see a big white
-;; screen
-(load-file (expand-file-name "src/ui.el" user-emacs-directory))
+;;; UI Setup
 
-;; Load the personal config if its available where all of the secrets
-;; source is
-(let ((personal-init (expand-file-name "init-personal.el" user-emacs-directory)))
- (when (file-exists-p personal-init)
-   (load-file personal-init)))
+(tooltip-mode -1)     ; Disable tooltips
+(menu-bar-mode -1)    ; Disable the menu bar
+(scroll-bar-mode -1)  ; Disable visible scrollbar
+(tool-bar-mode -1)    ; Disable the toolbar
 
-;; Genral and main configuration
-(load-file (expand-file-name "src/general.el" user-emacs-directory))
-(load-file (expand-file-name "src/file-operations.el" user-emacs-directory))
-(load-file (expand-file-name "src/evil.el" user-emacs-directory))
-(load-file (expand-file-name "src/ivy.el" user-emacs-directory))
-(load-file (expand-file-name "src/treemacs.el" user-emacs-directory))
-(load-file (expand-file-name "src/term.el" user-emacs-directory))
-(load-file (expand-file-name "src/language-tool.el" user-emacs-directory))
+(defun aa/set-font (a-font-size)
+  "Sets the font size for the whole of emacs setting the font faces
 
-;; Set up puppet for editing the dotfiles config
-(load-file (expand-file-name "src/puppet.el" user-emacs-directory))
+This is better than the `C-x +` and C-x - because this is global to emacs not
+just in in the current buffer."
+  (interactive "nFont Size: ")
 
-;; Email configuration
-(load-file (expand-file-name "src/notmuch.el" user-emacs-directory))
+  (setq aa-font "DejaVu Sans Mono")
+  (setq aa-v-font "Sans Serif")
+  ;; (setq aa-v-font "Ubuntu")
 
-;; Org mode
-(load-file (expand-file-name "src/org.el" user-emacs-directory))
+  (set-face-attribute 'default nil :font aa-font :height a-font-size)
+  (set-face-attribute 'fixed-pitch nil :font aa-font :height a-font-size)
+  (set-face-attribute 'variable-pitch nil :font aa-v-font :height a-font-size :weight 'regular))
 
-;; Development configuration
-(load-file (expand-file-name "src/format.el" user-emacs-directory))
-(load-file (expand-file-name "src/development.el" user-emacs-directory))
-(load-file (expand-file-name "src/zoekt.el" user-emacs-directory))
-(load-file (expand-file-name "src/lang/php.el" user-emacs-directory))
-(load-file (expand-file-name "src/lang/c-sharp.el" user-emacs-directory))
-(load-file (expand-file-name "src/lang/js-ts.el" user-emacs-directory))
-(load-file (expand-file-name "src/lang/yaml.el" user-emacs-directory))
-(load-file (expand-file-name "src/lang/json.el" user-emacs-directory))
-(load-file (expand-file-name "src/lang/web.el" user-emacs-directory))
-(load-file (expand-file-name "src/lang/go.el" user-emacs-directory))
-(load-file (expand-file-name "src/lang/docker.el" user-emacs-directory))
-(load-file (expand-file-name "src/lang/shell.el" user-emacs-directory))
-(load-file (expand-file-name "src/lang/c.el" user-emacs-directory))
+;; Set the default font size when emacs starts
+(aa/set-font 100)
 
-;; Load the projectile module last so we can override compilation errors regexp
-;; without other modules affecting it after
-(load-file (expand-file-name "src/projectile.el" user-emacs-directory))
+(use-package all-the-icons
+  :straight t
+  :if (display-graphic-p))
+
+(use-package doom-modeline
+  :straight t
+  :init (doom-modeline-mode 1))
+
+(use-package doom-themes
+  :straight t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  (load-theme 'doom-nord-light t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+
+;;; General Setup
+
+;; Disable .# lock files. Then sends all directory watch tasks crazy. It also
+;; make compiling applications fail when you have unsaved files
+(setq create-lockfiles nil)
+
+;; Make ESC quit prompts
+(global-set-key (kbd "<escape>") 'keyboard-escape-quit)
+
+(setq browse-url-browser-function 'browse-url-chrome)
+
+(use-package which-key
+  :straight t
+  :init (which-key-mode)
+  :diminish which-key-mode
+  :config
+  (setq which-key-idle-delay 1))
+
+;;; Org
+
+(straight-use-package 'org)
+
+(require 'org-habit)
+(require 'org-id)
+(require 'org-protocol)
+(require 'org-tempo)
+
+(setq org-directory "~/Org"
+      org-agenda-files (list org-directory)
+      org-todo-keywords '((sequence "TODO" "WAITING" "REVIEW" "|" "DONE" "ARCHIVED"))
+      org-hide-emphasis-markers t
+      org-agenda-window-setup 'current-window
+      org-export-with-broken-links "mark"
+      org-export-with-section-numbers nil
+      org-export-with-sub-superscripts nil
+      org-export-with-toc nil
+      org-html-head "<style>body { font-family: system-ui; }</style>")
+
+(setq org-agenda-custom-commands
+      '(("d" "Dashboard"
+         ((agenda "" ((org-deadline-warning-days 7)))
+          (todo "WAITING"
+                ((org-agenda-overriding-header "Waiting on External")))
+          (todo "TODO"
+                ((org-agenda-overriding-header "Scheduled")
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottimestamp))))
+          (todo "TODO"
+                ((org-agenda-overriding-header "Backlog")
+                 (org-agenda-todo-list-sublevels nil)
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))))))
+
+(setq org-capture-templates
+      '(("t" "Todo" entry (file+headline "Todo.org" "Inbox")
+         "* TODO %?\n\n  %a")))
+
+(add-hook 'org-mode-hook (lambda ()
+    (electric-pair-mode)
+    (org-indent-mode)
+    (flyspell-mode)))
+
+;; Open file links in current window, rather than new ones
+;; https://github.com/hlissner/doom-emacs/blob/develop/modules/lang/org/config.el#L632
+(setf (alist-get 'file org-link-frame-setup) #'find-file)
+
+(use-package org-bullets
+  :straight t
+  :after org
+  :config
+  (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1))))
+
+(use-package org-roam
+  :straight t
+  :custom
+  (setq org-roam-completion-everywhere t)
+  (org-roam-directory (concat (file-name-as-directory org-directory) "Roam"))
+  (org-roam-completion-everywhere t)
+  :config
+  (org-roam-db-autosync-mode)
+  (require 'org-roam-protocol))
+
+(use-package org-roam-ui
+  :straight t
+  :after org-roam
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
+
+(use-package org-download
+  :straight t
+  :config
+  (setq-default org-download-image-dir (concat (file-name-as-directory org-directory) "Attachments")
+                org-download-heading-lvl nil))
+
+;;; Completion
+
+(use-package company
+  :straight t
+  :config
+  (setq completion-ignore-case t)
+  (setq company-idle-delay 0.4)
+  (add-to-list 'company-backends 'company-capf)
+  (global-company-mode 1))
+
+(use-package company-box
+  :straight t
+  :hook (company-mode . company-box-mode))
+
+(use-package ivy
+  :straight t
+  :diminish
+  :bind (:map ivy-minibuffer-map
+         ("TAB" . ivy-alt-done)
+         ("C-l" . ivy-alt-done)
+         ("C-j" . ivy-next-line)
+         ("C-k" . ivy-previous-line)
+         :map ivy-switch-buffer-map
+         ("C-k" . ivy-previous-line)
+         ("C-l" . ivy-done)
+         ("C-d" . ivy-switch-buffer-kill)
+         :map ivy-reverse-i-search-map
+         ("C-k" . ivy-previous-line)
+         ("C-d" . ivy-reverse-i-search-kill))
+  :config
+  (ivy-mode 1))
+
+(use-package counsel
+  :straight t
+  :config
+  (counsel-mode 1))
+
+;;; Evil
+
+(use-package evil
+  :straight t
+  :init
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-i-jump nil)
+  :config
+  (evil-mode 1)
+
+  ;; Set window movement to CTRL hjkl to emulate tmux vim interaction
+  (global-set-key (kbd "C-h") 'evil-window-left)
+  (global-set-key (kbd "C-j") 'evil-window-down)
+  (global-set-key (kbd "C-l") 'evil-window-right)
+  (global-set-key (kbd "C-k") 'evil-window-up)
+
+  (evil-set-initial-state 'messages-buffer-mode 'normal)
+  (evil-set-initial-state 'dashboard-mode 'normal))
+
+(use-package evil-collection
+  :straight t
+  :after evil
+  :config
+  (evil-collection-init))
+
+(use-package evil-org
+  :straight t
+  :after org
+  :hook (org-mode . (lambda () evil-org-mode))
+  :config
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
+;;; Email
+
+(use-package counsel-notmuch
+  :straight t
+  :defer t)
+
+(use-package notmuch
+  ;; Use the notmuch package that is installed
+  :load-path "/usr/share/emacs/site-lisp"
+  :config
+  (setq notmuch-saved-searches '((:name "inbox"
+                                  :key "i"
+                                  :query "query:inbox"
+                                  :sort-order oldest-first)))
+
+  (evil-define-key 'normal notmuch-search-mode-map
+    "d" 'aa/notmuch-search-delete)
+  (evil-define-key 'visual notmuch-search-mode-map
+    "d" 'aa/notmuch-search-delete))
+
+(defun aa/notmuch-search-inbox ()
+  "Helper function to search for the inbox messages (oldest message first).
+  This query is defined in the notmuch config to make it easier to search for
+  inbox messages."
+  (interactive)
+  (notmuch-search "query:inbox" t))
+
+(defun aa/notmuch-search-delete ()
+  "When deleting messages we want to also make them unread. When a new message
+  comes in the thread notmuch will show you all the messages, this makes it
+  easier to see what is new."
+  (interactive)
+  (notmuch-search-tag (list "+deleted" "-inbox" "-unread"))
+  (notmuch-tree-next-message))
+
+(defun org-notmuch-open (id)
+  "Visit the notmuch message or thread with id ID."
+  (notmuch-show id))
+
+(defun org-notmuch-store-link ()
+  "Store a link to a notmuch mail message."
+  (cl-case major-mode
+    ('notmuch-show-mode
+     ;; Store link to the current message
+     (let* ((id (notmuch-show-get-message-id))
+	    (link (concat "notmuch:" id))
+	    (description (format "Mail: %s" (notmuch-show-get-subject))))
+       (org-store-link-props
+	:type "notmuch"
+	:link link
+	:description description)))
+    ('notmuch-search-mode
+     ;; Store link to the thread on the current line
+     (let* ((id (notmuch-search-find-thread-id))
+	    (link (concat "notmuch:" id))
+	    (description (format "Mail: %s" (notmuch-search-find-subject))))
+       (org-store-link-props
+	:type "notmuch"
+	:link link
+	:description description)))))
+
+(org-link-set-parameters
+  "notmuch"
+  :follow 'org-notmuch-open
+  :store 'org-notmuch-store-link)
+
+(defun aa/notmuch-show-view-as-patch ()
+  "View the the current message as a patch.
+
+   See: https://notmuchmail.org/emacstips"
+  (interactive)
+  (let* ((id (notmuch-show-get-message-id))
+         (msg (notmuch-show-get-message-properties))
+         (part (notmuch-show-get-part-properties))
+         (subject (concat "Subject: " (notmuch-show-get-subject) "\n"))
+         (diff-default-read-only t)
+         (buf (get-buffer-create (concat "*notmuch-patch-" id "*")))
+         (map (make-sparse-keymap)))
+    (define-key map "q" 'notmuch-bury-or-kill-this-buffer)
+    (switch-to-buffer buf)
+    (let ((inhibit-read-only t))
+      (erase-buffer)
+      (insert subject)
+      (insert (notmuch-get-bodypart-text msg part nil)))
+    (set-buffer-modified-p nil)
+    (diff-mode)
+    (lexical-let ((new-ro-bind (cons 'buffer-read-only map)))
+                 (add-to-list 'minor-mode-overriding-map-alist new-ro-bind))
+    (goto-char (point-min))))
+
+(use-package mbwatch
+  :load-path "~/.emacs.d/mbwatch"
+  :after notmuch
+  :config
+  (mbwatch-mode 1)
+  (add-hook 'mbwatch-output-hook
+          (lambda (account mailbox)
+            (message "[mbwatch] new messages for account %s in mailbox %s" account mailbox)
+            (notmuch-command-to-string "new"))))
+
+;;; Sending email
+(use-package org-mime
+  :straight t)
+
+;; sendmail-program
+(setq send-mail-function 'sendmail-send-it
+      sendmail-program "mailsend")
+
+;;; Keybindings
 
 (use-package general
+  :straight t
   :config
-  (general-create-definer efs/leader-keys
+  (general-create-definer aa/leader-keys
     :keymaps '(normal insert visual emacs)
     :prefix "SPC"
     :global-prefix "C-SPC")
 
-  (efs/leader-keys
+  (aa/leader-keys
    ;; Global bindings
-    "/"		'(counsel-projectile-ag :which-key "Search Project")
-    "TAB"	'(evil-switch-to-windows-last-buffer :which-key "Last Buffer")
-    "SPC"	'(counsel-M-x :which-key "M-x")
-	"a"     '(projectile-toggle-between-implementation-and-test :which-key "Toggle test and implementation")
-    ";"		'(evil-commentary-line :which-key "Comment")
-	;; Docker
-    "d"		'(:ignore t :which-key "Docker")
-    "dd"	'docker
-    "di"	'docker-images
-    "dc"	'docker-containers
+    "/"   '(counsel-projectile-ag :which-key "Search Project")
+    "TAB" '(evil-switch-to-windows-last-buffer :which-key "Last Buffer")
+    "SPC" '(counsel-M-x :which-key "M-x")
+
     ;; Jumping in a buffer
-    "j"		'(:ignore t :which-key "Jumps")
-    "jj"	'evil-avy-goto-char-timer
-    "jl"	'evil-avy-goto-line
+    "j"  '(:ignore t :which-key "Jumps")
+    "jj" 'evil-avy-goto-char-timer
+    "jl" 'evil-avy-goto-line
+
     ;; Searching
-    "s"		'(:ignore t :which-key "Searching")
-    "ss"	'swiper
-    "sS"	'swiper-thing-at-point
-    "sb"	'swiper-all
-    "sB"	'swiper-all-thing-at-point
+    "s"  '(:ignore t :which-key "Searching")
+    "ss" 'swiper
+    "sS" 'swiper-thing-at-point
+    "sb" 'swiper-all
+    "sB" 'swiper-all-thing-at-point
+
     ;; Windows. Just rebind all of the evil window bindings to "SPC w"
     ;; so we dont have to keep hitting "CTRL-w"
-    "w"		'(evil-window-map :which-key "Windows")
-    "wd"	'evil-window-delete
-    ;; Org Mode
-    "o"		'(evil-window-map :which-key "Org Mode")
-    "oa"	'org-agenda
-    "oc"    'org-capture
-    ;; Git
-    "g"		'(:ignore t :which-key "Git")
-    "gs"    'magit-status
-    "gd"	'magit-diff
-    "gl"	'magit-log
-	"gb"    'browse-at-remote
-    ;; Email
-    "e"		'(:ignore t :which-key "Email")
-    "ei"    'aa/notmuch-search-inbox
-    "eu"    'aa/notmuch-search-inbox-unread
-    "es"	'counsel-notmuch
-    "en"	'notmuch
-    "ej"	'notmuch-jump-search
-    ;; Files
-    "f"		'(:ignore t :which-key "Files")
-    "fs"	'save-buffer
-    "ff"	'counsel-find-file
-    ;; Buffers
-    "b"		'(:ignore t :which-key "Buffers")
-    "bd"	'kill-this-buffer
-    "bb"	'counsel-switch-buffer
-    ;; LSP actions
-    "l"		'(:ignore t :which-key "LSP")
-    "lr"	'lsp-workspace-restart
-	"la"    'lsp-execute-code-action
-    ;; Projects
-    "p"		'(:ignore t :which-key "Projects")
-    "p SPC"	'counsel-projectile
-    "pb"	'counsel-projectile-switch-to-buffer
-    "pd"	'counsel-projectile-find-dir
-    "pp"	'counsel-projectile-switch-project
-    "pf"	'counsel-projectile-find-file
-    "pt"	'neotree-projectile-action
-	"ps"    'projectile-run-vterm
-    ;; Toggles
-    "t"		'(:ignore t :which-key "Toggles")
-    "tt"	'(counsel-load-theme :which-key "choose theme")))
+    "w"  '(evil-window-map :which-key "Windows")
+    "wd" 'evil-window-delete
 
-(require 'server)
-(unless (server-running-p)
-        (message "Starting a server...")
-        (server-start))
+    ;; Org Mode
+    "o"  '(evil-window-map :which-key "Org Mode")
+    "oa" 'org-agenda
+    "oc" 'org-capture
+    "ot" 'org-roam-dailies-goto-today
+    "of" 'org-roam-node-find
+    "or" 'org-refile
+    "ol" 'org-roam-link-replace-all
+
+    ;; Files
+    "f"  '(:ignore t :which-key "Files")
+    "fs" 'save-buffer
+    "ff" 'counsel-find-file
+
+    ;; Buffers
+    "b"  '(:ignore t :which-key "Buffers")
+    "bd" 'kill-this-buffer
+    "bb" 'counsel-switch-buffer
+
+    "e"  '(:ignore t :which-key "Email")
+    "ee" 'notmuch
+    "ei" 'aa/notmuch-search-inbox
+    "ej" 'notmuch-jump-search
+    "es" 'counsel-notmuch
+
+    ;; Toggles
+    "t"  '(:ignore t :which-key "Toggles")
+    "tt" '(counsel-load-theme :which-key "choose theme")))

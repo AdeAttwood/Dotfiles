@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: PHP Tags
-# key: php
-# --
-<?php $0 ?>

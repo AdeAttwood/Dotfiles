@@ -1,6 +1,0 @@
-# -*- mode: snippet; require-final-newline: nil -*-
-# name: React useState
-# key: useState
-# contributor: Ade Attwood <code@adeattwood.co.uk>
-# --
-const [${1:state}, set${1:$(aa/yas/rjsx/capitalize-first-cha yas-text)}] = React.useState(${2:initialState});

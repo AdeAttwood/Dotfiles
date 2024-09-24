@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: React import
-# key: react
-# contributor: Ade Attwood <code@adeattwood.co.uk>
-# --
-import React from 'react';

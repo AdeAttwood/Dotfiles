@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: ES Import
-# key: import
-# contributor: Ade Attwood <code@adeattwood.co.uk>
-# --
-import {${2:Import}} from '$1';

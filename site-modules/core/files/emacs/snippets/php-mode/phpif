@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: PHP if statment in view
-# key: phpif
-# --
-<?php if ($1) : ?>
-    $0
-<?php endif; ?>

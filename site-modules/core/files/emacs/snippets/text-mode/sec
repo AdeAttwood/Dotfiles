@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: Security footer in a commit message
-# key: sec
-# contributor: Ade Attwood <code@adeattwood.co.uk>
-# --
-SECURITY: ${0:Description}

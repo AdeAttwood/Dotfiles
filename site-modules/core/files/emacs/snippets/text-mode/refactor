@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: Refactor commit message
-# key: refactor
-# contributor: Ade Attwood <code@adeattwood.co.uk>
-# --
-refactor(${1:scope}): ${2:title}

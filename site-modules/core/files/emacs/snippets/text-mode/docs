@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: Documentation commit message
-# key: docs
-# contributor: Ade Attwood <code@adeattwood.co.uk>
-# --
-docs(${1:scope}): ${2:title}

@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: Array item
-# key: ai
-# contributor: Ade Attwood <code@adeattwood.co.uk>
-# --
-'$1' => $0

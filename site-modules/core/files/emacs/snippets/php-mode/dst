@@ -1,6 +1,0 @@
-# -*- mode: snippet -*-
-# name: Declare strict types decoration
-# key: dst
-# contributor: Ade Attwood <code@adeattwood.co.uk>
-# --
-declare(strict_types = 1);
