@@ -299,11 +299,20 @@ just in in the current buffer."
 
 (use-package evil-org
   :straight t
-  :after org
+  :after evil org
   :hook (org-mode . (lambda () evil-org-mode))
   :config
   (require 'evil-org-agenda)
+  (evil-org-set-key-theme)
   (evil-org-agenda-set-keys))
+
+;; Ensure org-agenda starts in evil-normal-state
+(defun aa/org-agenda-setup ()
+  "Start org-agenda in evil-normal-state."
+  (evil-org-mode)
+  (evil-set-initial-state 'org-agenda-mode 'normal))
+
+(add-hook 'org-agenda-mode-hook 'aa/org-agenda-setup)
 
 ;;; Email
 
