@@ -92,8 +92,70 @@ just in in the current buffer."
 (require 'org-protocol)
 (require 'org-tempo)
 
+(defun aa/org-roam-update-tasklist-tag ()
+  "Add or remove the 'tasklist' filetag based on the presence of TODO items in
+  the current buffer. Ensure the filetag is inserted right under the title if
+  not present."
+  (when (org-roam-file-p)  ; Ensure this only runs on Org-roam files
+    (save-excursion
+      (goto-char (point-min))
+      ;; Locate the title or the first heading
+      (let ((has-title (re-search-forward "^#\\+title:" nil t))
+            (has-todo nil))
+        ;; Check for TODOs in the file
+        (goto-char (point-min))
+        (while (re-search-forward org-todo-regexp nil t)
+               (setq has-todo t))
+
+        ;; Determine the correct place for filetags (right below the title or
+        ;; first heading)
+        (goto-char (point-min))
+        (when has-title
+          (re-search-forward "^#\\+title:.*$" nil t))
+
+        ;; Insert filetags if missing
+        (unless (re-search-forward "^#\\+filetags:" (save-excursion (outline-next-heading) (point)) t)
+          ;; Move under title or first heading
+          (end-of-line)
+          (insert "\n#+filetags:"))
+
+        ;; Go to the filetags line and modify based on presence of TODOs
+        (goto-char (point-min))
+        (when (re-search-forward "^#\\+filetags:.*$" nil t)
+          (let ((tags-line (match-string 0)))
+            (if has-todo
+              (unless (string-match-p ":tasklist:" tags-line)
+                ;; Add the tasklist tag if not present and TODOs exist
+                (end-of-line)
+                (insert " :tasklist:"))
+              (when (string-match-p ":tasklist:" tags-line)
+                ;; Remove the tasklist tag if no TODOs exist
+                (replace-match (replace-regexp-in-string ":tasklist:" "" tags-line) nil nil nil 0)))))))))
+
+;; Add the function to before-save-hook so it runs on every save
+(add-hook 'before-save-hook 'aa/org-roam-update-tasklist-tag)
+
+(defun aa/org-roam-tasklist-files ()
+  "Return a list of note files containing 'tasklist' tag."
+  (seq-uniq
+   (seq-map
+    #'car
+    (org-roam-db-query
+     [:select [nodes:file]
+      :from tags
+      :left-join nodes
+      :on (= tags:node-id nodes:id)
+      :where (like tag (quote "%\"tasklist\"%"))]))))
+
+(defun aa/org-agenda-files (&rest _)
+  "Update the value of `org-agenda-files'."
+  (setq org-agenda-files
+    (append (aa/org-roam-tasklist-files) (list org-directory))))
+
+(advice-add 'org-agenda :before #'aa/org-agenda-files)
+(advice-add 'org-todo-list :before #'aa/org-agenda-files)
+
 (setq org-directory "~/Org"
-      org-agenda-files (list org-directory)
       org-todo-keywords '((sequence "TODO" "WAITING" "REVIEW" "|" "DONE" "ARCHIVED"))
       org-hide-emphasis-markers t
       org-agenda-window-setup 'current-window
@@ -120,6 +182,17 @@ just in in the current buffer."
       '(("t" "Todo" entry (file+headline "Todo.org" "Inbox")
          "* TODO %?\n\n  %a")))
 
+(setq org-roam-dailies-capture-templates
+      '(("d" "default" entry
+         "* %?"
+         :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))
+        ("t" "todo" entry
+         "* TODO %?\n\n  %a"
+         :target (file+head "%<%Y-%m-%d>.org" "#+title: %<%Y-%m-%d>\n"))))
+
+(setq org-refile-targets
+      `((,(concat (file-name-as-directory org-directory) "Todo.org") :maxlevel . 1)))
+
 (add-hook 'org-mode-hook (lambda ()
     (electric-pair-mode)
     (org-indent-mode)
@@ -143,6 +216,7 @@ just in in the current buffer."
   (org-roam-completion-everywhere t)
   :config
   (org-roam-db-autosync-mode)
+  (aa/org-agenda-files)
   (require 'org-roam-protocol))
 
 (use-package org-roam-ui
@@ -375,7 +449,7 @@ just in in the current buffer."
     ;; Org Mode
     "o"  '(evil-window-map :which-key "Org Mode")
     "oa" 'org-agenda
-    "oc" 'org-capture
+    "oc" 'org-roam-dailies-capture-today
     "ot" 'org-roam-dailies-goto-today
     "of" 'org-roam-node-find
     "or" 'org-refile
