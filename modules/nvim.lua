@@ -33,7 +33,7 @@ local start_plugins = {
   ["cmp-nvim-lsp"] = { url = "https://github.com/hrsh7th/cmp-nvim-lsp.git", revision = "main" },
   ["cmp-path"] = { url = "https://github.com/hrsh7th/cmp-path.git", revision = "main" },
   ["Comment.nvim"] = { url = "https://github.com/numToStr/Comment.nvim.git" },
-  ["ferret"] = { url = "https://github.com/wincent/ferret.git" },
+  ["ferret"] = { url = "https://github.com/wincent/ferret.git", revision = "main" },
   ["LuaSnip"] = { url = "https://github.com/L3MON4D3/LuaSnip.git" },
   ["nvim-cmp"] = { url = "https://github.com/hrsh7th/nvim-cmp.git", revision = "main" },
   ["nvim-lint"] = { url = "https://github.com/mfussenegger/nvim-lint.git" },
