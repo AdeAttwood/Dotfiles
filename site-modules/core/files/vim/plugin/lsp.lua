@@ -11,8 +11,8 @@ local servers = {
   -- Language servers for the day to day web development, could probably think
   -- about loosing the html and css one and living with typescript, rescript
   -- and emmet
-  ts_ls = { enabled = has_file("tsconfig.json") },
-  denols = { enabled = has_file("deno.json") or has_file("deno.jsonc") },
+  ts_ls = { enabled = has_file "tsconfig.json" },
+  denols = { enabled = has_file "deno.json" or has_file "deno.jsonc" },
   html = {},
   cssls = {},
   marksman = {},
@@ -110,7 +110,7 @@ for lsp, config in pairs(servers) do
   lspconfig[lsp].setup(config)
 end
 
-require("ionide").setup({ on_attach = on_attach, capabilities = capabilities })
+require("ionide").setup { on_attach = on_attach, capabilities = capabilities }
 
 -- Change the diagnostic signs
 vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint", numhl = "DiagnosticSignHint" })
