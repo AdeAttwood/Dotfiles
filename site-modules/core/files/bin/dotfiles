@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 #
-# Cli app for managing files with puppet
+# Cli app for managing files with configz
 # see https://github.com/adeattwood/dotfiles
+# see https://github.com/adeattwood/configz
 #
 # Author:  Ade Attwood <code@adeattwood.co.uk>
 # Version: 0.0.2
@@ -11,25 +12,21 @@
 SCRIPT="$(realpath "$(readlink -f "$0")")";
 DOTFILES_DIR=${SCRIPT%%site-modules/core/files/bin/dotfiles*}
 
+MODULES="$(ls -1 "$DOTFILES_DIR"/modules)"
+MODULES="${MODULES//.lua/}"
+
 case $1 in
     apply)
+        shift
         cd "$DOTFILES_DIR"
-        bolt module install
-        bolt apply manifests/root.pp --targets localhost --run-as root --sudo-password-prompt
-        bolt apply manifests/workstation.pp --targets localhost
-        RUST_LOG=info configz --module manifests/configz-user
+        for module in $@; do
+          RUST_LOG=info configz --module "modules.$module";
+        done
         exit 0;
-        ;;
-    apply-root)
-        cd "$DOTFILES_DIR"
-        bolt apply manifests/root.pp --targets localhost --run-as root --sudo-password-prompt
-        exit 0;
-        ;;
-    apply-user)
-        cd "$DOTFILES_DIR"
-        bolt apply manifests/workstation.pp --targets localhost
-        RUST_LOG=info configz --module manifests/configz-user
-        exit 0;
+    ;;
+    list)
+      echo "$MODULES" | column
+      exit 0;
     ;;
 esac
 
@@ -45,13 +42,12 @@ Usage: dotfiles <command>
 Author: Ade Attwood <code@adeattwood.co.uk>
 
 Commands:
-    apply       Applies a puppet configuration with the dotfiles config and facts
-    apply-root  Applies the root puppet manifestes
-    apply-user  Applies the user puppet manifestes
+    list        List all of the available configz modules
+    apply       Apply a configz module
 
 Examples:
 
-Apply all of the puppet config
-$ dotfiles apply
+Apply the zsh configz module
+$ dotfiles apply zsh
 
 HELP
