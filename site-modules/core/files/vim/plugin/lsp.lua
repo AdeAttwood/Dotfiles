@@ -3,11 +3,16 @@ local lspconfig = require "lspconfig"
 local workspace_library = vim.api.nvim_get_runtime_file("lua", true)
 table.insert(workspace_library, os.getenv "HOME" .. "/Code/src/github.com/AdeAttwood/Configz/definitions/configz.lua")
 
+local function has_file(file)
+  return vim.fn.filereadable(vim.fn.getcwd() .. "/" .. file) == 1
+end
+
 local servers = {
   -- Language servers for the day to day web development, could probably think
   -- about loosing the html and css one and living with typescript, rescript
   -- and emmet
-  tsserver = {},
+  ts_ls = { enabled = has_file("tsconfig.json") },
+  denols = { enabled = has_file("deno.json") or has_file("deno.jsonc") },
   html = {},
   cssls = {},
   marksman = {},
