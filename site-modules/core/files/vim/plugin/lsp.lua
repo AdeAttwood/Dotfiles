@@ -113,12 +113,12 @@ end
 require("ionide").setup({ on_attach = on_attach, capabilities = capabilities })
 
 -- Change the diagnostic signs
-vim.fn.sign_define("DiagnosticSignHint", { text = "➤", texthl = "DiagnosticSignHint", numhl = "DiagnosticSignHint" })
-vim.fn.sign_define("DiagnosticSignInfo", { text = "ℹ", texthl = "DiagnosticSignInfo", numhl = "DiagnosticSignInfo" })
-vim.fn.sign_define("DiagnosticSignWarn", { text = "⚠", texthl = "DiagnosticSignWarn", numhl = "DiagnosticSignWarn" })
+vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint", numhl = "DiagnosticSignHint" })
+vim.fn.sign_define("DiagnosticSignInfo", { text = "", texthl = "DiagnosticSignInfo", numhl = "DiagnosticSignInfo" })
+vim.fn.sign_define("DiagnosticSignWarn", { text = "", texthl = "DiagnosticSignWarn", numhl = "DiagnosticSignWarn" })
 vim.fn.sign_define(
   "DiagnosticSignError",
-  { text = "✖", texthl = "DiagnosticSignError", numhl = "DiagnosticSignError" }
+  { text = "", texthl = "DiagnosticSignError", numhl = "DiagnosticSignError" }
 )
 
 local border = "rounded"
@@ -131,6 +131,9 @@ vim.diagnostic.config {
   float = {
     focusable = false,
     border = border,
+  },
+  virtual_text = {
+    prefix = " ",
   },
 }
 
