@@ -32,3 +32,8 @@ pager = delta
 nvim_diff.executable = nvim
 nvim_diff.args = -d $base $local $other
 nvim_diff.priority = 1
+
+[revsetalias]
+# Diff between two revs. This is the same as `<rev>...<rev>`, unlike `a::b`
+# this is equivalent to `a..b` in git.
+ddd(a, b) = ancestor(a, b)::b
