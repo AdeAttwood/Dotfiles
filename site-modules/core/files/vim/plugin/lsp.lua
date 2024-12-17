@@ -11,7 +11,7 @@ local servers = {
   -- Language servers for the day to day web development, could probably think
   -- about loosing the html and css one and living with typescript, rescript
   -- and emmet
-  ts_ls = { enabled = has_file "tsconfig.json" },
+  ts_ls = { enabled = has_file "tsconfig.json" or has_file "yarn.lock" },
   denols = { enabled = has_file "deno.json" or has_file "deno.jsonc" },
   html = {},
   cssls = {},
