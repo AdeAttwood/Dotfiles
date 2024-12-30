@@ -1,7 +1,7 @@
 local wezterm = require "wezterm"
 
 local scheme = wezterm.get_builtin_color_schemes()
-local nord = scheme["nord"]
+local theme = scheme["Poimandres"]
 
 local function vim_pass_though_action(config)
   return {
@@ -25,39 +25,41 @@ return {
   -- Use a sexy terminal font with ligatures.
   -- You will need to install the beta version of the font to get the ligatures
   -- https://github.com/intel/intel-one-mono/issues/9#issuecomment-1994958719
-  font = wezterm.font {
-    family = "Intel One Mono",
-  },
+  -- font = wezterm.font {
+  --   family = "FiraCode Nerd Font Mono",
+  -- },
 
-  -- The nord theme to fit with everyting else
-  color_scheme = "nord",
+  -- -- The nord theme to fit with everyting else
+  color_scheme = "Poimandres",
   colors = {
     tab_bar = {
-      background = nord.background,
+      background = theme.background,
       active_tab = {
-        bg_color = "#88c0d0", -- nord.background,
-        fg_color = nord.background,
+        bg_color = "#88c0d0",
+        fg_color = theme.background,
       },
       inactive_tab = {
-        bg_color = nord.background,
-        fg_color = nord.foreground,
+        bg_color = theme.background,
+        fg_color = theme.foreground,
       },
       inactive_tab_hover = {
         bg_color = "#4c566a",
-        fg_color = nord.foreground,
+        fg_color = theme.foreground,
         italic = false,
       },
       new_tab = {
-        bg_color = nord.background,
-        fg_color = nord.foreground,
+        bg_color = theme.background,
+        fg_color = theme.foreground,
       },
       new_tab_hover = {
         bg_color = "#4c566a",
-        fg_color = nord.foreground,
+        fg_color = theme.foreground,
         italic = false,
       },
     },
   },
+
+  default_prog = { 'nu' },
 
   use_fancy_tab_bar = false,
 
@@ -65,7 +67,7 @@ return {
   line_height = 1.4,
 
   -- Remove the window boarders so we have a nice clean look
-  window_decorations = "NONE",
+  window_decorations = "RESIZE",
 
   -- Who wants their music interrupted every time there is no tab completion
   -- available in the shell, Who wants their music interrupted evert time there

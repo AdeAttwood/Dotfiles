@@ -7,12 +7,12 @@
 # The format of the prompt is: username@hostname:current_path
 def create_left_prompt [] {
     let username = $env.USER
-    let hostname = $env.HOSTNAME
+    let hostname = $env.HOSTNAME | str downcase
 
     let formatted_path = $env.PWD
       | str replace $env.HOME '~'
-      | str replace '~/Code/src/' '~s/'
-      | str replace '~s/github.com' '~gh'
+      | str replace (["~", "Code", "src"] | path join) '~s'
+      | str replace (["~s", "github.com"] | path join) '~gh'
 
     $"(ansi magenta)($username)(ansi light_cyan)@(ansi yellow)($hostname)(ansi red):(ansi light_cyan)($formatted_path)(ansi reset)"
 }

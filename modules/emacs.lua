@@ -1,6 +1,13 @@
 local git = require "lib.git"
 
-local emacs_dir = os.getenv "HOME" .. "/.emacs.d"
+
+local emacs_dir
+if os.getenv "OS" == "Windows_NT" then
+  emacs_dir = os.getenv "HOME" .. "/AppData/Roaming/.emacs.d"
+else
+  emacs_dir = os.getenv "HOME" .. "/.emacs.d"
+end
+
 if not configz.is_directory(emacs_dir .. "/straight") then
   configz.directory(emacs_dir .. "/straight")
 end

@@ -1,6 +1,12 @@
 local git = require "lib.git"
 
-local nvim_dir = os.getenv "HOME" .. "/.config/nvim"
+local nvim_dir
+if os.getenv "OS" == "Windows_NT" then
+  nvim_dir = os.getenv "HOME" .. "/AppData/Local/nvim"
+else
+  nvim_dir = os.getenv "HOME" .. "/.config/nvim"
+end
+
 local nvim_plugin_dir_start = nvim_dir .. "/pack/bundle/start"
 local nvim_plugin_dir_opt = nvim_dir .. "/pack/bundle/opt"
 
@@ -74,12 +80,12 @@ for plugin, config in pairs(opt_plugins) do
   }
 end
 
-configz.run(string.format("rm -rf %s/conjure", nvim_plugin_dir_start))
-configz.run(string.format("rm -rf %s/orgmode", nvim_plugin_dir_start))
-configz.run(string.format("rm -rf %s/indent-line", nvim_plugin_dir_start))
-configz.run(string.format("rm -rf %s/auto-pairs", nvim_plugin_dir_start))
-configz.run(string.format("rm -rf %s/vim-puppet", nvim_plugin_dir_start))
-configz.run(string.format("rm -rf %s/base16-vim", nvim_plugin_dir_start))
-configz.run(string.format("rm -rf %s/vim-fugitive", nvim_plugin_dir_start))
-configz.run(string.format("rm -rf %s/vim-rhubarb", nvim_plugin_dir_start))
-configz.run(string.format("rm -rf %s/vim-tmux-navigator", nvim_plugin_dir_start))
+-- configz.run(string.format("rm -rf %s/conjure", nvim_plugin_dir_start))
+-- configz.run(string.format("rm -rf %s/orgmode", nvim_plugin_dir_start))
+-- configz.run(string.format("rm -rf %s/indent-line", nvim_plugin_dir_start))
+-- configz.run(string.format("rm -rf %s/auto-pairs", nvim_plugin_dir_start))
+-- configz.run(string.format("rm -rf %s/vim-puppet", nvim_plugin_dir_start))
+-- configz.run(string.format("rm -rf %s/base16-vim", nvim_plugin_dir_start))
+-- configz.run(string.format("rm -rf %s/vim-fugitive", nvim_plugin_dir_start))
+-- configz.run(string.format("rm -rf %s/vim-rhubarb", nvim_plugin_dir_start))
+-- configz.run(string.format("rm -rf %s/vim-tmux-navigator", nvim_plugin_dir_start))
