@@ -66,7 +66,7 @@ local function parse_snippet_file(file_path)
 end
 
 local snippets = {}
-local paths = vim.split(vim.fn.glob "~/.config/nvim/snippets/**/*.snippet", "\n")
+local paths = vim.split(vim.fn.glob(vim.fn.stdpath("config") .. "/snippets/**/*.snippet"), "\n")
 for paths_index = 1, #paths do
   local file = paths[paths_index]
   local snippet = parse_snippet_file(file)
@@ -96,3 +96,12 @@ end
 for filetype, snippets_to_add in pairs(snippets) do
   ls.add_snippets(filetype, snippets_to_add)
 end
+
+ls.env_namespace("AA", {
+  vars= {
+    NAMESPACE = function ()
+      local file_path = vim.fn.fnamemodify(vim.fn.expand("%:h"), ":~:.")
+      return string.gsub(file_path, "[\\/]", ".");
+    end
+  }
+})
