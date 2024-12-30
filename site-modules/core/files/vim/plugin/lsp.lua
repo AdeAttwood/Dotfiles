@@ -113,29 +113,22 @@ end
 
 require("ionide").setup { on_attach = on_attach, capabilities = capabilities }
 
--- Change the diagnostic signs
-vim.fn.sign_define("DiagnosticSignHint", { text = "", texthl = "DiagnosticSignHint", numhl = "DiagnosticSignHint" })
-vim.fn.sign_define("DiagnosticSignInfo", { text = "", texthl = "DiagnosticSignInfo", numhl = "DiagnosticSignInfo" })
-vim.fn.sign_define("DiagnosticSignWarn", { text = "", texthl = "DiagnosticSignWarn", numhl = "DiagnosticSignWarn" })
-vim.fn.sign_define(
-  "DiagnosticSignError",
-  { text = "", texthl = "DiagnosticSignError", numhl = "DiagnosticSignError" }
-)
-
-local border = "rounded"
-
-vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-vim.lsp.handlers["textDocument/show_line_diagnostics"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-vim.lsp.handlers["textDocument/diagnostic"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
-vim.lsp.handlers["textDocument/diagnostics"] = vim.lsp.with(vim.lsp.handlers.hover, { border = border })
 vim.diagnostic.config {
   float = {
     focusable = false,
-    border = border,
+    border = "rounded",
   },
   virtual_text = {
     prefix = " ",
   },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '',
+      [vim.diagnostic.severity.INFO] = '',
+      [vim.diagnostic.severity.WARN] = '',
+      [vim.diagnostic.severity.HINT] = '',
+    }
+  }
 }
 
 vim.cmd [[set updatetime=1000]]
