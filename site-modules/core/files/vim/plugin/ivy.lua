@@ -10,7 +10,7 @@ require("ivy").setup {
     "ivy.backends.lsp-workspace-symbols",
     "ivy.backends.rg",
   },
-  mappings = vim.tbl_extend("force", config:get { "mappings" }, {
+  mappings = vim.tbl_extend("force", config:get { "mappings" } or {}, {
     ["<C-M-n>"] = "next_checkpoint",
     ["<C-M-p>"] = "previous_checkpoint",
   }),
