@@ -25,9 +25,9 @@ return {
   -- Use a sexy terminal font with ligatures.
   -- You will need to install the beta version of the font to get the ligatures
   -- https://github.com/intel/intel-one-mono/issues/9#issuecomment-1994958719
-  -- font = wezterm.font {
-  --   family = "FiraCode Nerd Font Mono",
-  -- },
+  font = wezterm.font {
+    family = "FiraCode Nerd Font Mono",
+  },
 
   -- -- The nord theme to fit with everyting else
   color_scheme = "Poimandres",
