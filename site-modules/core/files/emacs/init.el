@@ -239,6 +239,13 @@ just in in the current buffer."
   (setq-default org-download-image-dir (concat (file-name-as-directory org-directory) "Attachments")
                 org-download-heading-lvl nil))
 
+(use-package languagetool
+  :straight t
+  :config
+  (setq languagetool-correction-language "en-GB"
+        languagetool-server-url "https://api.languagetool.org"
+        languagetool-server-port 443))
+
 ;;; Completion
 
 (use-package company
