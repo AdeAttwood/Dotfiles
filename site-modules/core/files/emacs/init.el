@@ -329,10 +329,46 @@ just in in the current buffer."
                                   :query "query:inbox"
                                   :sort-order oldest-first)))
 
-  (evil-define-key 'normal notmuch-search-mode-map
-    "d" 'aa/notmuch-search-delete)
-  (evil-define-key 'visual notmuch-search-mode-map
-    "d" 'aa/notmuch-search-delete))
+(defun aa/notmuch-open-github-link ()
+  "Open the first GitHub Pull Request or Issue link in the current notmuch message or thread.
+Works in both `notmuch-show-mode` and `notmuch-search-mode`."
+  (interactive)
+  (let (url (original-buffer (current-buffer)))
+    (cond
+     ;; Handle notmuch-show-mode (email message view)
+     ((eq major-mode 'notmuch-show-mode)
+      (save-excursion
+        (goto-char (point-min))
+        (if (re-search-forward "https://github\\.com/[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+/\\(pull\\|issues\\)/[0-9]+" nil t)
+            (setq url (match-string 0))
+          (message "No GitHub link found in the current message."))))
+     ;; Handle notmuch-search-mode (search list view)
+     ((eq major-mode 'notmuch-search-mode)
+      (let ((message-id (notmuch-search-find-thread-id)))
+        (when message-id
+          (save-window-excursion
+            (with-temp-buffer
+              (notmuch-show message-id nil nil)
+              (goto-char (point-min))
+              (if (re-search-forward "https://github\\.com/[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+/\\(pull\\|issues\\)/[0-9]+" nil t)
+                  (setq url (match-string 0))
+                (message "No GitHub link found in the thread."))))))))
+    ;; Open the URL in the browser
+    (if url
+        (browse-url url)
+      (message "No GitHub link found."))))
+
+
+(evil-define-key 'normal notmuch-search-mode-map
+  "d" 'aa/notmuch-search-delete
+  "b" 'aa/notmuch-open-github-link)
+
+(evil-define-key 'visual notmuch-search-mode-map
+  "d" 'aa/notmuch-search-delete)
+  "b" 'aa/notmuch-open-github-link)
+
+(evil-define-key 'normal notmuch-show-mode-map
+  "b" 'aa/notmuch-open-github-link)
 
 (defun aa/notmuch-search-inbox ()
   "Helper function to search for the inbox messages (oldest message first).
