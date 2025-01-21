@@ -51,9 +51,6 @@ table.insert(lint.linters.cspell.args, "--")
 table.insert(lint.linters.cspell.args, "stdin")
 
 lint.linters.eslint = eslint_linter
-table.insert(lint.linters.eslint.args, 1, "--flag")
-table.insert(lint.linters.eslint.args, 2, "unstable_ts_config")
-
 lint.linters_by_ft = {}
 
 if vim.fn.executable "phpcs" == 1 then
