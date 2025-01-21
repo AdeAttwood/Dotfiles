@@ -157,6 +157,10 @@ just in in the current buffer."
 
 (setq org-directory "~/Org"
       org-todo-keywords '((sequence "TODO" "WAITING" "REVIEW" "|" "DONE" "ARCHIVED"))
+      org-agenda-prefix-format '((agenda . " %?-12t% s")
+                                (todo . "  ")
+                                (tags . " %i %-12:c")
+                                (search . " %i %-12:c"))
       org-hide-emphasis-markers t
       org-agenda-window-setup 'current-window
       org-export-with-broken-links "mark"
