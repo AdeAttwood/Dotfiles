@@ -1,4 +1,4 @@
-use path.nu
+use path.nu *
 
 use fzf.nu *
 use neovim.nu *
@@ -16,6 +16,7 @@ $env.config = {
       PWD: [
         {|_, after| nvm dir-hook $after }
         {|_, after| rvm-dir-hook $after }
+        {|_, after| node-modules-dir-hook $after }
       ]
     }
   }
