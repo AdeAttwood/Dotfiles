@@ -33,7 +33,7 @@ This is better than the `C-x +` and C-x - because this is global to emacs not
 just in in the current buffer."
   (interactive "nFont Size: ")
 
-  (setq aa-font "DejaVu Sans Mono")
+  (setq aa-font "FiraCode Nerd Font Mono")
   (setq aa-v-font "Sans Serif")
   ;; (setq aa-v-font "Ubuntu")
 
