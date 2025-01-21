@@ -165,6 +165,11 @@ just in in the current buffer."
       org-export-with-toc nil
       org-html-head "<style>body { font-family: system-ui; }</style>")
 
+(defun aa/search-org-roam-notes ()
+  "Search in the Org-Roam folder using counsel-rg."
+  (interactive)
+  (counsel-rg nil org-roam-directory nil "Search Org Roam: "))
+
 (setq org-agenda-custom-commands
       '(("d" "Dashboard"
          ((agenda "" ((org-deadline-warning-days 7)))
@@ -470,7 +475,7 @@ Works in both `notmuch-show-mode` and `notmuch-search-mode`."
 
   (aa/leader-keys
    ;; Global bindings
-    "/"   '(counsel-projectile-ag :which-key "Search Project")
+    "/"   '(aa/search-org-roam-notes :which-key "Search Org Roam")
     "TAB" '(evil-switch-to-windows-last-buffer :which-key "Last Buffer")
     "SPC" '(counsel-M-x :which-key "M-x")
 
