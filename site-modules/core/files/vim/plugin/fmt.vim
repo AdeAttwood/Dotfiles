@@ -3,7 +3,7 @@
 " I don't accidentally start formatting when rebasing (bad memories).
 
 function s:format_on_save()
-  if &filetype == 'fsharp'
+  if &filetype == 'fsharp' || &filetype == 'cs'
     return execute('lua vim.lsp.buf.format()')
   endif
 
