@@ -194,13 +194,24 @@ just in in the current buffer."
           (todo "WAITING"
                 ((org-agenda-overriding-header "Waiting on External")))
           (todo "TODO"
-                ((org-agenda-overriding-header "Scheduled")
-                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'nottimestamp))))
-          (todo "TODO"
                 ((org-agenda-overriding-header "Backlog")
                  (org-agenda-todo-list-sublevels nil)
-                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))))))
+                 (org-agenda-skip-function '(org-agenda-skip-entry-if 'timestamp))))
+          (todo "TODO"
+                   ((org-agenda-overriding-header "Scheduled After This Week")
+                    (org-agenda-skip-function
+                (lambda ()
+                   (let* ((scheduled (org-get-scheduled-time (point)))
+                          (end-of-week
+                           (time-add (current-time)
+                                     (days-to-time
+                                      (- 7 (string-to-number (format-time-string "%u")))))))
+                     (if (and scheduled
+                              (time-less-p end-of-week scheduled))
+                         nil
+                       (org-end-of-subtree t)))))))
 
+  ))))
 (setq org-capture-templates
       '(("t" "Todo" entry (file+headline "Todo.org" "Inbox")
          "* TODO %?\n\n  %a")))
