@@ -362,13 +362,13 @@ just in in the current buffer."
   :defer t)
 
 (use-package notmuch
-  ;; Use the notmuch package that is installed
-  :load-path "/usr/share/emacs/site-lisp"
+  :straight t
   :config
+  (setq notmuch-command "~/.local/bin/notmuch-remote")
   (setq notmuch-saved-searches '((:name "inbox"
                                   :key "i"
                                   :query "query:inbox"
-                                  :sort-order oldest-first)))
+                                  :sort-order oldest-first))))
 
 (defun aa/notmuch-open-github-link ()
   "Open the first GitHub Pull Request or Issue link in the current notmuch message or thread.
@@ -405,7 +405,7 @@ Works in both `notmuch-show-mode` and `notmuch-search-mode`."
   "b" 'aa/notmuch-open-github-link)
 
 (evil-define-key 'visual notmuch-search-mode-map
-  "d" 'aa/notmuch-search-delete)
+  "d" 'aa/notmuch-search-delete
   "b" 'aa/notmuch-open-github-link)
 
 (evil-define-key 'normal notmuch-show-mode-map
