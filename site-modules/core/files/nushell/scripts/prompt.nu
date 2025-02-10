@@ -7,7 +7,7 @@
 # The format of the prompt is: username@hostname:current_path
 def create_left_prompt [] {
     let username = $env.USER
-    let hostname = $env.HOSTNAME | str downcase
+    let hostname = (sys host | get hostname) | str downcase # $env.HOSTNAME | str downcase
 
     let formatted_path = $env.PWD
       | str replace $env.HOME '~'
