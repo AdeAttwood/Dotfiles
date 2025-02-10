@@ -91,6 +91,20 @@ just in in the current buffer."
 (require 'org-id)
 (require 'org-protocol)
 (require 'org-tempo)
+(require 'ob)
+
+(use-package ob-nushell
+  :straight '(ob-nushell :type git :host github :repo "ln-nl/ob-nushell")
+  :config
+  (require 'ob-nushell)
+  (setq org-babel-nushell-command "~/.cargo/bin/nu"
+        ob-nushell-command-options "--error-style p")
+
+  (org-babel-do-load-languages
+    'org-babel-load-languages
+    '((emacs-lisp . t) ; Enable Emacs Lisp
+      (shell . t)
+      (nushell . t))))
 
 (defun aa/org-roam-update-tasklist-tag ()
   "Add or remove the 'tasklist' filetag based on the presence of TODO items in
