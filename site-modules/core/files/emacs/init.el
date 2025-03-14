@@ -33,13 +33,12 @@ This is better than the `C-x +` and C-x - because this is global to emacs not
 just in in the current buffer."
   (interactive "nFont Size: ")
 
-  (setq aa-font "FiraCode Nerd Font Mono")
-  (setq aa-v-font "Sans Serif")
-  ;; (setq aa-v-font "Ubuntu")
+  (setq aa-font "Hack Nerd Font Mono")
+  (setq aa-v-font "ETBembo")
 
   (set-face-attribute 'default nil :font aa-font :height a-font-size)
   (set-face-attribute 'fixed-pitch nil :font aa-font :height a-font-size)
-  (set-face-attribute 'variable-pitch nil :font aa-v-font :height a-font-size :weight 'regular))
+  (set-face-attribute 'variable-pitch nil :font aa-v-font :height (+ a-font-size 30) :weight 'regular))
 
 ;; Set the default font size when emacs starts
 (aa/set-font 100)
@@ -56,9 +55,9 @@ just in in the current buffer."
   :straight t
   :config
   ;; Global settings (defaults)
-  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
-        doom-themes-enable-italic t) ; if nil, italics is universally disabled
-  (load-theme 'doom-nord-light t)
+  (setq doom-themes-enable-bold t
+        doom-themes-enable-italic t)
+  (load-theme 'doom-opera-light t)
 
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
@@ -74,7 +73,10 @@ just in in the current buffer."
 ;; Make ESC quit prompts
 (global-set-key (kbd "<escape>") 'keyboard-escape-quit)
 
-(setq browse-url-browser-function 'browse-url-chrome)
+;; Force the browser to be chrome on linux. On windows the browser can
+;; be found by default. On Linux this keeps trying to use Firefox.
+(when (not (string-equal system-type "windows-nt"))
+  (setq browse-url-browser-function 'browse-url-chrome))
 
 (use-package which-key
   :straight t
@@ -92,6 +94,8 @@ just in in the current buffer."
 (require 'org-protocol)
 (require 'org-tempo)
 (require 'ob)
+
+(add-hook 'org-mode-hook 'variable-pitch-mode)
 
 (use-package ob-nushell
   :straight '(ob-nushell :type git :host github :repo "ln-nl/ob-nushell")
@@ -169,7 +173,7 @@ just in in the current buffer."
 (advice-add 'org-agenda :before #'aa/org-agenda-files)
 (advice-add 'org-todo-list :before #'aa/org-agenda-files)
 
-(setq org-directory "~/Org"
+(setq org-directory (concat (expand-file-name "~") "/Org")
       org-todo-keywords '((sequence "TODO" "WAITING" "REVIEW" "|" "DONE" "ARCHIVED"))
       org-agenda-prefix-format '((agenda . " %?-12t% s")
                                 (todo . "  ")
@@ -355,16 +359,20 @@ just in in the current buffer."
 
 (add-hook 'org-agenda-mode-hook 'aa/org-agenda-setup)
 
+;;; Markdown
+
+(use-package markdown-mode
+  :straight t
+  :mode ("\\.md\\'" . markdown-mode))
+
 ;;; Email
 
-(use-package counsel-notmuch
-  :straight t
-  :defer t)
-
 (use-package notmuch
-  :straight t
+  :straight (notmuch :type git
+		     :host nil
+		     :repo "https://forgejo.baln.co.uk/AdeAttwood/ElNotmuch.git")
   :config
-  (setq notmuch-command "~/.local/bin/notmuch-remote")
+  (setq notmuch-command (concat user-emacs-directory "notmuch-remote"))
   (setq notmuch-saved-searches '((:name "inbox"
                                   :key "i"
                                   :query "query:inbox"
@@ -481,16 +489,6 @@ Works in both `notmuch-show-mode` and `notmuch-search-mode`."
                  (add-to-list 'minor-mode-overriding-map-alist new-ro-bind))
     (goto-char (point-min))))
 
-(use-package mbwatch
-  :load-path "~/.emacs.d/mbwatch"
-  :after notmuch
-  :config
-  (mbwatch-mode 1)
-  (add-hook 'mbwatch-output-hook
-          (lambda (account mailbox)
-            (message "[mbwatch] new messages for account %s in mailbox %s" account mailbox)
-            (notmuch-command-to-string "new"))))
-
 ;;; Sending email
 (use-package org-mime
   :straight t)
@@ -555,7 +553,6 @@ Works in both `notmuch-show-mode` and `notmuch-search-mode`."
     "ee" 'notmuch
     "ei" 'aa/notmuch-search-inbox
     "ej" 'notmuch-jump-search
-    "es" 'counsel-notmuch
 
     ;; Toggles
     "t"  '(:ignore t :which-key "Toggles")
