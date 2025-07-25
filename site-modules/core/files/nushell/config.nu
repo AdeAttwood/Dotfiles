@@ -1,3 +1,8 @@
+if ((sys host | get name) == "Windows") {
+  $env.HOME = $env.USERPROFILE
+  $env.USER = $env.USERNAME
+}
+
 use path.nu *
 
 use fzf.nu *
@@ -5,9 +10,6 @@ use neovim.nu *
 use prompt.nu *
 use sapling.nu *
 use nvm.nu *
-use rvm.nu *
-
-nvm use default
 
 $env.config = {
   show_banner: false,
@@ -15,10 +17,11 @@ $env.config = {
     env_change: {
       PWD: [
         {|_, after| nvm dir-hook $after }
-        {|_, after| rvm-dir-hook $after }
         {|_, after| node-modules-dir-hook $after }
       ]
     }
   }
 }
 
+$env.config.show_banner = false
+$env.config.shell_integration.osc133 = false
