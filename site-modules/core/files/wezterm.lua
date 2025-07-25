@@ -1,7 +1,15 @@
 local wezterm = require "wezterm"
 
+function scheme_for_appearance(appearance)
+  if appearance:find 'Dark' then
+    return 'Tomorrow Night'
+  else
+    return 'Tomorrow'
+  end
+end
+
 local scheme = wezterm.get_builtin_color_schemes()
-local theme = scheme["Poimandres"]
+local theme = scheme[scheme_for_appearance(wezterm.gui.get_appearance())]
 
 function collect_executables(process)
   local executables = {}
@@ -58,8 +66,12 @@ return {
     family = "Hasklug Nerd Font Mono",
   },
 
+  set_environment_variables = {
+    OS_THEME = wezterm.gui.get_appearance()
+  },
+
   -- -- The nord theme to fit with everyting else
-  color_scheme = "Poimandres",
+  color_scheme = scheme_for_appearance(wezterm.gui.get_appearance()),
   colors = {
     tab_bar = {
       background = theme.background,

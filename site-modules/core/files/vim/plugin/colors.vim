@@ -1,9 +1,11 @@
-" Set color theme
-lua << EOF
-  require("nord").setup({})
-EOF
-
-colorscheme nord
+" Set color theme based on the OS theme
+if $OS_THEME ==# 'Dark'
+  set background=dark
+  colorscheme tairiki
+else
+  set background=light
+  colorscheme tairiki
+end
 
 " Set tailing white space to errors
 match ErrorMsg '\s\+$'

@@ -25,3 +25,8 @@ $env.config = {
 
 $env.config.show_banner = false
 $env.config.shell_integration.osc133 = false
+
+if $env.OS_THEME == "Light" {
+  use std/config light-theme
+  $env.config.color_config = (light-theme)
+}
