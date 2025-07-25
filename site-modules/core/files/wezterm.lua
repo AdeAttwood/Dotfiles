@@ -3,15 +3,44 @@ local wezterm = require "wezterm"
 local scheme = wezterm.get_builtin_color_schemes()
 local theme = scheme["Poimandres"]
 
+function collect_executables(process)
+  local executables = {}
+
+  if process.executable then
+    table.insert(executables, process.executable)
+  end
+
+  if process.ppid and process.ppid > 0 then
+    local parent_process = wezterm.procinfo.get_info_for_pid(process.ppid)
+    if parent_process then
+      local parent_executables = collect_executables(parent_process)
+      for _, exe in ipairs(parent_executables) do
+        table.insert(executables, exe)
+      end
+    end
+  end
+
+  return executables
+end
+
+local function matches_editor(process)
+  local executables = collect_executables(process)
+  for _, executable in ipairs(executables) do
+    if string.match(executable, "vim") or string.match(executable, "emacs") then
+      return true
+    end
+  end
+
+  return false
+end
+
 local function vim_pass_though_action(config)
   return {
     key = config.key,
     mods = config.mods,
     action = wezterm.action_callback(function(win, pane)
-      local process_name = pane:get_foreground_process_name()
-
       -- If we are in vim then we want to send the key to go to the net pain
-      if string.match(process_name, "vim") or string.match(process_name, "emacs") then
+      if matches_editor(pane:get_foreground_process_info()) then
         win:perform_action({ SendKey = { key = config.key, mods = config.mods } }, pane)
         return
       end
@@ -26,7 +55,7 @@ return {
   -- You will need to install the beta version of the font to get the ligatures
   -- https://github.com/intel/intel-one-mono/issues/9#issuecomment-1994958719
   font = wezterm.font {
-    family = "FiraCode Nerd Font Mono",
+    family = "Hasklug Nerd Font Mono",
   },
 
   -- -- The nord theme to fit with everyting else
@@ -75,7 +104,7 @@ return {
   audible_bell = "Disabled",
 
   -- Have a really clean UI when there is only one tab open
-  hide_tab_bar_if_only_one_tab = false,
+  hide_tab_bar_if_only_one_tab = true,
 
   -- Disabled all the padding, this makes vim look a lot nicer when all the
   -- window bars go to the edges of the terminal
