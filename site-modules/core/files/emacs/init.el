@@ -33,15 +33,15 @@ This is better than the `C-x +` and C-x - because this is global to emacs not
 just in in the current buffer."
   (interactive "nFont Size: ")
 
-  (setq aa-font "Hack Nerd Font Mono")
-  (setq aa-v-font "ETBembo")
+  (setq aa-font "Hasklug Nerd Font")
+  (setq aa-v-font "Hasklug Nerd Font")
 
   (set-face-attribute 'default nil :font aa-font :height a-font-size)
   (set-face-attribute 'fixed-pitch nil :font aa-font :height a-font-size)
   (set-face-attribute 'variable-pitch nil :font aa-v-font :height (+ a-font-size 30) :weight 'regular))
 
 ;; Set the default font size when emacs starts
-(aa/set-font 100)
+(aa/set-font 120)
 
 (use-package all-the-icons
   :straight t
@@ -95,7 +95,6 @@ just in in the current buffer."
 (require 'org-tempo)
 (require 'ob)
 
-(add-hook 'org-mode-hook 'variable-pitch-mode)
 
 (use-package ob-nushell
   :straight '(ob-nushell :type git :host github :repo "ln-nl/ob-nushell")
@@ -232,7 +231,7 @@ just in in the current buffer."
       `((,(concat (file-name-as-directory org-directory) "Todo.org") :maxlevel . 1)))
 
 (add-hook 'org-mode-hook (lambda ()
-    (electric-pair-mode)
+    (visual-line-mode)
     (org-indent-mode)
     (flyspell-mode)))
 
