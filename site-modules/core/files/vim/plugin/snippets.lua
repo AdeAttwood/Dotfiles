@@ -101,7 +101,19 @@ ls.env_namespace("AA", {
   vars= {
     NAMESPACE = function ()
       local file_path = vim.fn.fnamemodify(vim.fn.expand("%:h"), ":~:.")
-      return string.gsub(file_path, "[\\/]", ".");
+      local namespace = string.gsub(file_path, "[\\/]", ".");
+
+      -- If the namespace starts with a 'src.' then we remove it
+      if namespace:sub(1, 4) == "src." then
+        namespace = namespace:sub(5)
+      end
+
+      -- If the namespace starts with a 'test.' then we remove it
+      if namespace:sub(1, 5) == "test." then
+        namespace = namespace:sub(6)
+      end
+
+      return namespace
     end
   }
 })
