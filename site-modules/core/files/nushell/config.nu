@@ -11,6 +11,10 @@ use prompt.nu *
 use sapling.nu *
 use nvm.nu *
 
+if ((sys host | get name) == "Windows") {
+  use windows.nu *
+}
+
 $env.config = {
   show_banner: false,
   hooks: {
