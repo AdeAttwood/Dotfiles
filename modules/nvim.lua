@@ -55,6 +55,8 @@ local start_plugins = {
   ["csharpls-extended-lsp"] = { url = "https://github.com/Decodetalkers/csharpls-extended-lsp.nvim" },
   ["Ionide-vim"] = { url = "https://github.com/ionide/Ionide-vim" },
   ["baleia.nvim"] = { url = "https://github.com/m00qek/baleia.nvim", revision = "main" },
+  ["tairiki.nvim"] = { url = "https://github.com/deparr/tairiki.nvim.git" },
+  ["ivy.nvim"] = { url = "https://github.com/AdeAttwood/ivy.nvim.git", revision = "0.x" },
 }
 
 local opt_plugins = {
@@ -79,6 +81,8 @@ for plugin, config in pairs(opt_plugins) do
     version = config.revision or "master",
   }
 end
+
+configz.run("cd " .. nvim_plugin_dir_start .. "/ivy.nvim; cargo build --release")
 
 -- configz.run(string.format("rm -rf %s/conjure", nvim_plugin_dir_start))
 -- configz.run(string.format("rm -rf %s/orgmode", nvim_plugin_dir_start))

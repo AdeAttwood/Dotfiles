@@ -9,7 +9,13 @@ export-env {
   }
   $env.PATH = $env.PATH
     | prepend ([$env.HOME ".cargo" "bin"] | path join)
+
+  let bob_path = ([$env.HOME ".local" "share" "bob" "nvim-bin"] | path join)
+  if ($bob_path | path exists) {
+    $env.PATH = $env.PATH | prepend $bob_path
+  }
 }
+
 
 export def --env node-modules-dir-hook [dir: string] {
   let nodePath = ([$dir, "node_modules", ".bin"] | path join)
