@@ -108,7 +108,8 @@ for lsp, config in pairs(servers) do
   config["capabilities"] = capabilities
   config["init_options"] = { usePlaceholders = true }
 
-  lspconfig[lsp].setup(config)
+  vim.lsp.config(lsp, config)
+  vim.lsp.enable(lsp)
 end
 
 require("ionide").setup { on_attach = on_attach, capabilities = capabilities }
