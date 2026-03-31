@@ -1,0 +1,29 @@
+[settings]
+idiomatic_version_file_enable_tools = ["node", "dotnet"]
+
+[tools]
+bat = "latest"
+delta = "latest"
+dotnet = "latest"
+fd = "latest"
+fzf = "latest"
+gh = "latest"
+neovim = "0.11"
+node = "latest"
+rg = "latest"
+rust = "latest"
+
+"cargo:https://github.com/AdeAttwood/Configz" = "latest"
+
+"github:facebook/sapling" = { version = "0.2.20260317-201835+0234c21f", version_prefix = "", filter_bins = "sl" }
+"github:nushell/nushell" = { version = "latest", version_prefix = "" }
+
+"npm:@tailwindcss/language-server" = "latest"
+"npm:cspell" = "latest"
+"npm:emmet-ls" = "latest"
+"npm:typescript" = "latest"
+"npm:typescript-language-server" = "latest"
+"npm:vscode-langservers-extracted" = "latest"
+"npm:yarn" = "latest"
+
+"dotnet:csharp-ls" = "latest"

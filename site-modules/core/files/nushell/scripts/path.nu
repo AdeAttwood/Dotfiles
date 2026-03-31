@@ -2,7 +2,7 @@
 
 
 export-env {
-  $env.GOPATH = if ($env.COMPUTERNAME == "LAFITE") {
+  $env.GOPATH = if ($env.COMPUTERNAME? == "LAFITE") {
     $"D:/Code"
   } else {
     $"($env.HOME)/Code"
