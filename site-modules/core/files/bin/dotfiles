@@ -11,9 +11,49 @@
 
 SCRIPT="$(realpath "$(readlink -f "$0")")";
 DOTFILES_DIR=${SCRIPT%%site-modules/core/files/bin/dotfiles*}
+PERSONAL_CONFIG="$DOTFILES_DIR/data/personal.lua"
 
 MODULES="$(ls -1 "$DOTFILES_DIR"/modules)"
 MODULES="${MODULES//.lua/}"
+
+escape_lua_string() {
+    printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'
+}
+
+set_personal_property() {
+    local key="$1"
+    local value="$2"
+    local escaped_value line tmp_file
+
+    if [[ ! "$key" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]]; then
+        printf 'Invalid property name: %s\n' "$key" >&2
+        exit 1
+    fi
+
+    escaped_value="$(escape_lua_string "$value")"
+    line="  ${key} = \"${escaped_value}\","
+
+    if [ ! -f "$PERSONAL_CONFIG" ]; then
+        printf 'return {\n%s\n}\n' "$line" > "$PERSONAL_CONFIG"
+        return
+    fi
+
+    tmp_file="$(mktemp "$DOTFILES_DIR/data/personal.lua.XXXXXX")"
+
+    if grep -Eq "^[[:space:]]*${key}[[:space:]]*=" "$PERSONAL_CONFIG"; then
+        awk -v key="$key" -v line="$line" '
+            $0 ~ "^[[:space:]]*" key "[[:space:]]*=" { print line; next }
+            { print }
+        ' "$PERSONAL_CONFIG" > "$tmp_file"
+    else
+        awk -v line="$line" '
+            /^}[[:space:]]*$/ && !inserted { print line; inserted = 1 }
+            { print }
+        ' "$PERSONAL_CONFIG" > "$tmp_file"
+    fi
+
+    mv "$tmp_file" "$PERSONAL_CONFIG"
+}
 
 case $1 in
     apply)
@@ -28,15 +68,30 @@ case $1 in
       echo "$MODULES" | column
       exit 0;
     ;;
+    set)
+      shift
+      key="$1"
+      shift
+      value="$*"
+
+      if [ -z "$key" ] || [ -z "$value" ]; then
+        printf 'Usage: dotfiles set <property> <value>\n' >&2
+        exit 1
+      fi
+
+      set_personal_property "$key" "$value"
+      printf 'Set %s in %s\n' "$key" "$PERSONAL_CONFIG"
+      exit 0;
+    ;;
 esac
 
 cat << HELP
-    ____        __  _____ __         
+    ____        __  _____ __
    / __ \____  / /_/ __(_) /__  _____
   / / / / __ \/ __/ /_/ / / _ \/ ___/
- / /_/ / /_/ / /_/ __/ / /  __(__  ) 
-/_____/\____/\__/_/ /_/_/\___/____/  
-                                     
+ / /_/ / /_/ / /_/ __/ / /  __(__  )
+/_____/\____/\__/_/ /_/_/\___/____/
+
 Usage: dotfiles <command>
 
 Author: Ade Attwood <code@adeattwood.co.uk>
@@ -44,10 +99,14 @@ Author: Ade Attwood <code@adeattwood.co.uk>
 Commands:
     list        List all of the available configz modules
     apply       Apply a configz module
+    set         Set a property in data/personal.lua
 
 Examples:
 
 Apply the zsh configz module
 $ dotfiles apply zsh
+
+Set your personal email address
+$ dotfiles set email "my@email.com"
 
 HELP
