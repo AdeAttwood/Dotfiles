@@ -57,6 +57,10 @@ local servers = {
       ["textDocument/typeDefinition"] = require("csharpls_extended").handler,
     },
   },
+  contractforge = {
+    cmd = { "contractforge", "lsp" },
+    filetypes = { "thrift" },
+  },
 }
 
 local on_attach = function(_, bufnr)
