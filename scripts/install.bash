@@ -2,12 +2,14 @@
 
 dotfiles_dir="${DOTFILE_DIR:-$HOME/dotfiles}"
 
+echo "Using dotfiles dir $dotfiles_dir"
+
 if [ -x "$(command -v zypper)" ]; then
   sudo zypper install --type pattern devel_basis
   sudo zypper install libopenssl-devel git
 elif  [ -x "$(command -v apt)" ]; then
   sudo apt-get update
-  sudo apt-get install -y pkg-config git
+  sudo apt-get install -y pkg-config git build-essential libssl-dev
 else
   echo "ERROR: Package manager not found. Could not install"
 fi
