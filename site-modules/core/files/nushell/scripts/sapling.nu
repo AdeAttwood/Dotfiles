@@ -40,3 +40,50 @@ export def sco [] {
     _sl goto $commit
   }
 }
+
+# Configure the current repository for the preferred Sapling PR workflow.
+export def sl-configure [
+  branch?: string # Development branch to use, auto-detected when omitted
+] {
+  let development_branch = if ($branch | is-empty) {
+    let remote_head = (git symbolic-ref --quiet --short refs/remotes/origin/HEAD | complete)
+
+    if $remote_head.exit_code == 0 {
+      $remote_head.stdout | str trim | str replace --regex '^origin/' ''
+    } else {
+      let remote_refs = (git for-each-ref '--format=%(refname:short)' refs/remotes/origin | lines | each {|ref| $ref | str trim | str replace --regex '^origin/' '' })
+      let local_refs = (git for-each-ref '--format=%(refname:short)' refs/heads | lines | each {|ref| $ref | str trim })
+      let candidates = [development main master 0.x]
+      let detected_remote = ($candidates | where {|candidate| $candidate in $remote_refs } | first)
+      let detected_local = if ($detected_remote | is-empty) {
+        $candidates | where {|candidate| $candidate in $local_refs } | first
+      } else {
+        null
+      }
+      let current_branch = (git symbolic-ref --quiet --short HEAD | complete)
+      let detected = if (not ($detected_remote | is-empty)) {
+        $detected_remote
+      } else if (not ($detected_local | is-empty)) {
+        $detected_local
+      } else if ($current_branch.exit_code == 0 and (($current_branch.stdout | str trim) in $candidates)) {
+        $current_branch.stdout | str trim
+      } else {
+        null
+      }
+
+      if ($detected | is-empty) {
+        error make {
+          msg: "Could not detect development branch. Pass one explicitly, e.g. sl-configure development"
+        }
+      }
+
+      $detected
+    }
+  } else {
+    $branch
+  }
+
+  _sl config --local $"remotenames.publicheads=remote/($development_branch),origin/($development_branch)" $"remotenames.selectivepulldefault=($development_branch)" $"smartlog.master=($development_branch)" github.pr_workflow=single github.preferred_submit_command=pr
+
+  print $"Configured Sapling for ($development_branch)"
+}
