@@ -10,6 +10,7 @@ use neovim.nu *
 use prompt.nu *
 use sapling.nu *
 use nvm.nu *
+use jobs.nu *
 
 if ((sys host | get name) == "Windows") {
   use windows.nu *
