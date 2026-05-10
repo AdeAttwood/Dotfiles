@@ -1,0 +1,13 @@
+[Unit]
+Description=OpenCode local server
+After=network.target
+
+[Service]
+Type=simple
+Environment=TICKETS_DIR=%h/.tk
+ExecStart=%h/.local/share/mise/shims/opencode web --hostname 0.0.0.0 --port 4096
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
